@@ -1,0 +1,50 @@
+{% load static %}
+
+<div class="bg-white z-40 relative m-2 mb-6 shadow-md">
+  <!-- Upper navbar -->
+  <div class="max-w-[1200px] flex mx-auto items-center">
+    <div class="mr-2 min-w-14 size-14">
+      <a href="/">
+        <img
+          src="{% static 'favicon.ico' %}"
+          width="56px"
+          height='56px'
+          alt="Logo"></img>
+      </a>
+    </div>
+
+    <div class="flex items-center w-[540px] mx-auto gap-2 p-2">
+      <input
+        type="text"
+        placeholder="Tìm kiếm"
+        class="bg-white rounded-3xl px-4 h-10 w-full min-w-24 border-2 border-gray-400 transition-colors duration-300"></input>
+      <button class="bg-transparent size-10 flex justify-center items-center">
+        <i class="text-[32px] ph-light ph-magnifying-glass"></i>
+      </button>
+    </div>
+
+    <div class="flex gap-2">
+      <button class="size-16 flex flex-col justify-center items-center">
+        <i class="text-[30px] my-1 ph-light ph ph-shopping-cart"></i>
+        <span class="text-sm">Giỏ hàng</span>
+      </button>
+      <button class="size-16 flex flex-col justify-center items-center">
+        <i class="text-[30px] my-1 ph-light ph-user"></i>
+        <span class="text-sm">Tài khoản</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Below navbar -->
+  <div class="max-w-[600px] flex mx-auto items-center justify-between p-4">
+      {% for item in menu_links %}
+        <div>
+            <a 
+                href="{{ item.link }}"
+                class="px-2 font-semibold uppercase hover:underline underline-offset-4 hover:text-red-600 transition-all duration-300">
+                {{ item.name }}
+            </a>
+        </div>
+      {% endfor %}
+  </div>
+</div>
