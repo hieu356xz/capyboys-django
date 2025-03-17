@@ -2,7 +2,7 @@ from django.db import models
 
 class Collection(models.Model):
     name = models.CharField(max_length=511)
-    description = models.TextField()
+    description = models.TextField(blank=True, null=True)
     slug = models.SlugField(max_length=255, unique=True)
     books = models.ManyToManyField('product.Book', through='BookCollection')
 
