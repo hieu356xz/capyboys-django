@@ -10,34 +10,38 @@
   </div>
 </div>
 
-<c-section title="Sách mới">
-  {% for product in new_products %}
-    <c-product-item :product="product"></c-product-item>
-  {% endfor %}
-</c-section>
+{% with class="basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5" %}
+<div>
+  <c-section title="Sách mới">
+    {% for product in new_products %}
+      <c-product-item :product="product" class="{{class}}"></c-product-item>
+    {% endfor %}
+  </c-section>
 
-<c-section title="Sách bán chạy">
-  {% for product in best_selling_products %}
-    <c-product-item :product="product"></c-product-item>
-  {% endfor %}
-</c-section>
+  <c-section title="Sách bán chạy">
+    {% for product in best_selling_products %}
+      <c-product-item :product="product" class="{{class}}"></c-product-item>
+    {% endfor %}
+  </c-section>
 
-<c-section title="Văn học Việt Nam">
-  {% for product in vietnamese_literatures %}
-    <c-product-item :product="product"></c-product-item>
-  {% endfor %}
-</c-section>
+  <c-section title="Văn học Việt Nam">
+    {% for product in vietnamese_literatures %}
+      <c-product-item :product="product" class="{{class}}"></c-product-item>
+    {% endfor %}
+  </c-section>
 
-<c-section title="Manga - Comics">
-  {% for product in manga_comics %}
-    <c-product-item :product="product"></c-product-item>
-  {% endfor %}
-</c-section>
+  <c-section title="Manga - Comics">
+    {% for product in manga_comics %}
+      <c-product-item :product="product" class="{{class}}"></c-product-item>
+    {% endfor %}
+  </c-section>
 
-<c-section title="Light Novel">
-  {% for product in light_novels %}
-    <c-product-item :product="product"></c-product-item>
-  {% endfor %}
-</c-section>
+  <c-section title="Light Novel">
+    {% for product in light_novels %}
+      <c-product-item :product="product" class="{{class}}"></c-product-item>
+    {% endfor %}
+  </c-section>
+</div>
+{% endwith %}
 
 {% endblock %}
