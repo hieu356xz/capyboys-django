@@ -1,0 +1,35 @@
+{% load pagination_tags %}
+
+<c-vars href totalPages=1 currentPage=1 />
+
+<div class="w-full max-w-[1200px] mx-auto py-8 justify-center flex">
+    {% if currentPage > 1 %}
+      <span class="size-[40px] mx-1.5 border-black border rounded text-center content-center font-semibold text-xl">
+        <a href="{{ href }}?page={{ currentPage|add:'-1' }}" class="size-full flex justify-center items-center">
+          <i class="ph ph-caret-double-left"></i>
+        </a>
+      </span>
+    {% endif %}
+    
+    {% with currentPage|page_range:totalPages as page_numbers %}
+      {% for page_num in page_numbers %}
+        <c-page-item href="{{ href }}" :currentPage="{{ currentPage }}" :pageNumber="{{ page_num }}"></c-page-item>
+      {% endfor %}
+    {% endwith %}
+    
+    {% if currentPage < totalPages|add:'-3' %}
+      <span class="size-[40px] mx-1.5 text-center content-center font-semibold text-xs">...</span>
+    {% endif %}
+    
+    {% if currentPage < totalPages|add:'-2' %}
+      <c-page-item href="{{ href }}" :currentPage="{{ currentPage }}" :pageNumber="{{ totalPages }}"></c-page-item>
+    {% endif %}
+    
+    {% if currentPage < totalPages %}
+      <span class="size-[40px] mx-1.5 border-black border rounded text-center content-center font-semibold text-xl">
+        <a href="{{ href }}?page={{ currentPage|add:'1' }}" class="size-full flex justify-center items-center">
+          <i class="ph ph-caret-double-right"></i>
+        </a>
+      </span>
+    {% endif %}
+</div>
