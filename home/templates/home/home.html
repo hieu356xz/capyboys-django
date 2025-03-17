@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="snap-x mx-30px">
+  <div class="snap-center">
+    <img
+      src="//theme.hstatic.net/200000343865/1001052087/14/ms_banner_img4.jpg?v=1590"
+      alt="Triển lãm Thám tử lừng danh Conan" />
+  </div>
+</div>
+
+<c-section title="Sách mới">
+  {% for product in new_products %}
+    <c-product-item :product="product"></c-product-item>
+  {% endfor %}
+</c-section>
+
+<c-section title="Sách bán chạy">
+  {% for product in best_selling_products %}
+    <c-product-item :product="product"></c-product-item>
+  {% endfor %}
+</c-section>
+
+<c-section title="Văn học Việt Nam">
+  {% for product in vietnamese_literatures %}
+    <c-product-item :product="product"></c-product-item>
+  {% endfor %}
+</c-section>
+
+<c-section title="Manga - Comics">
+  {% for product in manga_comics %}
+    <c-product-item :product="product"></c-product-item>
+  {% endfor %}
+</c-section>
+
+<c-section title="Light Novel">
+  {% for product in light_novels %}
+    <c-product-item :product="product"></c-product-item>
+  {% endfor %}
+</c-section>
+
+{% endblock %}
