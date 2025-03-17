@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Book, Author, Attribute, BookAttributeValue, Publisher, Genre, BookGenre
+from .models import Book, Author, Attribute, BookAttributeValue, Publisher, Genre, BookGenre, BookAuthor
 from collection.models import BookCollection, Collection
 from django.forms import ModelForm, ModelMultipleChoiceField
 from django.contrib.admin.widgets import FilteredSelectMultiple
@@ -11,6 +11,10 @@ class BookAttributeValueInline(admin.StackedInline):
 
 class BookCollectionInline(admin.TabularInline):
     model = BookCollection
+    extra = 1
+
+class BookAuthorInline(admin.TabularInline):
+    model = BookAuthor
     extra = 1
 
 # Chat GPT save me from going insane
@@ -69,17 +73,22 @@ class BookAdmin(admin.ModelAdmin):
     form = BookAdminForm
 
     prepopulated_fields = {"slug": ["title"]}
-    list_display = ('title', 'author', 'publisher', 'price', 'publish_year', 'description')
 
-    inlines = [BookAttributeValueInline, BookCollectionInline]
+    def display_authors(self, obj):
+        return ", ".join([author.name for author in obj.authors.all()])
+    display_authors.short_description = "Authors"
+
+    list_display = ('title', 'display_authors', 'publisher', 'price', 'publish_year', 'description')
+
+    inlines = [BookAttributeValueInline, BookCollectionInline, BookAuthorInline]
     
     # formfield_overrides = {
     #     Book.slug: {'widget': TextInput(attrs={'readonly': 'readonly'})},
     # }
 
-    list_filter = ['publish_year', 'author', 'publisher']
-    search_fields = ['title', 'author', 'publisher']
-    autocomplete_fields = ['author', 'publisher']
+    list_filter = ['publish_year', 'authors', 'publisher']
+    search_fields = ['title', 'authors__name', 'publisher__name']
+    autocomplete_fields = ['publisher']
 
 class AuthorAdmin(admin.ModelAdmin):
     search_fields = ['name']
