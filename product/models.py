@@ -5,7 +5,7 @@ class Book(models.Model):
     publisher = models.ForeignKey('Publisher', on_delete=models.CASCADE)
     price = models.DecimalField(max_digits=15, decimal_places=2)
     publish_year = models.PositiveSmallIntegerField(blank=True, null=True)
-    cover_img = models.ImageField(upload_to='covers/', blank=True, null=True)
+    cover_img = models.ImageField(max_length=511, upload_to='covers/', blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     slug = models.SlugField(max_length=255, unique=True)
     authors = models.ManyToManyField('Author', through='BookAuthor')
