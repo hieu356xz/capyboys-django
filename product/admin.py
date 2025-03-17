@@ -1,16 +1,23 @@
 from django.contrib import admin
 from .models import Book, Author, Attribute, BookAttributeValue, Publisher, Genre, BookGenre
+from collection.models import BookCollection, Collection
 from django.forms import ModelForm, ModelMultipleChoiceField
 from django.contrib.admin.widgets import FilteredSelectMultiple
+from django import forms
 
 class BookAttributeValueInline(admin.StackedInline):
     model = BookAttributeValue
+    extra = 1
+
+class BookCollectionInline(admin.TabularInline):
+    model = BookCollection
     extra = 1
 
 # Chat GPT save me from going insane
 class BookAdminForm(ModelForm):
     # Add a multiple choice field for genres
     _genres = ModelMultipleChoiceField(
+        label='',
         queryset=Genre.objects.all(),
         required=False,
         widget=FilteredSelectMultiple('Genre', is_stacked=False),
@@ -64,8 +71,8 @@ class BookAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ["title"]}
     list_display = ('title', 'author', 'publisher', 'price', 'publish_year', 'description')
 
-    inlines = [BookAttributeValueInline]
-
+    inlines = [BookAttributeValueInline, BookCollectionInline]
+    
     # formfield_overrides = {
     #     Book.slug: {'widget': TextInput(attrs={'readonly': 'readonly'})},
     # }

@@ -11,6 +11,7 @@ class Book(models.Model):
     slug = models.SlugField(max_length=255, unique=True)
     attributes = models.ManyToManyField('Attribute', through='BookAttributeValue')
     genres = models.ManyToManyField('Genre', through='BookGenre')
+    collections = models.ManyToManyField('collection.Collection', through='collection.BookCollection')
 
     def __str__(self):
         return self.title
