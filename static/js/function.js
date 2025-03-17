@@ -22,4 +22,14 @@ $(document).ready(function() {
             $("#add-to-cart-quantity").val(99);
         }
     });
+
+    $('.content-filter-btn').click(function() {
+        let container = $(this).next(".content-filter-container")
+        let hidden = container.attr("hidden");
+        if (hidden) {
+            container.removeAttr("hidden");
+        } else {
+            container.attr("hidden", "");
+        }
+    });
 });

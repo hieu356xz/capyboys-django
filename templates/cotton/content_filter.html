@@ -1,0 +1,24 @@
+<c-vars contents displayName contentHref />
+
+<button
+  class="content-filter-btn flex w-full bg-red-600 items-center text-white uppercase text-left text-sm font-semibold rounded-sm">
+  <span class="pl-3 py-3">{{displayName}}</span>
+  <span class="px-3 py-3 ml-auto font-extrabold">
+    {% if hide == 'true' %}+{% else %}-{% endif %}
+  </span>
+</button>
+
+<div
+  class="content-filter-container w-full uppercase text-left text-sm font-semibold border border-gray-200 rounded-sm">
+  <ul class="p-2">
+    {% for item in contents %}
+    <li class="py-1">
+      <a
+        href="/{{contentHref}}/{{item.slug}}"
+        class="hover:text-red-600 transition-colors duration-300 after:block after:w-0 after:border-b after:border-red-600 hover:after:w-full after:transition-all after:duration-[800ms]">
+        {{item.name}}
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+</div>

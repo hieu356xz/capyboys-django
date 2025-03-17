@@ -1,0 +1,37 @@
+{% extends 'base.html' %} {% block title %}{{ product.title }}{% endblock %} 
+
+{% block content %}
+<section>
+  <div class="px-1 md:px-4 max-w-[1200px] min-h-[calc(100vh-240px)] my-8 mx-auto">
+    <div class="grid md:grid-cols-[25%_1fr]">
+      <div class="hidden md:block px-4 w-full">
+        <c-content-filter :contents="collections" displayName="Danh mục sản phẩm" contentHref="collections"/>
+
+      </div>
+
+        <div class="px-4">
+          <h2 class="inline-block uppercase py-2 text-lg font-bold">
+            {% if current_collection %}
+              {{current_collection.name}}
+            {% else %}
+              Tất cả sản phẩm
+            {% endif %}
+          </h2>
+          <div class="block md:hidden py-2 w-[50%]">
+            <c-content-filter :contents="collections" displayName="Danh mục sản phẩm" contentHref="collections"/>
+          </div>
+          <div class="text-sm">
+            <span>Sắp xếp</span>
+            <select class="text-sm ml-4 rounded-lg">
+              {% for item in sort_options %}
+                <option value="{{item.id}}">{{item.name}}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <c-product-list :products="products" slug="{{slug}}" :currentPage="current_page" :totalPage="total_page"></c-product-list>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}
