@@ -2,14 +2,14 @@
   <div
     class="border-2 border-gray-200 rounded-sm hover:shadow-md hover:shadow-gray-400 transition-shadow duration-300">
     <div class="m-2">
-      <a href="/product/{{product.slug}}">
+      <a href="/products/{{product.slug}}">
         <img src="{{product.cover_img}}" alt="{{product.title}}" />
       </a>
     </div>
     <div class="m-2 text-sm">
       <div class="min-h-9 mb-1">
         <a
-          href="/product/{{product.slug}}"
+          href="/products/{{product.slug}}"
           class="font-semibold text-gray-800 hover:text-red-600 transition-colors duration-300">
           {{product.title|truncatechars:42}}
         </a>
