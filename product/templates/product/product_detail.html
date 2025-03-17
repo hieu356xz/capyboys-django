@@ -1,0 +1,94 @@
+{% extends 'base.html' %} {% block title %}{{ product.title }}{% endblock %} 
+
+{% block content %}
+<div class="px-1 md:px-4 max-w-[1200px] min-h-[calc(100vh-240px)] mx-auto">
+  <section>
+    <div class="px-4">
+      <a href="/" class="hover:text-red-500 transition-color duration-500">
+        Trang chủ
+      </a>
+      <span aria-hidden="true"> / </span>
+      <a
+        href="/collection/{{ collection.slug }}"
+        class="hover:text-red-500 transition-color duration-500">
+        {{ collection.name }}
+      </a>
+      <span aria-hidden="true"> / </span>
+      <span>{{ product.title }}</span>
+    </div>
+    <div class="py-4 flex flex-wrap border-b border-gray-300">
+      <div class="basis-full md:basis-2/5 p-4">
+        <a data-fancybox="gallery" href="{{ product.cover_img }}">
+          <img src="{{ product.cover_img }}" alt="{{ product.title }}" />
+        </a>
+      </div>
+
+      <div class="basis-full md:basis-3/5 p-8 pb-0 md:p-4">
+        <h2
+          class="uppercase font-semibold text-2xl pb-4 mb-2 border-b border-gray-300">
+          {{ product.title }}
+        </h2>
+        <h2
+          class="font-semibold text-2xl pb-2 mb-2 border-b border-gray-300 text-red-500">
+          {{ product_price }}
+        </h2>
+        <div class="flex flex-wrap">
+          <div class="basis-full pb-8 md:basis-1/2">
+            <ul class="list-disc pl-6 leading-[1.75]">
+              <li>
+                <strong>Tác giả: </strong>
+                {{ authors|join:', ' }}
+              </li>
+              <li>
+                <strong>Nhà xuất bản: </strong>
+                {{ product.publisher }} {% for attr in product_attributes %}
+              </li>
+
+              <li>
+                <strong>{{ attr.attribute.name }}: </strong>
+                {{ attr.value }}
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+          <div id="add-to-cart" class="basis-full md:basis-1/2 md:pl-8">
+            <div>
+              <button
+                id="add-to-cart-btn-decrease"
+                class="size-8 border border-gray-200">
+                <span> - </span>
+              </button>
+              <input id="add-to-cart-quantity" type="number" min="1" max="99" value="1" class="px-8 py-1 border border-gray-200 text-center"></input>
+              <button
+                id="add-to-cart-btn-increase"
+                class="size-8 border border-gray-200">
+                <span> + </span>
+              </button>
+            </div>
+            <div class="my-4">
+              <button class="p-1 w-full bg-red-500 text-white rounded-md">
+                Thêm vào giỏ hàng
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="pt-8">
+      <h2 class="uppercase py-4 text-center text-2xl font-bold">
+        Giới thiệu sách
+      </h2>
+      <p class="px-10 py-2">
+        {% if product.description %}
+        <span>{{ product.description }}</span>
+        {% else %}
+        <span>Chưa có thông tin</span>
+        {% endif %}
+      </p>
+    </div>
+  </section>
+</div>
+{% endblock %}
