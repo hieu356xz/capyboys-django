@@ -32,4 +32,8 @@ $(document).ready(function() {
             container.attr("hidden", "");
         }
     });
+
+    Fancybox.bind("[data-fancybox]", {
+        //
+    });
 });
