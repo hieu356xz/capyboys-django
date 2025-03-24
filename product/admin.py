@@ -86,7 +86,7 @@ class BookAdmin(admin.ModelAdmin):
     #     Book.slug: {'widget': TextInput(attrs={'readonly': 'readonly'})},
     # }
 
-    list_filter = ['publish_year', 'authors', 'publisher']
+    list_filter = ['collections', 'genres', 'publish_year', 'authors', 'publisher']
     search_fields = ['title', 'authors__name', 'publisher__name']
     autocomplete_fields = ['publisher']
 
