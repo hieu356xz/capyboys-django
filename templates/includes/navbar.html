@@ -1,16 +1,20 @@
 {% load static %}
 
 <div class="bg-white z-40 relative m-2 mb-6 shadow-md">
-  <!-- Upper navbar -->
+  {% comment %} Upper navbar {% endcomment %}
   <div class="max-w-[1200px] flex mx-auto items-center">
-    <div class="mr-2 min-w-14 size-14">
-      <a href="/">
-        <img
-          src="{% static 'favicon.ico' %}"
-          width="56px"
-          height='56px'
-          alt="Logo"></img>
-      </a>
+    <div class="flex gap-2">
+      <div class="min-w-14 size-14">
+        <a href="/">
+          <img
+            src="{% static 'favicon.ico' %}"
+            width="56px"
+            height='56px'
+            alt="Logo"></img>
+        </a>
+      </div>
+      {% comment %} Add space between logo and search bar {% endcomment %}
+      <div class="size-16"></div>
     </div>
 
     <div class="flex items-center w-[540px] mx-auto gap-2 p-2">
@@ -35,7 +39,7 @@
     </div>
   </div>
 
-  <!-- Below navbar -->
+  {% comment %} Below navbar {% endcomment %}
   <div class="max-w-[600px] flex mx-auto items-center justify-between p-4">
       {% for item in menu_links %}
         <div>

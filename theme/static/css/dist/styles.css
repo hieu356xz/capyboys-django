@@ -1381,10 +1381,6 @@ input[type="number"]::-webkit-inner-spin-button,
   margin-left: auto;
 }
 
-.mr-2 {
-  margin-right: 0.5rem;
-}
-
 .mt-8 {
   margin-top: 2rem;
 }
