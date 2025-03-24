@@ -3,8 +3,8 @@ from django import template
 
 register = template.Library()
 
-@register.filter
-def page_range(current_page, total_pages):
+@register.simple_tag
+def get_page_range(current_page, total_pages):
     current_page = int(current_page)
     total_pages = int(total_pages)
     
@@ -12,7 +12,3 @@ def page_range(current_page, total_pages):
     end = min(total_pages, current_page + 2)
     
     return range(start, end + 1)
-
-@register.filter
-def to_int(value):
-    return int(value)
