@@ -1,0 +1,38 @@
+{% extends 'base.html' %} {% block title %}{{ product.title }}{% endblock %} 
+
+{% block content %}
+
+<section>
+  <div class="px-6 max-w-[1100px] my-8 mx-auto">
+    <div class="py-2">
+      <a href="/" class="hover:text-red-500 transition-color duration-500">
+        Trang chủ
+      </a>
+      <span aria-hidden="true"> / </span>
+      <a
+        href="/blogs/{{blog.blog_type.slug}}"
+        class="hover:text-red-500 transition-color duration-500">
+        {{blog.blog_type.name}}
+      </a>
+      <span aria-hidden="true"> / </span>
+      <span>{{blog.title}}</span>
+    </div>
+    <div class="pb-2 mb-8 border-b-2 border-gray-300">
+      <h2 class="font-bold text-3xl my-2">{{blog.title}}</h2>
+      <div class="pb-4">
+        <span class="px-4 border-l border-gray-300 font-light text-sm">
+          {{blog.publish_date|date:"d/m/Y"}}
+        </span>
+        <span class="px-4 border-l border-gray-300 font-light text-sm">
+          {{blog.blog_type.name}}
+        </span>
+      </div>
+    </div>
+    <article
+      class="prose prose-img:inline-block max-w-[1000px] mx-auto text-justify">
+      {{ blog.content|safe }}
+    </article>
+  </div>
+</section>
+
+{% endblock %}

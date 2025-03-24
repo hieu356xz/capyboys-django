@@ -16,6 +16,7 @@ class Blog(models.Model):
 class BlogType(models.Model):
     name = models.CharField(max_length=511)
     slug = models.SlugField(max_length=255, unique=True)
+    blogs = models.ManyToManyField('Blog', related_name='blog_types')
 
     def __str__(self):
         return self.name
