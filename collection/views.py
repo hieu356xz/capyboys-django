@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.http import Http404
 from collection.models import Collection
 from product.models import Book
 
@@ -41,14 +42,19 @@ def index(request, slug):
     end = start + PRODUCT_PER_PAGE
     
     collections = Collection.objects.all()
-    try:
-        current_collection = Collection.objects.get(slug=slug)
-        products = current_collection.books.all()[start:end]
-        total_products = current_collection.books.count()
-    except Collection.DoesNotExist:
+
+    if slug == 'all':
         current_collection = None
         products = Book.objects.all()[start:end]
         total_products = Book.objects.count()
+    else:
+        try:
+            current_collection = Collection.objects.get(slug=slug)
+            products = current_collection.books.all()[start:end]
+            total_products = current_collection.books.count()
+        except Collection.DoesNotExist:
+            raise Http404("Collection does not exist")
+    
     context = {
         "collections": collections,
         "current_collection": current_collection,
