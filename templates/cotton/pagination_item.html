@@ -1,0 +1,23 @@
+<c-vars href pageNumber=1 :isCurrentPage="False"/>
+
+{% if isCurrentPage %}
+  <span class="size-[40px] mx-1.5 bg-red-600 border-red-600 border rounded font-semibold text-xl text-white">
+    {% if slot %}
+      {{ slot }}
+    {% else %}
+      <a href="{{ href }}?page={{ pageNumber }}" class="pointer-events-none size-full inline-block text-center content-center">
+        {{ pageNumber }}
+      </a>
+    {% endif %}
+  </span>
+{% else %}
+  <span class="size-[40px] mx-1.5 border-black border rounded font-semibold text-xl">
+    {% if slot %}
+      {{ slot }}
+    {% else %}
+      <a href="{{ href }}?page={{ pageNumber }}" class="size-full inline-block text-center content-center">
+        {{ pageNumber }}
+      </a>
+    {% endif %}
+  </span>
+{% endif %}

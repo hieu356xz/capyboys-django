@@ -1,35 +1,46 @@
 {% load pagination_tags %}
 
-<c-vars href totalPages=1 currentPage=1 />
+<c-vars href totalPages=1 currentPage=1/>
 
 <div class="w-full max-w-[1200px] mx-auto py-8 justify-center flex">
     {% if currentPage > 1 %}
-      <span class="size-[40px] mx-1.5 border-black border rounded text-center content-center font-semibold text-xl">
+      <c-pagination-item>
         <a href="{{ href }}?page={{ currentPage|add:'-1' }}" class="size-full flex justify-center items-center">
           <i class="ph ph-caret-double-left"></i>
         </a>
-      </span>
+      </c-pagination-item>
+    {% endif %}
+
+    {% comment %} Display first page when it far enough {% endcomment %}
+    {% if currentPage > 3 %}
+      <c-pagination-item href="{{ href }}" :pageNumber="1"></c-pagination-item>
+    {% endif %}
+    {% if currentPage > 4 %}
+      <span class="size-[40px] mx-1.5 text-center content-center font-semibold text-xl">...</span>
     {% endif %}
     
-    {% with currentPage|page_range:totalPages as page_numbers %}
-      {% for page_num in page_numbers %}
-        <c-page-item href="{{ href }}" :currentPage="{{ currentPage }}" :pageNumber="{{ page_num }}"></c-page-item>
-      {% endfor %}
-    {% endwith %}
+    {% get_page_range currentPage totalPages as page_numbers %}
+    {% for page_num in page_numbers %}
+    {% if currentPage == page_num %}
+      <c-pagination-item href="{{ href }}" :isCurrentPage="True" :pageNumber="{{ page_num }}"></c-pagination-item>
+    {% else %}
+      <c-pagination-item href="{{ href }}" :pageNumber="{{ page_num }}"></c-pagination-item>
+    {% endif %}
+    {% endfor %}
     
+    {% comment %} Display last page when it not close enough {% endcomment %}
     {% if currentPage < totalPages|add:'-3' %}
-      <span class="size-[40px] mx-1.5 text-center content-center font-semibold text-xs">...</span>
+      <span class="size-[40px] mx-1.5 text-center content-center font-semibold text-xl">...</span>
     {% endif %}
-    
     {% if currentPage < totalPages|add:'-2' %}
-      <c-page-item href="{{ href }}" :currentPage="{{ currentPage }}" :pageNumber="{{ totalPages }}"></c-page-item>
+      <c-pagination-item href="{{ href }}" :pageNumber="{{ totalPages }}"></c-pagination-item>
     {% endif %}
     
     {% if currentPage < totalPages %}
-      <span class="size-[40px] mx-1.5 border-black border rounded text-center content-center font-semibold text-xl">
+      <c-pagination-item>
         <a href="{{ href }}?page={{ currentPage|add:'1' }}" class="size-full flex justify-center items-center">
           <i class="ph ph-caret-double-right"></i>
         </a>
-      </span>
+      </c-pagination-item>
     {% endif %}
 </div>
