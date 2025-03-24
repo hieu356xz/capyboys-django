@@ -9,7 +9,6 @@ def index(request):
     manga_comics = Book.objects.filter(collection__name="Manga - Comic")[:10]
     light_novels = Book.objects.filter(collection__name="Light Novel")[:10]
 
-    print(new_products)
     context = {
         "new_products": new_products,
         "best_selling_products": best_selling_products,
