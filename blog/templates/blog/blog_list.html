@@ -1,0 +1,33 @@
+{% extends 'base.html' %} {% block title %}{{ product.title }}{% endblock %} 
+
+{% block content %}
+
+<section>
+  <div
+    class="px-1 md:px-4 max-w-[1200px] min-h-[calc(100vh-240px)] my-8 mx-auto">
+    <div class="grid md:grid-cols-[25%_1fr]">
+      <div class="hidden md:block px-4 w-full">
+        <c-content-filter
+          displayName="Danh mục bài viết"
+          contentHref="blogs"
+          :contents="blog_types" />
+      </div>
+
+      <div class="px-4">
+        <h2 class="inline-block uppercase py-2 text-lg font-bold">
+          {{current_blog_type.name}}
+        </h2>
+        <div class="block md:hidden py-2 w-[50%]">
+          <c-content-filter
+            displayName="Danh mục bài viết"
+            contentHref="blogs"
+            :contents="blog_types" />
+        </div>
+
+        <c-blog-list :blogs="blogs" :currentPage="current_page" :totalPage="total_page" slug="{{blog_type_slug}}"></c-blog-list>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

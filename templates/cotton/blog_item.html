@@ -1,0 +1,32 @@
+<div class="py-4 flex flex-wrap">
+    <div class="px-4 basis-full md:basis-2/5 max-h-[300px]">
+      <a href="/blogs/{{blog.blog_type.slug}}/{{blog.slug}}">
+        <img
+          class="size-full object-contain"
+          src={{blog.cover_img}}
+          alt={{blog.title}}
+        />
+      </a>
+    </div>
+
+    <div class="px-4 basis-full md:basis-3/5">
+      <h2 class="font-bold text-lg hover:text-red-600 transition-colors duration-300 my-2">
+        <a href="/blogs/{{blog.blog_type.slug}}/{{blog.slug}}">{{blog.title}}</a>
+      </h2>
+      <div class="pb-4">
+        <span class="px-4 border-l border-gray-300 font-light text-sm">
+          {{blog.publish_date|date:"d/m/Y"}}
+        </span>
+        <span class="px-4 border-l border-gray-300 font-light text-sm">
+          <a
+            class="hover:text-red-600 transition-colors duration-300"
+            href="/blogs/{{blog.blog_type.slug}}">
+            {{blog.blog_type.name}}
+          </a>
+        </span>
+      </div>
+      <p class="my-2 font-light">
+        {{blog.description|truncatechars:200}}
+      </p>
+    </div>
+  </div>
