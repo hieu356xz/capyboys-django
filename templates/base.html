@@ -15,7 +15,7 @@
     <script type="text/javascript" src="{% static 'js/function.js' %}"></script>
     <link rel="stylesheet" href="{% static 'css/base_style.css' %}">
     {% tailwind_css %}
-    <title>Document</title>
+    <title>{% block title %}Capyboys{% endblock %}</title>
 </head>
 <body>
     {% include 'includes/navbar.html' %}

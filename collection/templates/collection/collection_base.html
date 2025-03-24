@@ -1,4 +1,5 @@
-{% extends 'base.html' %} {% block title %}{{ product.title }}{% endblock %} 
+{% extends 'base.html' %}
+{% block title %}{{current_collection.name|default:"Tất cả sản phẩm"}} - Capyboys{% endblock %}
 
 {% block content %}
 <section>
