@@ -4,11 +4,11 @@ from django.http import Http404
 from blog.models import Blog, BlogType
 
 def blog_list(request, blog_type_slug):
-    BLOG_PER_PAGE = 10
-    offset = int(request.GET.get('page', default=1))
+    PAGE_SIZE = 10
+    page = int(request.GET.get('page', default=1))
 
-    start = max((offset - 1) * BLOG_PER_PAGE, 0)
-    end = start + BLOG_PER_PAGE
+    start = max((page - 1) * PAGE_SIZE, 0)
+    end = start + PAGE_SIZE
 
     try:
         blog_types = BlogType.objects.all()
@@ -23,8 +23,8 @@ def blog_list(request, blog_type_slug):
         "current_blog_type": current_blog_type,
         "blog_type_slug": blog_type_slug,
         "blogs": blogs,
-        "current_page": offset,
-        "total_page": total_blogs // BLOG_PER_PAGE + 1
+        "current_page": page,
+        "total_page": total_blogs // PAGE_SIZE + 1
     }
     return render(request, 'blog/blog_list.html', context)
 

@@ -12,3 +12,13 @@ def get_page_range(current_page, total_pages):
     end = min(total_pages, current_page + 2)
     
     return range(start, end + 1)
+
+@register.filter
+def add_query_param(url, query):
+    if url.find("?") != -1:
+        if url[-1] == "&":
+            return f"{url}{query}"
+
+        return f"{url}&{query}"
+    
+    return f"{url}?{query}"

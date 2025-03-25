@@ -35,11 +35,11 @@ sort_options = [
 ]
 
 def index(request, slug):
-    PRODUCT_PER_PAGE = 24
-    offset = int(request.GET.get('page', default=1))
+    PAGE_SIZE = 24
+    page = int(request.GET.get('page', default=1))
 
-    start = max((offset - 1) * PRODUCT_PER_PAGE, 0)
-    end = start + PRODUCT_PER_PAGE
+    start = max((page - 1) * PAGE_SIZE, 0)
+    end = start + PAGE_SIZE
     
     collections = Collection.objects.all()
 
@@ -61,7 +61,7 @@ def index(request, slug):
         "products": products,
         "sort_options": sort_options,
         "slug": slug,
-        "current_page": offset,
-        "total_page": total_products // PRODUCT_PER_PAGE + 1
+        "current_page": page,
+        "total_page": total_products // PAGE_SIZE + 1
     }
     return render(request, 'collection/collection_base.html', context)

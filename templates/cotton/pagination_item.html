@@ -1,3 +1,5 @@
+{% load pagination_tags %}
+
 <c-vars href pageNumber=1 :isCurrentPage="False"/>
 
 {% if isCurrentPage %}
@@ -5,7 +7,7 @@
     {% if slot %}
       {{ slot }}
     {% else %}
-      <a href="{{ href }}?page={{ pageNumber }}" class="pointer-events-none size-full inline-block text-center content-center">
+      <a href="{{ href|add_query_param:'page='}}{{ pageNumber }}" class="pointer-events-none size-full inline-block text-center content-center">
         {{ pageNumber }}
       </a>
     {% endif %}
@@ -15,7 +17,7 @@
     {% if slot %}
       {{ slot }}
     {% else %}
-      <a href="{{ href }}?page={{ pageNumber }}" class="size-full inline-block text-center content-center">
+      <a href="{{ href|add_query_param:'page='}}{{ pageNumber }}" class="size-full inline-block text-center content-center">
         {{ pageNumber }}
       </a>
     {% endif %}
