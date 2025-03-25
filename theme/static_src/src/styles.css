@@ -10,6 +10,24 @@
   }
 }
 
+@layer components {
+  .underline-animate {
+    @apply after:block after:scale-x-0 after:border-b hover:after:scale-x-100 after:transition-transform
+  }
+
+  .underline-animate-center {
+    @apply after:origin-center hover:after:origin-center
+  }
+
+  .underline-animate-left {
+    @apply after:origin-left hover:after:origin-left
+  }
+
+  .underline-animate-right {
+    @apply after:origin-right hover:after:origin-right
+  }
+}
+
 .owl-theme .owl-nav {
   @apply absolute top-1/2 w-full h-0 m-0 z-50;
 }

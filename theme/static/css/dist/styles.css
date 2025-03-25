@@ -1294,6 +1294,43 @@ input[type="number"]::-webkit-inner-spin-button,
   margin-bottom: 0;
 }
 
+.underline-animate::after {
+  display: block;
+  --tw-scale-x: 0;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+  border-bottom-width: 1px;
+  content: var(--tw-content);
+  transition-property: transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.underline-animate:hover::after {
+  content: var(--tw-content);
+  --tw-scale-x: 1;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.underline-animate-center::after {
+  content: var(--tw-content);
+  transform-origin: center;
+}
+
+.underline-animate-center:hover::after {
+  content: var(--tw-content);
+  transform-origin: center;
+}
+
+.underline-animate-left::after {
+  content: var(--tw-content);
+  transform-origin: left;
+}
+
+.underline-animate-left:hover::after {
+  content: var(--tw-content);
+  transform-origin: left;
+}
+
 .pointer-events-none {
   pointer-events: none;
 }
@@ -1861,20 +1898,10 @@ input[type="number"]::-webkit-inner-spin-button,
   color: rgb(255 255 255 / var(--tw-text-opacity, 1));
 }
 
-.underline-offset-4 {
-  text-underline-offset: 4px;
-}
-
 .shadow-md {
   --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-}
-
-.transition-all {
-  transition-property: all;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
 }
 
 .transition-colors {
@@ -1895,6 +1922,22 @@ input[type="number"]::-webkit-inner-spin-button,
 
 .duration-500 {
   transition-duration: 500ms;
+}
+
+.underline-animate-color-red-600::after {
+  border-color: #dc2626;
+}
+
+.underline-animate-duration-300::after {
+  transition-duration: 300ms;
+}
+
+.underline-animate-duration-500::after {
+  transition-duration: 500ms;
+}
+
+.underline-animate-duration-\[800ms\]::after {
+  transition-duration: 800ms;
 }
 
 .owl-theme .owl-nav {
@@ -1950,48 +1993,15 @@ input[type="number"]::-webkit-inner-spin-button,
   height: 2px;
 }
 
-.after\:w-0::after {
-  content: var(--tw-content);
-  width: 0px;
-}
-
 .after\:w-full::after {
   content: var(--tw-content);
   width: 100%;
-}
-
-.after\:border-b::after {
-  content: var(--tw-content);
-  border-bottom-width: 1px;
-}
-
-.after\:border-red-600::after {
-  content: var(--tw-content);
-  --tw-border-opacity: 1;
-  border-color: rgb(220 38 38 / var(--tw-border-opacity, 1));
 }
 
 .after\:bg-black::after {
   content: var(--tw-content);
   --tw-bg-opacity: 1;
   background-color: rgb(0 0 0 / var(--tw-bg-opacity, 1));
-}
-
-.after\:transition-all::after {
-  content: var(--tw-content);
-  transition-property: all;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
-}
-
-.after\:duration-\[500ms\]::after {
-  content: var(--tw-content);
-  transition-duration: 500ms;
-}
-
-.after\:duration-\[800ms\]::after {
-  content: var(--tw-content);
-  transition-duration: 800ms;
 }
 
 .hover\:text-red-500:hover {
@@ -2004,10 +2014,6 @@ input[type="number"]::-webkit-inner-spin-button,
   color: rgb(220 38 38 / var(--tw-text-opacity, 1));
 }
 
-.hover\:underline:hover {
-  text-decoration-line: underline;
-}
-
 .hover\:shadow-md:hover {
   --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
@@ -2017,11 +2023,6 @@ input[type="number"]::-webkit-inner-spin-button,
 .hover\:shadow-gray-400:hover {
   --tw-shadow-color: #9ca3af;
   --tw-shadow: var(--tw-shadow-colored);
-}
-
-.hover\:after\:w-full:hover::after {
-  content: var(--tw-content);
-  width: 100%;
 }
 
 .prose-img\:inline-block :is(:where(img):not(:where([class~="not-prose"],[class~="not-prose"] *))) {
