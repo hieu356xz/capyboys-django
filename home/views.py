@@ -1,5 +1,5 @@
 from django.shortcuts import render
-
+from django.db.models import Q
 from product.models import Book
 
 def index(request):
@@ -20,6 +20,28 @@ def index(request):
 
 def about(request):
     return render(request, 'home/about.html')
+
+def search(request):
+    PAGE_SIZE = 24
+    query = request.GET.get("q")
+    page = int(request.GET.get('page', default=1))
+    print(page)
+
+    start = max((page - 1) * PAGE_SIZE, 0)
+    end = start + PAGE_SIZE
+
+    filtered_books = Book.objects.filter(Q(title__icontains=query) | Q(description__icontains=query))
+    total_products = filtered_books.count()
+    products = filtered_books[start:end]
+
+    context = {
+        "products": products,
+        "total_products": total_products,
+        "query": query,
+        "current_page": page,
+        "total_page": total_products // PAGE_SIZE + 1
+    }
+    return render(request, 'home/search.html', context)
 
 def handler404(request, exception):
     return render(request, 'home/404.html', status=404)

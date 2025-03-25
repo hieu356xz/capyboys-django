@@ -17,14 +17,21 @@
       <div class="size-16"></div>
     </div>
 
-    <div class="flex items-center w-[540px] mx-auto gap-2 p-2">
-      <input
-        type="text"
-        placeholder="Tìm kiếm"
-        class="bg-white rounded-3xl px-4 h-10 w-full min-w-24 border-2 border-gray-400 transition-colors duration-300"></input>
-      <button class="bg-transparent size-10 flex justify-center items-center">
-        <i class="text-[32px] ph-light ph-magnifying-glass"></i>
-      </button>
+    <div class="w-[540px] mx-auto p-2">
+      <form id="search-form" action="/search">
+        <div class="flex items-center gap-2">
+          <input
+          id="search-text"
+          type="text"
+          name="q"
+          placeholder="Tìm kiếm"
+          autocomplete="off"
+          class="bg-white rounded-3xl px-4 h-10 w-full min-w-24 border-2 border-gray-400 transition-colors duration-300"></input>
+          <button type="submit" class="bg-transparent size-10 flex justify-center items-center">
+            <i class="text-[32px] ph-light ph-magnifying-glass"></i>
+          </button>
+        </div>
+      </form>
     </div>
 
     <div class="flex gap-2">
