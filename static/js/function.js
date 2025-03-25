@@ -33,7 +33,30 @@ $(document).ready(function() {
         }
     });
 
-    Fancybox.bind("[data-fancybox]", {
-        //
+    if (typeof Fancybox !== "undefined") {
+        Fancybox.bind("[data-fancybox]", {
+            //
+        });
+    }
+
+    $('.owl-carousel').owlCarousel({
+        nav: true,
+        navText: ["<i class='ph ph-caret-left'></i>", "<i class='ph ph-caret-right'></i>"],
+        dots: false,
+        margin: 10,
+        responsive: {
+            0: {
+                items: 2
+            },
+            480: {
+                items: 3
+            },
+            768: {
+                items: 4
+            },
+            960: {
+                items: 5
+            },
+        }
     });
 });
