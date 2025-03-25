@@ -1492,8 +1492,12 @@ input[type="number"]::-webkit-inner-spin-button,
   min-height: 2.25rem;
 }
 
-.min-h-\[calc\(100vh-240px\)\] {
-  min-height: calc(100vh - 240px);
+.min-h-\[calc\(100vh-241px\)\] {
+  min-height: calc(100vh - 241px);
+}
+
+.min-h-\[inherit\] {
+  min-height: inherit;
 }
 
 .w-\[50\%\] {
