@@ -39,6 +39,17 @@ $(document).ready(function() {
         });
     }
 
+    $('#main-carousel').owlCarousel({
+        items: 1,
+        nav: true,
+        navText: ["<i class='ph ph-caret-left'></i>", "<i class='ph ph-caret-right'></i>"],
+        dots: true,
+        loop: true,
+        autoplay: true,
+        autoplayTimeout: 5000,
+        autoplayHoverPause: true
+    });
+
     $('.owl-carousel').owlCarousel({
         nav: true,
         navText: ["<i class='ph ph-caret-left'></i>", "<i class='ph ph-caret-right'></i>"],
