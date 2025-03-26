@@ -23,9 +23,9 @@
           </div>
           <div class="text-sm">
             <span>Sắp xếp</span>
-            <select class="text-sm ml-4 rounded-lg">
-              {% for item in sort_options %}
-                <option value="{{item.id}}">{{item.name}}</option>
+            <select id="sorter" class="text-sm ml-4 rounded-lg">
+              {% for key,value in sort_options.items %}
+                <option value="{{key}}" {% if current_sort == key %}selected{% endif %} >{{value.name}}</option>
               {% endfor %}
             </select>
           </div>
