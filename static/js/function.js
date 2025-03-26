@@ -81,4 +81,10 @@ $(document).ready(function() {
             }
         });
     }
+
+    $("#sorter").change(function() {
+        let url = new URL(window.location.href);
+        url.searchParams.set("order", $(this).val());
+        window.location.href = url.href;
+    });
 });
