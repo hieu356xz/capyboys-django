@@ -1,4 +1,4 @@
-<c-vars products slug totalPage currentPage/>
+<c-vars products href totalPage currentPage/>
 
 <div class="flex flex-row flex-wrap py-4">
     {% if products|length == 0 %}
@@ -10,5 +10,5 @@
             class="basis-1/2 sm:basis-1/3 md:basis-1/3 lg:basis-1/4"></c-product-item>
     {% endfor %}
     {% endif %}
-    <c-pagination :totalPages="totalPage" :currentPage="currentPage" href="/collections/{{slug}}"></c-pagination>
+    <c-pagination :totalPages="totalPage" :currentPage="currentPage" href="{{href}}"></c-pagination>
 </div>

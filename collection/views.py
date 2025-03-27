@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import Http404
 from collection.models import Collection
 from product.models import Book
+from home.utils import QueryParams
 
 SORT_OPTIONS = {
     "newest": {
@@ -36,12 +37,11 @@ SORT_OPTIONS = {
 
 def index(request, slug):
     PAGE_SIZE = 24
-    page = int(request.GET.get('page', default=1))
-    sort_key = request.GET.get('order', default='newest')
+    query_params = QueryParams(request.GET, ("order","page"))
 
-    if sort_key not in SORT_OPTIONS:
-        sort_key = 'newest'
-
+    page = int(query_params.get('page', default=1))
+    sort_key = query_params.get_if_not_in('order', SORT_OPTIONS, "newest")
+    
     start = max((page - 1) * PAGE_SIZE, 0)
     end = start + PAGE_SIZE
     
@@ -63,13 +63,15 @@ def index(request, slug):
     total_products = queryset.count()
     products = queryset[start:end]
 
+    base_url = query_params.without("page").build_url(f"/collections/{slug}/")
+
     context = {
         "collections": collections,
         "current_collection": current_collection,
         "products": products,
         "sort_options": SORT_OPTIONS,
         "current_sort": sort_key,
-        "slug": slug,
+        "base_url": base_url,
         "current_page": page,
         "total_page": total_products // PAGE_SIZE + 1
     }
