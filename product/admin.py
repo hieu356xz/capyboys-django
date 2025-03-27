@@ -1,9 +1,8 @@
 from django.contrib import admin
 from .models import Book, Author, Attribute, BookAttributeValue, Publisher, Genre, BookGenre, BookAuthor
-from collection.models import BookCollection, Collection
+from collection.models import BookCollection
 from django.forms import ModelForm, ModelMultipleChoiceField
 from django.contrib.admin.widgets import FilteredSelectMultiple
-from django import forms
 
 class BookAttributeValueInline(admin.StackedInline):
     model = BookAttributeValue
