@@ -87,4 +87,14 @@ $(document).ready(function() {
         url.searchParams.set("order", $(this).val());
         window.location.href = url.href;
     });
+
+    $("#user-popup-btn").click(function() {
+        let popupContainer = $(this).next();
+        let display = popupContainer.css("display")
+        if (display !== "flex") {
+            popupContainer.css({ display: "flex" });
+        } else {
+            popupContainer.css({ display: "none" });
+        }
+    })
 });

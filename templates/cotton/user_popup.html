@@ -1,0 +1,33 @@
+<div class="absolute top-full right-0 w-[320px] min-h-[200px] break-words bg-slate-100 shadow-md border-2 border-gray-200 rounded-md p-6 flex-col gap-4 hidden">
+    <a href={% if user.is_authenticated %}{% url "home" %}{% else %}{% url "login" %}{% endif %} class="flex flex-col w-full text-center gap-2 rounded-md hover:bg-zinc-200 p-4">
+        <div class="text-lg font-semibold leading-5">
+        {% if user.is_authenticated %}
+            {%if user.last_name %}{{ user.last_name }} {% endif %}{{ user.first_name }}
+        {% else %}
+            Khách
+        {% endif %}
+        </div>
+        <div>
+        {% if user.is_authenticated %}
+            {{ user.email }}
+        {% else %}
+            <div class="text-sm text-gray-700">Chưa đăng nhập</div>
+        {% endif %}
+        </div>
+    </a>
+    <hr class="border-t border-gray-400"></hr>
+    <div class="flex flex-col gap-2">
+    {% if user.is_authenticated %}
+        <a href={% url "logout" %} class="w-full py-2 px-4 font-semibold bg-red-600 rounded-md text-white cursor-pointer hover:bg-red-700 text-center">
+            Đăng xuất
+        </a>
+    {% else %}
+        <a href={% url "login" %} class="w-full py-2 px-4 font-semibold bg-red-600 rounded-md text-white cursor-pointer hover:bg-red-700 text-center">
+            Đăng nhập
+        </a>
+        <a href={% url "register" %} class="w-full py-2 px-4 font-semibold border-2 border-red-600 bg-white rounded-md text-red-600 cursor-pointer hover:bg-zinc-200 text-center">
+            Đăng ký
+        </a>
+    {% endif %}
+    </div>
+</div>
