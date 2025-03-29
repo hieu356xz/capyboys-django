@@ -35,14 +35,17 @@
     </div>
 
     <div class="flex gap-2">
-      <button class="size-16 flex flex-col justify-center items-center">
+      <button class="size-16 flex flex-col justify-center items-center rounded-md hover:bg-zinc-200">
         <i class="text-[30px] my-1 ph-light ph ph-shopping-cart"></i>
         <span class="text-sm">Giỏ hàng</span>
       </button>
-      <button class="size-16 flex flex-col justify-center items-center">
-        <i class="text-[30px] my-1 ph-light ph-user"></i>
-        <span class="text-sm">Tài khoản</span>
-      </button>
+      <div class="relative">
+        <button id="user-popup-btn" class="size-16 flex flex-col justify-center items-center rounded-md hover:bg-zinc-200">
+          <i class="text-[30px] my-1 ph-light ph-user"></i>
+          <span class="text-sm">Tài khoản</span>
+        </button>
+        <c-user-popup></c-user-popup>
+      </div>
     </div>
   </div>
 
