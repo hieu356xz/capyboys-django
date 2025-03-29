@@ -13,7 +13,7 @@ def blog_list(request, blog_type_slug):
     try:
         blog_types = BlogType.objects.all()
         current_blog_type = BlogType.objects.get(slug=blog_type_slug)
-        blogs = current_blog_type.blog_set.all()[start:end]
+        blogs = current_blog_type.blog_set.all().order_by('-publish_date')[start:end]
         total_blogs = current_blog_type.blog_set.count()
     except BlogType.DoesNotExist:
         raise Http404("Blog type does not exist")
