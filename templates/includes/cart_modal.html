@@ -18,7 +18,7 @@
         <th></th>
       </thead>
       <tbody class="overflow-auto max-h-[500px]">
-        {% for item in cart %}
+        {% for id, item in cart.cart.items %}
         <tr>
           <td class="p-[6px] min-w-[120px] max-w-[120px]">
             <a href="/products/{{item.slug}}" class="cursor-pointer">
@@ -40,11 +40,11 @@
             {{item.final_price|calc_subtotal:item.quantity}} đ
           </td>
           <td class="p-[6px] min-w-[40px]">
-            <a
-              href="/"
-              class="cursor-pointer hover:text-red-600 transition-colors duration-300">
+            <button
+              data-product-id="{{id}}"
+              class="remove-cart-item-btn cursor-pointer hover:text-red-600 transition-colors duration-300">
               <i class="ph-bold ph-trash"></i>
-            </a>
+            </button>
           </td>
         </tr>
         {% endfor %}
@@ -74,6 +74,25 @@
       $(document).ready(function() {
         $(".modal-container__close-btn").click(function() {
           $(this).closest('.modal-container').toggle();
+        })
+
+        $(".remove-cart-item-btn").click(function() {
+          console.log("Click")
+          let product_id = $(this).data("product-id");
+          console.log(product_id)
+          
+          $.ajax({
+            type: "POST",
+            url: '{% url "remove-from-cart" %}',
+            data: {
+              product_id: product_id,
+              csrfmiddlewaretoken: "{{ csrf_token }}",
+            },
+            success: function(json) {
+              console.log(json);  
+              location.reload();
+            }
+          })
         })
       })
     </script>
