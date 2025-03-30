@@ -73,4 +73,12 @@ $(document).ready(function() {
             popupContainer.css({ display: "none" });
         }
     })
+
+    $(".modal-container__close-btn").click(function() {
+        $(this).closest('.modal-container').toggle();
+    })
+
+    $("#cart-btn").click(function() {
+        $("#cart-modal").toggle();
+    })
 });
