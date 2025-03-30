@@ -35,10 +35,15 @@
     </div>
 
     <div class="flex gap-2">
-      <button id="cart-btn" class="size-16 flex flex-col justify-center items-center rounded-md hover:bg-zinc-200">
-        <i class="text-[30px] my-1 ph-light ph ph-shopping-cart"></i>
-        <span class="text-sm">Giỏ hàng</span>
-      </button>
+      <div class="relative">
+        <button id="cart-btn" class="size-16 flex flex-col justify-center items-center rounded-md hover:bg-zinc-200">
+          <i class="text-[30px] my-1 ph-light ph ph-shopping-cart"></i>
+          <span class="text-sm">Giỏ hàng</span>
+        </button>
+        <span id="cart-count-badge" class="absolute top-0 right-1 size-4 rounded-full bg-red-600 leading-[normal] align-middle text-center text-[12px] text-white">
+          {{cart.get_item_count}}
+        </span>
+      </div>
       <div class="relative">
         <button id="user-popup-btn" class="size-16 flex flex-col justify-center items-center rounded-md hover:bg-zinc-200">
           <i class="text-[30px] my-1 ph-light ph-user"></i>

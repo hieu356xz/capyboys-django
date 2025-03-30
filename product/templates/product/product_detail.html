@@ -140,7 +140,22 @@
               csrfmiddlewaretoken: '{{ csrf_token }}'
           },
           success: function(json) {
-            console.log(json)
+            console.log(json);
+            $.ajax({
+              type: "GET",
+              url: '{% url "cart-modal" %}',
+              success: function(xhr) {
+                let cartModal = $("#cart-modal");
+                let $content = $(xhr).children();
+
+                cartModal.html($content);
+                if (json.data?.total_cart_item) {
+                  $("#cart-count-badge").text(json.data.total_cart_item);
+                }
+
+                cartModal.toggle();
+              }
+            })
           },
           error: function(xhr) {
             console.log(xhr.responseJSON);

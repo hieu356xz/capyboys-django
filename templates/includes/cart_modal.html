@@ -17,7 +17,7 @@
         <th>Thành tiền</th>
         <th></th>
       </thead>
-      <tbody>
+      <tbody class="overflow-auto max-h-[500px]">
         {% for item in cart %}
         <tr>
           <td class="p-[6px] min-w-[120px] max-w-[120px]">
@@ -68,5 +68,14 @@
         >Thanh toán</a
       >
     </div>
+  </c-slot>
+  <c-slot name="script">
+    <script>
+      $(document).ready(function() {
+        $(".modal-container__close-btn").click(function() {
+          $(this).closest('.modal-container').toggle();
+        })
+      })
+    </script>
   </c-slot>
 </c-modal>
