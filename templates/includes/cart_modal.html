@@ -54,6 +54,7 @@
     <h1 class="text-center">Giỏ hàng của bạn hiện có sản phẩm nào</h1>
     {% endif %}
   </c-slot>
+  {% if cart.get_item_count %}
   <c-slot name="footer">
     <div class="text-right font-semibold">
       <h3>
@@ -69,13 +70,10 @@
       >
     </div>
   </c-slot>
+  {% endif %}
   <c-slot name="script">
     <script>
       $(document).ready(function() {
-        $(".modal-container__close-btn").click(function() {
-          $(this).closest('.modal-container').toggle();
-        })
-
         $(".remove-cart-item-btn").click(function() {
           console.log("Click")
           let product_id = $(this).data("product-id");
@@ -89,8 +87,15 @@
               csrfmiddlewaretoken: "{{ csrf_token }}",
             },
             success: function(json) {
-              console.log(json);  
               location.reload();
+            },
+            error: function(xhr) {
+              if (typeof xhr.responseJSON.message === "string") {
+                let errorMessage = xhr.responseJSON.message;
+  
+                $("#error-modal__body").html(errorMessage);
+                $("#error-modal").toggle();
+              }
             }
           })
         })
