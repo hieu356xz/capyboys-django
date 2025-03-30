@@ -77,13 +77,9 @@ class BookAdmin(admin.ModelAdmin):
         return ", ".join([author.name for author in obj.authors.all()])
     display_authors.short_description = "Authors"
 
-    list_display = ('title', 'display_authors', 'publisher', 'price', 'publish_year', 'description')
+    list_display = ('title', 'display_authors', 'publisher', 'price', 'stock', 'discount', 'publish_year', 'description')
 
     inlines = [BookAttributeValueInline, BookCollectionInline, BookAuthorInline]
-    
-    # formfield_overrides = {
-    #     Book.slug: {'widget': TextInput(attrs={'readonly': 'readonly'})},
-    # }
 
     list_filter = ['collections', 'genres', 'publish_year', 'authors', 'publisher']
     search_fields = ['title', 'authors__name', 'publisher__name']
