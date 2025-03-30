@@ -72,9 +72,13 @@ $(document).ready(function() {
         } else {
             popupContainer.css({ display: "none" });
         }
-    })
+    });
 
     $("#cart-btn").click(function() {
         $("#cart-modal").toggle();
-    })
+    });
+
+    $(document).on("click", ".modal-container__close-btn", function() {
+        $(this).closest('.modal-container').toggle();
+    });
 });

@@ -140,7 +140,6 @@
               csrfmiddlewaretoken: '{{ csrf_token }}'
           },
           success: function(json) {
-            console.log(json);
             $.ajax({
               type: "GET",
               url: '{% url "cart-modal" %}',
@@ -158,7 +157,12 @@
             })
           },
           error: function(xhr) {
-            console.log(xhr.responseJSON);
+            if (typeof xhr.responseJSON.message === "string") {
+              let errorMessage = xhr.responseJSON.message;
+
+              $("#error-modal__body").html(errorMessage);
+              $("#error-modal").toggle();
+            }
           }
         })
       })
