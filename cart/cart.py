@@ -54,7 +54,7 @@ class Cart:
         return True
     
     def save(self):
-        # self.session['cart_session'] = self.cart
+        self.session['cart_session'] = self.cart
         self.session.modified = True  # Mark session as modified to ensure it's saved
     
     def remove(self, product_id):
@@ -62,27 +62,30 @@ class Cart:
         if product_id in self.cart:
             del self.cart[product_id]
             self.save()
+            return True
+        
+        return False
             
     def update_quantity(self, product_id, quantity):
         product_id = str(product_id)
         if product_id not in self.cart:
-            return False
+            return False, None
             
         # Verify stock levels
         try:
             product = Book.objects.get(id=product_id)
             if quantity > product.stock:
-                return False
+                return False, product
             
             if quantity < 0:
-                return False
+                return False, product
                 
             self.cart[product_id]['quantity'] = quantity
             self.save()
-            return True
+            return True, product
         except Book.DoesNotExist:
             self.remove(product_id)
-            return False
+            return False, None
             
     def get_total_price(self):
         return sum(float(item['final_price']) * item['quantity'] for item in self.cart.values())
