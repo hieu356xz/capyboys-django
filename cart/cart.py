@@ -2,12 +2,12 @@ from product.models import Book
 
 class Cart:
     def __init__(self, request):
-        self.__session = request.session
+        self.session = request.session
 
-        cart = self.__session.get('cart_session')
+        cart = self.session.get('cart_session')
 
         if not cart:
-            cart = self.__session['cart_session'] = {}
+            cart = self.session['cart_session'] = {}
 
         self.cart = cart
 
@@ -54,8 +54,8 @@ class Cart:
         return True
     
     def save(self):
-        # self.__session['cart_session'] = self.cart
-        self.__session.modified = True  # Mark session as modified to ensure it's saved
+        # self.session['cart_session'] = self.cart
+        self.session.modified = True  # Mark session as modified to ensure it's saved
     
     def remove(self, product_id):
         product_id = str(product_id)
@@ -72,6 +72,9 @@ class Cart:
         try:
             product = Book.objects.get(id=product_id)
             if quantity > product.stock:
+                return False
+            
+            if quantity < 0:
                 return False
                 
             self.cart[product_id]['quantity'] = quantity

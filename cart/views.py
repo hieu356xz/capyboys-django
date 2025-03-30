@@ -11,6 +11,7 @@ def cart_add(request):
             product_id = int(request.POST.get("product_id"))
             quantity = int(request.POST.get("quantity"))
             product = Book.objects.get(pk=product_id)
+
             if product:
                 add_success = cart.add(product, quantity)
                 if add_success: 
@@ -22,6 +23,7 @@ def cart_add(request):
                             "product_title": product.title,
                             "added_quantity": quantity,
                             "total_quantity": cart.get_subtotal(product_id),
+                            "total_cart_item": cart.get_item_count(),
                         }
                     }, status=200)
                 else:
@@ -34,6 +36,7 @@ def cart_add(request):
                             "added_quantity": quantity,
                             "total_quantity": cart.get_subtotal(product_id),
                             "stock": product.stock,
+                            "total_cart_item": cart.get_item_count(),
                         }
                     }, status=400)
             else:
@@ -48,7 +51,7 @@ def cart_add(request):
         except Exception:
             return JsonResponse(data = {
                 "status": 400,
-                "message": "Yêu cần không hợp lệ",
+                "message": "Yêu cầu không hợp lệ",
             }, status=400)
             
 
