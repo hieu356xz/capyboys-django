@@ -2,15 +2,18 @@ from django.db import models
 
 class Book(models.Model):
     title = models.CharField(max_length=511)
-    publisher = models.ForeignKey('Publisher', on_delete=models.CASCADE)
+    publisher = models.ForeignKey('Publisher', on_delete=models.SET_NULL, null=True, blank=True)
     price = models.DecimalField(max_digits=15, decimal_places=2)
     publish_year = models.PositiveSmallIntegerField(blank=True, null=True)
     cover_img = models.ImageField(max_length=511, upload_to='covers/', blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     slug = models.SlugField(max_length=255, unique=True)
+    stock = models.PositiveIntegerField(default=0)
+    discount = models.DecimalField(max_digits=5, decimal_places=2, default=0)
+
     authors = models.ManyToManyField('Author', through='BookAuthor')
-    attributes = models.ManyToManyField('Attribute', through='BookAttributeValue')
     genres = models.ManyToManyField('Genre', through='BookGenre')
+    attributes = models.ManyToManyField('Attribute', through='BookAttributeValue')
     collections = models.ManyToManyField('collection.Collection', through='collection.BookCollection')
 
     def __str__(self):
@@ -62,7 +65,7 @@ class BookAttributeValue(models.Model):
         ]
 
     def __str__(self):
-        return f"{self.book.title} - {self.attribute.name}: {self.value}"
+        return f"[{self.book.title}] {self.attribute.name}: {self.value}"
 
 class Genre(models.Model):
     name = models.CharField(max_length=511)
