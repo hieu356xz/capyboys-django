@@ -41,6 +41,27 @@
       <c-product-item :product="product"></c-product-item>
     {% endfor %}
   </c-section>
+
+  <section>
+    <div class="px-3 md:px-8 max-w-[1200px] my-14 mx-auto">
+      <div
+        class="text-center font-semibold text-2xl mb-4 relative after:block after:w-full after:h-[2px] after:bg-black after:top-1/2 after:absolute after:-z-10">
+        <h2 class="text-gray-800 bg-white inline-block px-4 uppercase">
+          Bài viết mới
+        </h2>
+      </div>
+      <div class="flex flex-row flex-wrap">
+        {% for blog in new_blogs %}
+          <c-blog-item :blog="blog"></c-blog-item>
+        {% endfor %}
+      </div>
+      <div class="text-right text-red-500 text-sm">
+        <a 
+          class="inline-block underline-animate underline-animate-left underline-animate-color-red-600 underline-animate-duration-500"
+          href="/blogs/tin-tuc">Xem thêm >></a>
+      </div>
+    </div>
+  </section>
 </div>
 
 {% endblock %}
