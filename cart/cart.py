@@ -37,7 +37,7 @@ class Cart:
                 'final_price': str(final_price),
                 'discount': str(product.discount),
                 'title': product.title,
-                'image': product.cover_img.url if product.cover_img else '',
+                'cover_img': str(product.cover_img) if product.cover_img else '',
                 'author': author_names,
                 'publisher': product.publisher.name if product.publisher else 'Unknown',
                 'slug': product.slug,

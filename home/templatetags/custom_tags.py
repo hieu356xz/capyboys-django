@@ -24,3 +24,10 @@ def add_query_param(url: str, param: str):
     param_name, param_value = param.split('=', 1)
     query_params.set(param_name, param_value)
     return query_params.build_url(parsed_url.path)
+
+@register.filter
+def calc_subtotal(price, count):
+    price = float(price)
+    count = int(count)
+    subtotal = price * count
+    return f"{subtotal:,.0f}"

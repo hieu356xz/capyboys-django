@@ -43,3 +43,34 @@
 .owl-theme .owl-nav .owl-prev {
   @apply left-0;
 }
+
+
+/* animation by w3schools https://www.w3schools.com/howto/howto_css_modals.asp */
+@-webkit-keyframes animatetop {
+  from {
+    top:-300px; 
+    opacity:0
+  } 
+  to {
+    top:0; 
+    opacity:1
+  }
+}
+
+@keyframes animatetop {
+  from {
+    top:-300px; 
+    opacity:0
+  }
+  to {
+    top:0; 
+    opacity:1
+  }
+}
+
+.modal-container__content {
+  -webkit-animation-name: animatetop;
+  -webkit-animation-duration: 0.4s;
+  animation-name: animatetop;
+  animation-duration: 0.4s
+} 

@@ -1339,6 +1339,10 @@ input[type="number"]::-webkit-inner-spin-button,
   position: static;
 }
 
+.fixed {
+  position: fixed;
+}
+
 .absolute {
   position: absolute;
 }
@@ -1347,12 +1351,28 @@ input[type="number"]::-webkit-inner-spin-button,
   position: relative;
 }
 
+.-right-4 {
+  right: -1rem;
+}
+
+.-top-4 {
+  top: -1rem;
+}
+
 .bottom-0 {
   bottom: 0px;
 }
 
+.left-0 {
+  left: 0px;
+}
+
 .right-0 {
   right: 0px;
+}
+
+.top-0 {
+  top: 0px;
 }
 
 .top-full {
@@ -1363,12 +1383,20 @@ input[type="number"]::-webkit-inner-spin-button,
   z-index: 40;
 }
 
+.z-50 {
+  z-index: 50;
+}
+
 .m-2 {
   margin: 0.5rem;
 }
 
 .m-4 {
   margin: 1rem;
+}
+
+.m-auto {
+  margin: auto;
 }
 
 .mx-1\.5 {
@@ -1438,6 +1466,14 @@ input[type="number"]::-webkit-inner-spin-button,
   margin-top: 0.25rem;
 }
 
+.mt-24 {
+  margin-top: 6rem;
+}
+
+.mt-4 {
+  margin-top: 1rem;
+}
+
 .mt-8 {
   margin-top: 2rem;
 }
@@ -1452,6 +1488,10 @@ input[type="number"]::-webkit-inner-spin-button,
 
 .flex {
   display: flex;
+}
+
+.table {
+  display: table;
 }
 
 .grid {
@@ -1500,6 +1540,14 @@ input[type="number"]::-webkit-inner-spin-button,
   height: 2.5rem;
 }
 
+.h-8 {
+  height: 2rem;
+}
+
+.h-full {
+  height: 100%;
+}
+
 .h-screen {
   height: 100vh;
 }
@@ -1524,6 +1572,14 @@ input[type="number"]::-webkit-inner-spin-button,
   min-height: inherit;
 }
 
+.w-4\/5 {
+  width: 80%;
+}
+
+.w-8 {
+  width: 2rem;
+}
+
 .w-\[320px\] {
   width: 320px;
 }
@@ -1540,12 +1596,28 @@ input[type="number"]::-webkit-inner-spin-button,
   width: 100%;
 }
 
+.w-screen {
+  width: 100vw;
+}
+
 .min-w-14 {
   min-width: 3.5rem;
 }
 
 .min-w-24 {
   min-width: 6rem;
+}
+
+.min-w-\[100px\] {
+  min-width: 100px;
+}
+
+.min-w-\[120px\] {
+  min-width: 120px;
+}
+
+.min-w-\[40px\] {
+  min-width: 40px;
 }
 
 .max-w-\[1000px\] {
@@ -1560,8 +1632,16 @@ input[type="number"]::-webkit-inner-spin-button,
   max-width: 1200px;
 }
 
+.max-w-\[120px\] {
+  max-width: 120px;
+}
+
 .max-w-\[600px\] {
   max-width: 600px;
+}
+
+.max-w-\[850px\] {
+  max-width: 850px;
 }
 
 .basis-1\/2 {
@@ -1622,6 +1702,10 @@ input[type="number"]::-webkit-inner-spin-button,
   margin-bottom: calc(1rem * var(--tw-space-y-reverse));
 }
 
+.overflow-auto {
+  overflow: auto;
+}
+
 .overflow-hidden {
   overflow: hidden;
 }
@@ -1636,6 +1720,10 @@ input[type="number"]::-webkit-inner-spin-button,
 
 .rounded-3xl {
   border-radius: 1.5rem;
+}
+
+.rounded-full {
+  border-radius: 9999px;
 }
 
 .rounded-lg {
@@ -1656,6 +1744,11 @@ input[type="number"]::-webkit-inner-spin-button,
 
 .border-2 {
   border-width: 2px;
+}
+
+.border-y {
+  border-top-width: 1px;
+  border-bottom-width: 1px;
 }
 
 .border-b {
@@ -1703,6 +1796,11 @@ input[type="number"]::-webkit-inner-spin-button,
   border-color: transparent;
 }
 
+.bg-black {
+  --tw-bg-opacity: 1;
+  background-color: rgb(0 0 0 / var(--tw-bg-opacity, 1));
+}
+
 .bg-gray-50 {
   --tw-bg-opacity: 1;
   background-color: rgb(249 250 251 / var(--tw-bg-opacity, 1));
@@ -1737,6 +1835,10 @@ input[type="number"]::-webkit-inner-spin-button,
   background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
 }
 
+.bg-opacity-40 {
+  --tw-bg-opacity: 0.4;
+}
+
 .object-contain {
   -o-object-fit: contain;
      object-fit: contain;
@@ -1764,6 +1866,10 @@ input[type="number"]::-webkit-inner-spin-button,
 
 .p-8 {
   padding: 2rem;
+}
+
+.p-\[6px\] {
+  padding: 6px;
 }
 
 .px-1 {
@@ -2006,6 +2112,11 @@ input[type="number"]::-webkit-inner-spin-button,
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
+.shadow-neutral-600 {
+  --tw-shadow-color: #525252;
+  --tw-shadow: var(--tw-shadow-colored);
+}
+
 .transition-colors {
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -2068,6 +2179,27 @@ input[type="number"]::-webkit-inner-spin-button,
 
 .owl-theme .owl-nav .owl-prev {
   left: 0px;
+}
+
+/* animation by w3schools https://www.w3schools.com/howto/howto_css_modals.asp */
+
+@keyframes animatetop {
+  from {
+    top:-300px;
+    opacity:0
+  }
+
+  to {
+    top:0;
+    opacity:1
+  }
+}
+
+.modal-container__content {
+  -webkit-animation-name: animatetop;
+  -webkit-animation-duration: 0.4s;
+  animation-name: animatetop;
+  animation-duration: 0.4s
 }
 
 .after\:absolute::after {
@@ -2217,4 +2349,4 @@ input[type="number"]::-webkit-inner-spin-button,
   .lg\:basis-1\/4 {
     flex-basis: 25%;
   }
-}
+} 
