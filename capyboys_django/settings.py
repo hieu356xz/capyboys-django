@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'collection',
     'blog',
     'user',
+    'cart',
 ]
 
 MIDDLEWARE = [
@@ -84,6 +85,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'capyboys_django.context_processors.base_context',
+                'cart.context_processors.cart',
             ],
         },
     },

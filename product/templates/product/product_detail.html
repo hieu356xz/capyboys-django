@@ -67,7 +67,7 @@
               </button>
             </div>
             <div class="my-4">
-              <button class="p-1 w-full bg-red-500 text-white rounded-md">
+              <button id="add-to-cart-btn" data-product-id={{product.pk}} class="p-1 w-full bg-red-500 text-white rounded-md">
                 Thêm vào giỏ hàng
               </button>
             </div>
@@ -91,5 +91,63 @@
       </p>
     </div>
   </section>
+
+  <script>
+    $(document).ready(function() {
+      $("#add-to-cart-btn-decrease").click(function() {
+        let quantityInput = $("#add-to-cart-quantity");
+        let quantity = parseInt(quantityInput.val());
+        let min = quantityInput.attr("min");
+
+        if (quantity > min) {
+          quantityInput.val(quantity - 1);
+        }
+      });
+
+      $("#add-to-cart-btn-increase").click(function() {
+        let quantityInput = $("#add-to-cart-quantity");
+        let quantity = parseInt(quantityInput.val());
+
+        let max = quantityInput.attr("max");
+        if (quantity < max) {
+          quantityInput.val(quantity + 1);
+        }
+      }); 
+
+      $("#add-to-cart-quantity").on("input" ,function() {
+        let quantityInput = $("#add-to-cart-quantity");
+        let quantity = parseInt(quantityInput.val());
+        let min = quantityInput.attr("min");
+        let max = quantityInput.attr("max");
+
+        if (quantity < min || isNaN(quantity)) {
+          quantityInput.val(min);
+        } else if (quantity > max) {
+          quantityInput.val(max);
+        }
+      });
+
+      $("#add-to-cart-btn").click(function() {
+        let product_id = parseInt($(this).data("product-id"));
+        let quantity = parseInt($("#add-to-cart-quantity").val());
+        
+        $.ajax({
+          type: "POST",
+          url: '{% url "add-to-cart" %}',
+          data: {
+              product_id: product_id,
+              quantity: quantity,
+              csrfmiddlewaretoken: '{{ csrf_token }}'
+          },
+          success: function(json) {
+            console.log(json)
+          },
+          error: function(xhr) {
+            console.log(xhr.responseJSON);
+          }
+        })
+      })
+    })
+  </script>
 </div>
 {% endblock %}
