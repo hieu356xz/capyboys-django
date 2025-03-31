@@ -1,13 +1,13 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 from product.models import Book
-from .cart import Cart
+from .cart import CartSession
 
 
 def cart_add(request):
     if request.method == "POST":
         try:
-            cart = Cart(request)
+            cart = CartSession(request)
             product_id = int(request.POST.get("product_id"))
             quantity = int(request.POST.get("quantity"))
             product = Book.objects.get(pk=product_id)
@@ -56,7 +56,7 @@ def cart_add(request):
 def cart_update_quantity(request):
     if request.method == "POST":
         try:
-            cart = Cart(request)
+            cart = CartSession(request)
             product_id = int(request.POST.get("product_id"))
             quantity = int(request.POST.get("quantity"))
             add_success, product = cart.update_quantity(product_id, quantity)
@@ -100,7 +100,7 @@ def cart_update_quantity(request):
 def cart_remove_item(request):
     if request.method == "POST":
         try:
-            cart = Cart(request)
+            cart = CartSession(request)
             product_id = int(request.POST.get("product_id"))
 
             remove_success = cart.remove(product_id)

@@ -1,6 +1,6 @@
 from product.models import Book
 
-class Cart:
+class CartSession:
     def __init__(self, request):
         self.session = request.session
 

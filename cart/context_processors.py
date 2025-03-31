@@ -1,6 +1,6 @@
-from .cart import Cart
+from .cart import CartSession
 
 def cart(request):
     return {
-        'cart': Cart(request)
+        'cart': CartSession(request)
     }
