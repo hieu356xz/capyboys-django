@@ -19,6 +19,13 @@ class Book(models.Model):
     def __str__(self):
         return self.title
     
+    @property
+    def final_price(self):
+        if self.discount > 0:
+            return (self.price * self.discount) / 100.0
+        else:
+            return self.price
+
 class Author(models.Model):
     name = models.CharField(max_length=511)
     birth_date = models.DateField(blank=True, null=True)
