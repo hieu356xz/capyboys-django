@@ -1,12 +1,12 @@
 from django.shortcuts import render
 from django.http import Http404
-from cart.cart import Cart
+from cart.cart import CartSession
 from product.models import Book, BookAttributeValue
 
 # Create your views here.
 def product_detail(request, slug):
     try:
-        cart = Cart(request)
+        cart = CartSession(request)
         product = Book.objects.get(slug=slug)
         product_attributes = BookAttributeValue.objects.filter(book=product).order_by('attribute__pk')
         collection = product.collections.first()
