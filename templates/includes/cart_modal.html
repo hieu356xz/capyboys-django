@@ -77,7 +77,6 @@
         $(".remove-cart-item-btn").click(function() {
           console.log("Click")
           let product_id = $(this).data("product-id");
-          console.log(product_id)
           
           $.ajax({
             type: "POST",

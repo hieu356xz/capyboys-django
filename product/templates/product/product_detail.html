@@ -59,7 +59,7 @@
                 class="size-8 border border-gray-200">
                 <span> - </span>
               </button>
-              <input id="add-to-cart-quantity" type="number" min="1" max="99" value="1" class="px-8 py-1 border border-gray-200 text-center"></input>
+              <input id="add-to-cart-quantity" type="number" min="{{min_quantity}}" max="{{max_quantity}}" value="{{min_quantity}}" class="py-1 border w-20 border-gray-200 text-center"></input>
               <button
                 id="add-to-cart-btn-increase"
                 class="size-8 border border-gray-200">
@@ -67,8 +67,15 @@
               </button>
             </div>
             <div class="my-4">
-              <button id="add-to-cart-btn" data-product-id={{product.pk}} class="p-1 w-full bg-red-500 text-white rounded-md">
-                Thêm vào giỏ hàng
+              <button 
+                id="add-to-cart-btn"
+                data-product-id={{product.pk}} class="p-1 w-full bg-red-500 text-white rounded-md font-semibold text-[14px] uppercase"
+                {% if not product.stock %}disabled{% endif %}>
+                {% if product.stock %}
+                  Thêm vào giỏ hàng
+                {% else %}
+                  Tạm hết hàng
+                {% endif %}
               </button>
             </div>
           </div>
@@ -129,7 +136,14 @@
 
       $("#add-to-cart-btn").click(function() {
         let product_id = parseInt($(this).data("product-id"));
-        let quantity = parseInt($("#add-to-cart-quantity").val());
+        let quantityInput = $("#add-to-cart-quantity");
+        let quantity = parseInt(quantityInput.val());
+
+        if (quantity < 1) {
+          $("#error-modal__body").html("Hiện không thể đặt thêm sản phẩm {{product.title}}. Số lượng hàng trong kho không đủ. Nếu bạn có nhu cầu đặt thêm xin hãy liên hệ với chúng tôi.");
+          $("#error-modal").toggle();
+          return;
+        };
         
         $.ajax({
           type: "POST",
@@ -151,7 +165,19 @@
                 if (json.data?.total_cart_item) {
                   $("#cart-count-badge").text(json.data.total_cart_item);
                 }
+                
+                if (json.data?.total_quantity) {
+                  let max = Math.max(0, Math.min({{product.stock}} - json.data.total_quantity, 99))
+                  quantityInput.attr("max", max); 
 
+                  if (max < 1) {
+                    quantityInput.attr("min", 0);
+                  }
+                  if (quantity > max) {
+                    quantityInput.val(max);
+                  }
+                }
+                
                 cartModal.toggle();
               }
             })

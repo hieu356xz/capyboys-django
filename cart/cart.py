@@ -93,6 +93,12 @@ class Cart:
     def get_item_count(self):
         return sum(item['quantity'] for item in self.cart.values())
     
+    def get_item_quantity(self, product_id):
+        product_id = str(product_id)
+        if product_id in self.cart:
+            return self.cart[product_id]["quantity"]
+        return 0
+    
     def clear(self):
         self.cart = {}
         self.save()

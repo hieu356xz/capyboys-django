@@ -22,20 +22,19 @@ def cart_add(request):
                             "product_id": product_id,
                             "product_title": product.title,
                             "added_quantity": quantity,
-                            "total_quantity": cart.get_subtotal(product_id),
+                            "total_quantity": cart.get_item_quantity(product_id),
                             "total_cart_item": cart.get_item_count(),
                         }
                     }, status=200)
                 else:
                     return JsonResponse(data = {
                         "status": 400,
-                        "message": f"Sản phẩm {product.title} thêm vào giỏ hàng thất bại. Số lượng bạn đang đặt không thể lớn hơn số lượng còn lại trong kho. (còn lại {product.stock})",
+                        "message": f"Sản phẩm {product.title} thêm vào giỏ hàng thất bại. Số lượng hàng trong kho không đủ. Nếu bạn có nhu cầu đặt thêm xin hãy liên hệ với chúng tôi.",
                         "data": {
                             "product_id": product_id,
                             "product_title": product.title,
                             "added_quantity": quantity,
-                            "total_quantity": cart.get_subtotal(product_id),
-                            "stock": product.stock,
+                            "total_quantity": cart.get_item_quantity(product_id),
                             "total_cart_item": cart.get_item_count(),
                         }
                     }, status=400)
@@ -69,7 +68,7 @@ def cart_update_quantity(request):
                         "data": {
                             "product_id": product_id,
                             "product_title": product.title,
-                            "total_quantity": cart.get_subtotal(product_id),
+                            "total_quantity": cart.get_item_quantity(product_id),
                         }
                     }, status=200)
                 else:
@@ -80,8 +79,7 @@ def cart_update_quantity(request):
                             "product_id": product_id,
                             "product_title": product.title,
                             "added_quantity": quantity,
-                            "total_quantity": cart.get_subtotal(product_id),
-                            "stock": product.stock,
+                            "total_quantity": cart.get_item_quantity(product_id),
                         }
                     }, status=400)
             else:
