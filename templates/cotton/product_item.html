@@ -3,7 +3,7 @@
     class="border-2 border-gray-200 rounded-sm hover:shadow-md hover:shadow-gray-400 transition-shadow duration-300">
     <div class="m-2">
       <a href="/products/{{product.slug}}">
-        <img src="{{product.cover_img}}" onerror="this.src='{% if product.cover_img %}{{product.cover_img.url}}{% endif %}';" alt="{{product.title}}" />
+        <img src="{{product.cover_img}}" {% if product.cover_img and product.cover_img.url %}onerror="this.src='{{product.cover_img.url}};'"{% endif %} alt="{{product.title}}" />
       </a>
     </div>
     <div class="m-2 text-sm">

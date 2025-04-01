@@ -23,7 +23,7 @@
           <tr>
             <td class="p-[6px] min-w-[120px] max-w-[120px]">
               <a href="/products/{{item.book.slug}}" class="cursor-pointer">
-                <img src="{{item.book.cover_img}}" onerror="this.src='{% if item.book.cover_img %}{{item.book.cover_img.url}}{% endif %}';" alt="{{item.book.title}}" />
+                <img src="{{item.book.cover_img}}" {% if item.book.cover_img and item.book.cover_img.url %}onerror="this.src='{{item.book.cover_img.url}};'"{% endif %} alt="{{item.book.title}}" />
               </a>
             </td>
             <td class="p-[6px] w-full">
@@ -54,7 +54,7 @@
           <tr>
             <td class="p-[6px] min-w-[120px] max-w-[120px]">
               <a href="/products/{{item.slug}}" class="cursor-pointer">
-                <img src="{{item.cover_img}}" onerror="this.src='{% if item.cover_img %}{{item.cover_img.url}}{% endif %}';" alt="{{item.title}}" />
+                <img src="{{item.cover_img}}" {% if item.cover_img and item.cover_img.url %}onerror="this.src='{{item.cover_img.url}};'"{% endif %} alt="{{item.title}}" />
               </a>
             </td>
             <td class="p-[6px] w-full">

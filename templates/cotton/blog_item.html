@@ -6,7 +6,7 @@
         <img
           class="size-full object-contain"
           src={{blog.cover_img}}
-          onerror="this.src='{% if blog.cover_img %}{{blog.cover_img.url}}{% endif %}';"
+          {% if blog.cover_img and blog.cover_img.url %}onerror="this.src='{{blog.cover_img.url}};'"{% endif %}
           alt={{blog.title}}
         />
       </a>
