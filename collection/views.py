@@ -35,6 +35,15 @@ SORT_OPTIONS = {
     }
 }
 
+general_collections = (
+    "lich-su-truyen-thong",
+    "van-hoc-viet-nam",
+    "truyen-tranh",
+    "manga-comic",
+    "light-novel",
+    "kien-thuc-khoa-hoc",
+)
+
 def index(request, slug):
     PAGE_SIZE = 24
     query_params = QueryParams(request.GET, ("order","page"))
@@ -45,7 +54,7 @@ def index(request, slug):
     start = max((page - 1) * PAGE_SIZE, 0)
     end = start + PAGE_SIZE
     
-    collections = Collection.objects.all()
+    collections = Collection.objects.filter(slug__in=general_collections)
 
     if slug == 'all':
         current_collection = None
