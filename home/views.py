@@ -29,7 +29,7 @@ def about(request):
 
 def search(request):
     PAGE_SIZE = 24
-    query_params = QueryParams(request.GET, ("q","page", "author", "genre"))
+    query_params = QueryParams(request.GET, ("q", "page", "author", "genre"))
     
     page = int(query_params.get('page', default=1))
     search_query = query_params.get("q", default="")
@@ -55,10 +55,13 @@ def search(request):
     total_products = queryset.count()
     products = queryset[start:end]
 
+    base_url = query_params.without("page").build_url('/search/')
+
     context = {
         "products": products,
         "total_products": total_products,
         "query": search_query,
+        "base_url": base_url,
         "current_page": page,
         "total_page": total_products // PAGE_SIZE + 1
     }
