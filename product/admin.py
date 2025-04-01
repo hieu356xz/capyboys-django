@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.template.defaultfilters import slugify
 from .models import Book, Author, Attribute, BookAttributeValue, Publisher, Genre, BookGenre, BookAuthor
 from collection.models import BookCollection
 from django.forms import ModelForm, ModelMultipleChoiceField
@@ -8,13 +9,18 @@ class BookAttributeValueInline(admin.StackedInline):
     model = BookAttributeValue
     extra = 1
 
+    autocomplete_fields = ('attribute',)
 class BookCollectionInline(admin.TabularInline):
     model = BookCollection
     extra = 1
 
+    autocomplete_fields = ('collection',)
+
 class BookAuthorInline(admin.TabularInline):
     model = BookAuthor
     extra = 1
+
+    autocomplete_fields = ('author',)
 
 # Chat GPT save me from going insane
 class BookAdminForm(ModelForm):
@@ -85,15 +91,24 @@ class BookAdmin(admin.ModelAdmin):
     search_fields = ['title', 'authors__name', 'publisher__name']
     autocomplete_fields = ['publisher']
 
+    def save_model(self, request, obj, form, change):
+        if 'slug' not in form.changed_data or not change:
+                obj.slug = slugify(obj.title)
+        return super().save_model(request, obj, form, change)
+
+
 class AuthorAdmin(admin.ModelAdmin):
     search_fields = ['name']
 
 class PublisherAdmin(admin.ModelAdmin):
     search_fields = ['name']
 
+class AttributeAdmin(admin.ModelAdmin):
+    search_fields = ['attribute']
+
 admin.site.register(Book, BookAdmin)
 admin.site.register(Author, AuthorAdmin)
 admin.site.register(Publisher, PublisherAdmin)
-admin.site.register(Attribute)
+admin.site.register(Attribute, AttributeAdmin)
 admin.site.register(Genre)
 admin.site.register(BookAttributeValue)
