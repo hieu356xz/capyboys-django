@@ -1,7 +1,10 @@
 from django.shortcuts import render
 from django.db.models import Q
+from home.utils import QueryParams
 from product.models import Book
 from blog.models import Blog
+from .utils import get_queryset_with_filter
+
 
 def index(request):
     new_products = Book.objects.all().order_by("-pk")[:10]
@@ -26,20 +29,36 @@ def about(request):
 
 def search(request):
     PAGE_SIZE = 24
-    query = request.GET.get("q")
-    page = int(request.GET.get('page', default=1))
+    query_params = QueryParams(request.GET, ("q","page", "author", "genre"))
+    
+    page = int(query_params.get('page', default=1))
+    search_query = query_params.get("q", default="")
+    author_query = query_params.get("author", default="")
+    genre_query = query_params.get("genre", default="")
 
     start = max((page - 1) * PAGE_SIZE, 0)
     end = start + PAGE_SIZE
 
-    filtered_books = Book.objects.filter(Q(title__icontains=query) | Q(description__icontains=query))
-    total_products = filtered_books.count()
-    products = filtered_books[start:end]
+    # queryset = Book.objects.all()
+
+    # if collection_query: queryset = queryset.filter(collections__slug=collection_query)
+    # if genre_query: queryset = queryset.filter(genres__name=genre_query)
+    # if author_query: queryset = queryset.filter(authors__name=author_query)
+    # if search_query: queryset = queryset.filter(Q(title__icontains=search_query) | Q(description__icontains=search_query))
+
+    queryset = Book.objects.none()
+
+    queryset = get_queryset_with_filter(queryset, author_query, authors__name=author_query)
+    queryset = get_queryset_with_filter(queryset, genre_query, genres__name=genre_query)
+    queryset = get_queryset_with_filter(queryset, search_query, (Q(title__icontains=search_query) | Q(description__icontains=search_query)))
+
+    total_products = queryset.count()
+    products = queryset[start:end]
 
     context = {
         "products": products,
         "total_products": total_products,
-        "query": query,
+        "query": search_query,
         "current_page": page,
         "total_page": total_products // PAGE_SIZE + 1
     }

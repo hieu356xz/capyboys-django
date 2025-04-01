@@ -1,4 +1,5 @@
 from typing import Iterable, Sequence
+from django.db.models.manager import BaseManager
 
 class QueryParams:
     def __init__(self, query_dict: Iterable = None, accept_keys: Sequence = None):
@@ -44,3 +45,14 @@ class QueryParams:
             new_params.remove(k)
         
         return new_params
+
+def get_queryset_with_filter(queryset: BaseManager, querystring: str, *args, **kwargs):
+    if not querystring:
+        return queryset
+    
+    model_class = queryset.model
+
+    if queryset.exists():
+        return queryset.filter(*args, **kwargs)
+    else:
+        return model_class.objects.filter(*args, **kwargs)
