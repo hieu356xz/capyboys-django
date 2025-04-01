@@ -38,7 +38,9 @@
             <ul class="list-disc pl-6 leading-[1.75]">
               <li>
                 <strong>Tác giả: </strong>
-                {{ authors|join:', ' }}
+                {% for author in authors %}
+                  <a href="/search/?author={{author.name|urlencode}}" class="text-red-600 font-semibold hover:text-red-500">{{ author.name }}</a>{% if not forloop.last %}, {% endif %}
+                {% endfor %}
               </li>
               <li>
                 <strong>Nhà xuất bản: </strong>
@@ -47,7 +49,9 @@
               {% if genres %}
               <li>
                 <strong>Thể loại: </strong>
-                {{ genres|join:', ' }}
+                {% for genre in genres %}
+                  <a href="/search/?genre={{genre.name|urlencode}}" class="text-red-600 font-semibold hover:text-red-500">{{ genre.name }}</a>{% if not forloop.last %}, {% endif %}
+                {% endfor %}
               </li>
               {% endif %}
               {% for attr in product_attributes %}
@@ -59,7 +63,9 @@
               {% if collections %}
               <li>
                 <strong>Bộ sách: </strong>
-                {{ collections|join:', ' }}
+                {% for collection in collections %}
+                  <a href="/collections/{{ collection.slug }}" class="text-red-600 font-semibold hover:text-red-500">{{ collection.name }}</a>{% if not forloop.last %}, {% endif %}
+                {% endfor %}
               </li>
               {% endif %}
             </ul>
@@ -110,6 +116,8 @@
           {% endif %}
         </div>
       </div>
+
+      {% if related_products %}
       <div class="pt-4 border">
         <h2 class="uppercase text-center font-semibold text-white bg-red-600">
           Sách cùng tác giả
@@ -119,31 +127,40 @@
           <div class="grid grid-cols-[30%_auto] gap-3">
             <img src="{{product.cover_img}}" alt="product.title" {% if product.cover_img and product.cover_img.url %}onerror="this.src='{{product.cover_img.url}};'"{% endif %}>
             <div class="text-[14px] font-semibold">
-              <a href="/products/{{product.slug}}">
+              <a href="/products/{{product.slug}}" class="font-semibold text-gray-800 hover:text-red-600 transition-colors duration-300">
                 {{product.title}}
               </a>
               <div class="text-red-600">{{product.price|floatformat:'0g'}} đ</div>
             </div>
           </div>
           {% endfor %}
-          {% if related_products|length > 8 %}
           <div class="mx-auto">
-            <a href="/" class="py-[2px] px-4 bg-red-600 text-white cursor-pointer hover:bg-red-700 text-center">
+            <a href="/search/?author={{authors|first|urlencode}}" class="py-[2px] px-4 bg-red-600 text-white cursor-pointer hover:bg-red-700 text-center">
               Xem thêm
             </a>
           </div>
-            {% endif %}
         </div>
       </div>
+      {% endif %}
     </div>
   </section>
 
   {% if related_genre_products %}
-  <c-section title="Sách cùng thể loại" view-more-href="/">
-    {% for product in related_genre_products|slice:'5' %}
+  <c-section title="Sách cùng thể loại" view-more-href="/search/?genre={{genres|first|urlencode}}">
+    {% for product in related_genre_products|slice:'10' %}
     <c-product-item :product="product"></c-product-item>
     {% endfor %}
   </c-section>
+  {% endif %}
+
+  {% if related_collection_products %}
+  {% with collections|first as related_collection %}
+  <c-section title="Sách cùng bộ" view-more-href="/collections/{{related_collection.slug}}">
+    {% for product in related_collection_products|slice:'10' %}
+    <c-product-item :product="product"></c-product-item>
+    {% endfor %}
+  </c-section>
+  {% endwith %}
   {% endif %}
 
   <script>
