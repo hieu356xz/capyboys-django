@@ -22,7 +22,7 @@ def product_detail(request, slug):
             'genres',
             'bookattributevalue_set'
         ).get(slug=slug)
-        
+
         product_attributes = product.bookattributevalue_set.all()
         current_collection = product.collections.filter(slug=slug).first()
         collections = product.collections.exclude(slug__in=exclude_collections)
@@ -31,6 +31,7 @@ def product_detail(request, slug):
 
         related_products = Book.objects.filter(authors__in=authors).exclude(pk=product.id).distinct()
         related_genre_products = Book.objects.filter(genres__in=genres).exclude(pk=product.id).distinct()
+        related_collection_products = Book.objects.filter(collections__in=collections).exclude(pk=product.id).distinct()
 
         formatted_price = f"{product.price:,.0f} ₫"
         max_quantity = max(0, min(product.stock - cart.get_item_quantity(product.pk), 99))
@@ -52,6 +53,7 @@ def product_detail(request, slug):
         "min_quantity": min_quantity,
         "related_products": related_products,
         "related_genre_products": related_genre_products,
+        "related_collection_products": related_collection_products,
     }
 
     return render(request, texmplate_name, context)
