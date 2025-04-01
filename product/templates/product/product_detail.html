@@ -10,9 +10,9 @@
       </a>
       <span aria-hidden="true"> / </span>
       <a
-        href="/collections/{{ collection.slug }}"
+        href="/collections/{{ current_collection.slug }}"
         class="hover:text-red-500 transition-color duration-500">
-        {{ collection.name }}
+        {{ current_collection.name }}
       </a>
       <span aria-hidden="true"> / </span>
       <span>{{ product.title }}</span>
@@ -42,14 +42,26 @@
               </li>
               <li>
                 <strong>Nhà xuất bản: </strong>
-                {{ product.publisher }} {% for attr in product_attributes %}
+                {{ product.publisher }}
               </li>
-
+              {% if genres %}
+              <li>
+                <strong>Thể loại: </strong>
+                {{ genres|join:', ' }}
+              </li>
+              {% endif %}
+              {% for attr in product_attributes %}
               <li>
                 <strong>{{ attr.attribute.name }}: </strong>
                 {{ attr.value }}
               </li>
               {% endfor %}
+              {% if collections %}
+              <li>
+                <strong>Bộ sách: </strong>
+                {{ collections|join:', ' }}
+              </li>
+              {% endif %}
             </ul>
           </div>
           <div id="add-to-cart" class="basis-full md:basis-1/2 md:pl-8">
@@ -69,7 +81,7 @@
             <div class="my-4">
               <button 
                 id="add-to-cart-btn"
-                data-product-id={{product.pk}} class="p-1 w-full bg-red-500 text-white rounded-md font-semibold text-[14px] uppercase"
+                data-product-id={{product.pk}} class="p-1 w-full bg-red-600 text-white rounded-md font-semibold text-[14px] uppercase enabled:hover:bg-red-700 transition-colors duration-300 disabled:bg-neutral-600"
                 {% if not product.stock %}disabled{% endif %}>
                 {% if product.stock %}
                   Thêm vào giỏ hàng
@@ -85,19 +97,54 @@
   </section>
 
   <section>
-    <div class="pt-8">
-      <h2 class="uppercase py-4 text-center text-2xl font-bold">
-        Giới thiệu sách
-      </h2>
-      <p class="px-10 py-2">
-        {% if product.description %}
-        <span>{{ product.description }}</span>
-        {% else %}
-        <span>Chưa có thông tin</span>
-        {% endif %}
-      </p>
+    <div class="md:grid md:grid-cols-[75%_auto] md:gap-7 p-4">
+      <div class="pt-4">
+        <h2 class="uppercase text-center font-semibold text-white bg-red-600">
+          Giới thiệu sách
+        </h2>
+        <div class="px-10 py-2 prose max-w-full border text-neutral-800 pt-6">
+          {% if product.description %}
+          <span>{{ product.description|safe }}</span>
+          {% else %}
+          <div class="text-center h-32 leading-[8rem]">Chưa có thông tin</div>
+          {% endif %}
+        </div>
+      </div>
+      <div class="pt-4 border">
+        <h2 class="uppercase text-center font-semibold text-white bg-red-600">
+          Sách cùng tác giả
+        </h2>
+        <div class="flex flex-col gap-4 p-4">
+          {% for product in related_products|slice:'8' %}
+          <div class="grid grid-cols-[30%_auto] gap-3">
+            <img src="{{product.cover_img}}" alt="product.title" onerror="this.src='{% if product.cover_img %}{{product.cover_img.url}}{% endif %};'">
+            <div class="text-[14px] font-semibold">
+              <a href="/products/{{product.slug}}">
+                {{product.title}}
+              </a>
+              <div class="text-red-600">{{product.price|floatformat:'0g'}} đ</div>
+            </div>
+          </div>
+          {% endfor %}
+          {% if related_products|length > 8 %}
+          <div class="mx-auto">
+            <a href="/" class="py-[2px] px-4 bg-red-600 text-white cursor-pointer hover:bg-red-700 text-center">
+              Xem thêm
+            </a>
+          </div>
+            {% endif %}
+        </div>
+      </div>
     </div>
   </section>
+
+  {% if related_genre_products %}
+  <c-section title="Sách cùng thể loại" view-more-href="/">
+    {% for product in related_genre_products|slice:'5' %}
+    <c-product-item :product="product"></c-product-item>
+    {% endfor %}
+  </c-section>
+  {% endif %}
 
   <script>
     $(document).ready(function() {
