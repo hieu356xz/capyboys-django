@@ -103,8 +103,8 @@
   </section>
 
   <section>
-    <div class="md:grid md:grid-cols-[75%_auto] md:gap-7 p-4">
-      <div class="pt-4">
+    <div class="md:flex md:flex-rows md:gap-7 p-4">
+      <div class="pt-4 md:flex-1">
         <h2 class="uppercase text-center font-semibold text-white bg-red-600">
           Giới thiệu sách
         </h2>
@@ -112,19 +112,23 @@
           {% if product.description %}
           <span>{{ product.description|safe }}</span>
           {% else %}
-          <div class="text-center h-32 leading-[8rem]">Chưa có thông tin</div>
+          <div class="text-center h-32 leading-[8rem]">
+            <span class="inline-block leading-none">
+              Chưa có thông tin
+            </span>
+          </div>
           {% endif %}
         </div>
       </div>
 
       {% if related_products %}
-      <div class="pt-4 border">
+      <div class="pt-4 border md:basis-1/4">
         <h2 class="uppercase text-center font-semibold text-white bg-red-600">
           Sách cùng tác giả
         </h2>
         <div class="flex flex-col gap-4 p-4">
           {% for product in related_products|slice:'8' %}
-          <div class="grid grid-cols-[30%_auto] gap-3">
+          <div class="grid grid-cols-[25%_auto] md:grid-cols-[30%_auto] gap-3">
             <img src="{{product.cover_img}}" alt="product.title" {% if product.cover_img and product.cover_img.url %}onerror="this.src='{{product.cover_img.url}};'"{% endif %}>
             <div class="text-[14px] font-semibold">
               <a href="/products/{{product.slug}}" class="font-semibold text-gray-800 hover:text-red-600 transition-colors duration-300">
