@@ -20,7 +20,7 @@
     <div class="py-4 flex flex-wrap border-b border-gray-300">
       <div class="basis-full md:basis-2/5 p-4">
         <a data-fancybox="image" href="{{ product.cover_img }}">
-          <img src="{{ product.cover_img }}" alt="{{ product.title }}" />
+          <img src="{{ product.cover_img }}" onerror="this.src='{% if product.cover_img %}{{product.cover_img.url}}{% endif %}';" alt="{{ product.title }}" />
         </a>
       </div>
 
