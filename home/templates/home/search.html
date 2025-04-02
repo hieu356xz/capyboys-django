@@ -32,7 +32,7 @@
           <h2 class="pb-6 text-center font-semibold">Tìm thấy {{ total_products }} sản phẩm</h2>
     
           <h3 class="inline-block uppercase py-2 text-lg font-bold">Sản phẩm phù hợp</h3>
-          <div class="grid grid-cols-[50%_50%] gap-4 md:hidden py-2 w-full">
+          <div class="grid grid-cols-2 gap-4 md:hidden py-2 w-full">
             <c-price-filter currentValue="{{price_query}}" contentHref="{{base_url}}" :price-ranges="price_ranges" initialHide="True"></c-price-filter>
             {% if related_authors %}
               <c-author-filter currentValue="{{author_query}}" contentHref="{{base_url}}" :authors="related_authors" initialHide="True"></c-author-filter>

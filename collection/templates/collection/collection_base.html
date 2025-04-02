@@ -19,9 +19,16 @@
     </div>
 
     <div class="py-4 grid md:grid-cols-[25%_1fr]">
-      <div class="hidden md:block px-4 w-full">
-        <c-content-filter :contents="collections" displayName="Danh mục sản phẩm" contentHref="collections"/>
-      </div>
+        <div class="hidden md:flex flex-col gap-4 px-4 w-full">
+          <c-content-filter displayName="Danh mục sản phẩm" :contents="collections" contentHref="collections"/>
+          <c-price-filter currentValue="{{price_query}}" contentHref="{{base_url}}" :price-ranges="price_ranges"></c-price-filter>
+          {% if related_authors %}
+            <c-author-filter currentValue="{{author_query}}" contentHref="{{base_url}}" :authors="related_authors"></c-author-filter>
+          {% endif %}
+          {% if related_genres %}
+          <c-genre-filter currentValue="{{genre_query}}" contentHref="{{base_url}}" :genres="related_genres"></c-genre-filter>
+        {% endif %}
+        </div>
 
         <div class="px-4">
           <h2 class="inline-block uppercase py-2 text-lg font-bold">
@@ -31,8 +38,15 @@
               Tất cả sản phẩm
             {% endif %}
           </h2>
-          <div class="block md:hidden py-2 w-[50%]">
-            <c-content-filter :contents="collections" displayName="Danh mục sản phẩm" contentHref="collections"/>
+          <div class="grid grid-cols-2 gap-4 md:hidden py-2 w-full">
+            <c-content-filter displayName="Danh mục sản phẩm" contentHref="collections" :contents="collections" initialHide="True"/>
+            <c-price-filter currentValue="{{price_query}}" contentHref="{{base_url}}" :price-ranges="price_ranges" initialHide="True"></c-price-filter>
+            {% if related_authors %}
+              <c-author-filter currentValue="{{author_query}}" contentHref="{{base_url}}" :authors="related_authors" initialHide="True"></c-author-filter>
+              {% endif %}
+            {% if related_genres %}
+              <c-genre-filter currentValue="{{genre_query}}" contentHref="{{base_url}}" :genres="related_genres" initialHide="True"></c-genre-filter>
+            {% endif %}
           </div>
           <div class="pt-2 text-sm">
             <span>Sắp xếp</span>
