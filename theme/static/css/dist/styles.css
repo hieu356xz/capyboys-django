@@ -1702,6 +1702,10 @@ input[type="number"]::-webkit-inner-spin-button,
   grid-template-columns: 25% auto;
 }
 
+.grid-cols-\[50\%_50\%\] {
+  grid-template-columns: 50% 50%;
+}
+
 .flex-row {
   flex-direction: row;
 }
