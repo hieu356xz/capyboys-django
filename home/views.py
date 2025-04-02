@@ -48,6 +48,38 @@ PRICE_RANGES = {
     },
 }
 
+
+SORT_OPTIONS = {
+    "newest": {
+        "name": "Mới nhất",
+        "order_by": "-id"
+    },
+    "oldest": {
+        "name": "Cũ nhất",
+        "order_by": "id"
+    },
+    "best-selling": {
+        "name": "Bán chạy nhất",
+        "order_by": "-id" # Placeholder
+    },
+    "title-ascending": {
+        "name": "Tên A-Z",
+        "order_by": "title"
+    },
+    "title-descending": {
+        "name": "Tên Z-A",
+        "order_by": "-title"
+    },
+    "price-ascending": {
+        "name": "Giá thấp đến cao",
+        "order_by": "price"
+    },
+    "price-descending": {
+        "name": "Giá cao đến thấp",
+        "order_by": "-price"
+    }
+}
+
 def index(request):
     new_products = Book.objects.all().order_by("-pk")[:10]
     best_selling_products = Book.objects.all()[:10] # Placeholder
@@ -71,13 +103,14 @@ def about(request):
 
 def search(request):
     PAGE_SIZE = 24
-    query_params = QueryParams(request.GET, ("q", "page", "author", "genre", "price"))
+    query_params = QueryParams(request.GET, ("q", "page", "author", "genre", "price", "order"))
     
     page = int(query_params.get('page', default=1))
     search_query = query_params.get("q", default="")
     author_query = query_params.get("author", default="")
     genre_query = query_params.get("genre", default="")
     price_query = query_params.get("price", default="")
+    sort_key = query_params.get_if_not_in('order', SORT_OPTIONS, "newest")
 
     start = max((page - 1) * PAGE_SIZE, 0)
     end = start + PAGE_SIZE
@@ -109,6 +142,9 @@ def search(request):
     else:
         price_query = "all"
 
+    sort_option = SORT_OPTIONS[sort_key]
+    queryset = queryset.order_by(sort_option['order_by'])
+
     total_products = queryset.count()
     products = queryset[start:end]
 
@@ -127,6 +163,7 @@ def search(request):
         "total_products": total_products,
         "query": search_query,
         "base_url": base_url,
+        "sort_options": SORT_OPTIONS,
         "current_page": page,
         "total_page": total_products // PAGE_SIZE + 1,
         "related_authors": related_authors,
