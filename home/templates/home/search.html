@@ -3,8 +3,8 @@
 
 {% block content %}
 
+<section>
 <div class="px-1 md:px-4 max-w-[1200px] mx-auto">
-  <section>
     <div class="px-4">
       <a href="/" class="hover:text-red-500 transition-color duration-500">
         Trang chủ
@@ -12,24 +12,38 @@
       <span aria-hidden="true"> / </span>
       <span>Tìm kiếm</span>
     </div>
-    <h2 class="uppercase pt-6 text-center text-lg font-semibold">Kết quả tìm kiếm: {{ query }}</h2>
-    {% if total_products < 1 %}
-        <h3 class="uppercase pt-12 text-center text-2xl font-bold">Không tìm thấy sản phẩm nào phù hợp</h3>
-    {% else %}
-    <h2 class="pb-6 text-center font-semibold">Tìm thấy {{ total_products }} sản phẩm</h2>
-
-    <h3 class="uppercase px-4 text-[22px] font-bold">Sản phẩm phù hợp</h3>
-    <div class="flex flex-row flex-wrap py-4">
-        {% for product in products %}
-        <c-product-item
-            :product="product"
-            class="basis-1/2 sm:basis-1/3 md:basis-1/3 lg:basis-1/4 !p-3"></c-product-item>
-        {% endfor %}
-        
-        <c-pagination :totalPages="total_page" :currentPage="current_page" href="{{base_url}}"></c-pagination>
+      
+      <div class="py-4 grid md:grid-cols-[25%_1fr]">
+        <div class="hidden md:block px-4 w-full">
+          <c-price-filter currentValue="{{price_query}}" contentHref="{{base_url}}" :price-ranges="price_ranges"></c-price-filter>
+        </div>
+    
+        <div class="px-4">
+          <h2 class="uppercase pt-2 text-center text-lg font-semibold">Kết quả tìm kiếm: {{ query }}</h2>
+          {% if total_products < 1 %}
+              <h3 class="uppercase pt-12 text-center text-2xl font-bold">Không tìm thấy sản phẩm nào phù hợp</h3>
+          {% else %}
+          <h2 class="pb-6 text-center font-semibold">Tìm thấy {{ total_products }} sản phẩm</h2>
+    
+          <h3 class="inline-block uppercase py-2 text-lg font-bold">Sản phẩm phù hợp</h3>
+          <div class="block md:hidden py-2 w-[50%]">
+            <c-price-filter currentValue="{{price_query}}" contentHref="{{base_url}}" :price-ranges="price_ranges"></c-price-filter>
+          </div>
+          <div class="pt-2 text-sm">
+            <span>Sắp xếp</span>
+            <select id="sorter" class="text-sm ml-4 rounded-lg">
+              {% for key,value in sort_options.items %}
+                <option value="{{key}}" {% if current_sort == key %}selected{% endif %} >{{value.name}}</option>
+              {% endfor %}
+            </select>
+          </div>
+    
+          <c-product-list :products="products" href="{{base_url}}" :currentPage="current_page" :totalPage="total_page"></c-product-list>
+        </div>
+      </div>
     </div>
     {% endif %}
-  </section>
-</div>
+  </div>
+</section>
 
 {% endblock%}
