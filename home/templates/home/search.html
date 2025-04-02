@@ -14,8 +14,14 @@
     </div>
       
       <div class="py-4 grid md:grid-cols-[25%_1fr]">
-        <div class="hidden md:block px-4 w-full">
+        <div class="hidden md:flex flex-col gap-4 px-4 w-full">
           <c-price-filter currentValue="{{price_query}}" contentHref="{{base_url}}" :price-ranges="price_ranges"></c-price-filter>
+          {% if related_authors %}
+            <c-author-filter currentValue="{{author_query}}" contentHref="{{base_url}}" :authors="related_authors"></c-author-filter>
+          {% endif %}
+          {% if related_genres %}
+          <c-genre-filter currentValue="{{genre_query}}" contentHref="{{base_url}}" :genres="related_genres"></c-genre-filter>
+        {% endif %}
         </div>
     
         <div class="px-4">
@@ -26,7 +32,7 @@
           <h2 class="pb-6 text-center font-semibold">Tìm thấy {{ total_products }} sản phẩm</h2>
     
           <h3 class="inline-block uppercase py-2 text-lg font-bold">Sản phẩm phù hợp</h3>
-          <div class="block md:hidden py-2 w-[50%]">
+          <div class="flex md:hidden py-2 w-[50%]">
             <c-price-filter currentValue="{{price_query}}" contentHref="{{base_url}}" :price-ranges="price_ranges"></c-price-filter>
           </div>
           <div class="pt-2 text-sm">
