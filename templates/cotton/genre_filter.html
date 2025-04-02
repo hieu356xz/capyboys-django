@@ -1,0 +1,28 @@
+{% load custom_tags %}
+
+<c-vars currentValue contentHref genres initialHide/>
+
+<c-content-filter initialHide="{{initialHide}}" displayName="Thể loại">
+  {% for genre in genres %}
+  {% if genre.name == currentValue %}
+  <li class="py-1">
+    <a
+      href="{% remove_query_param contentHref 'genre' %}"
+      class="relative w-full block text-red-600 font-bold transition-colors duration-300 underline-animate underline-animate-left underline-animate-color-red-600 underline-animate-duration-[800ms]">
+      {{genre.name}}
+      <span class="absolute right-0 -top-1 size-6 leading-[26px] text-center bg-red-600 rounded-sm">
+        <i class="ph-bold ph-x text-white"></i>
+      </span>
+    </a>
+  </li>
+  {% else %}
+  <li class="py-1">
+    <a
+      href="{% set_query_param contentHref 'genre' genre.name %}"
+      class="block hover:text-red-600 transition-colors duration-300 underline-animate underline-animate-left underline-animate-color-red-600 underline-animate-duration-[800ms]">
+      {{genre.name}}
+    </a>
+  </li>
+  {% endif %}
+  {% endfor %}
+</c-content-filter>

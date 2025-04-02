@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.db.models import Q
+from django.db.models import Q, Subquery
 from home.utils import QueryParams
 from product.models import Author, Book, Genre
 from blog.models import Blog
@@ -150,11 +150,14 @@ def search(request):
 
     queryset = queryset.prefetch_related('authors', 'genres')
 
-    related_authors_id = queryset.values_list('authors__id', flat=True).distinct()
-    related_authors = Author.objects.filter(pk__in=related_authors_id)[:20]
+    related_authors = Author.objects.filter(
+        id__in=Subquery(queryset.values('authors__id').distinct())
+    )[:30]
 
-    related_genres_id = queryset.values_list('genres__id', flat=True).distinct()
-    related_genres = Genre.objects.filter(pk__in=related_genres_id)[:20]
+    related_genres = Genre.objects.filter(
+        id__in=Subquery(queryset.values('genres__id').distinct())
+    )[:30]
+    print(query_params.params)
 
     base_url = query_params.without("page").build_url('/search/')
 
