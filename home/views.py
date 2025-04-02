@@ -3,7 +3,6 @@ from django.db.models import Q, Subquery
 from home.utils import QueryParams
 from product.models import Author, Book, Genre
 from blog.models import Blog
-from .utils import get_queryset_with_filter
 
 PRICE_RANGES = {
     "all": {
@@ -122,25 +121,32 @@ def search(request):
     # if author_query: queryset = queryset.filter(authors__name=author_query)
     # if search_query: queryset = queryset.filter(Q(title__icontains=search_query) | Q(description__icontains=search_query))
 
-    queryset = Book.objects.none()
-
-    queryset = get_queryset_with_filter(queryset, author_query, authors__name=author_query)
-    queryset = get_queryset_with_filter(queryset, genre_query, genres__name=genre_query)
-    queryset = get_queryset_with_filter(queryset, search_query, (Q(title__icontains=search_query) | Q(description__icontains=search_query)))
+    filter_conditions = Q()
+    
+    if author_query:
+        filter_conditions &= Q(authors__name=author_query)
+    
+    if genre_query:
+        filter_conditions &= Q(genres__name=genre_query)
+    
+    if search_query:
+        filter_conditions &= (Q(title__icontains=search_query) | Q(description__icontains=search_query))
 
     if price_query and price_query in PRICE_RANGES:
         price_range = PRICE_RANGES[price_query]
         min_price = price_range["min_price"]
         max_price = price_range["max_price"]
         
-        if min_price is not None and max_price is not None:
-            queryset = get_queryset_with_filter(queryset, min_price, price__gte=min_price, price__lte=max_price)
-        if min_price is not None:
-            queryset = get_queryset_with_filter(queryset, min_price, price__gte=min_price)
-        if max_price is not None:
-            queryset = get_queryset_with_filter(queryset, max_price, price__lte=max_price)
+        if min_price and max_price:
+            filter_conditions &= Q(price__gte=min_price, price__lte=max_price)
+        elif min_price:
+            filter_conditions &= Q(price__gte=min_price)
+        elif max_price:
+            filter_conditions &= Q(price__lte=max_price)
     else:
         price_query = "all"
+
+    queryset = Book.objects.filter(filter_conditions)
 
     sort_option = SORT_OPTIONS[sort_key]
     queryset = queryset.order_by(sort_option['order_by'])
@@ -153,11 +159,14 @@ def search(request):
     related_authors = Author.objects.filter(
         id__in=Subquery(queryset.values('authors__id').distinct())
     )[:30]
+    selected_authors = Author.objects.filter(name=author_query)
+    related_authors = related_authors | selected_authors
 
     related_genres = Genre.objects.filter(
         id__in=Subquery(queryset.values('genres__id').distinct())
     )[:30]
-    print(query_params.params)
+    selected_genres = Genre.objects.filter(name=genre_query)
+    related_genres = related_genres | selected_genres
 
     base_url = query_params.without("page").build_url('/search/')
 
