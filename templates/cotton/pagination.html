@@ -5,7 +5,7 @@
 <div class="w-full max-w-[1200px] mx-auto py-8 justify-center flex">
     {% if currentPage > 1 %}
       <c-pagination-item>
-        <a href="{{ href|set_query_param:'page='}}{{ currentPage|add:'-1' }}" class="size-full flex justify-center items-center">
+        <a href="{% set_query_param href 'page' currentPage|add:'-1' %}" class="size-full flex justify-center items-center">
           <i class="ph ph-caret-double-left"></i>
         </a>
       </c-pagination-item>
@@ -38,7 +38,7 @@
     
     {% if currentPage < totalPages %}
       <c-pagination-item>
-        <a href="{{ href|set_query_param:'page='}}{{ currentPage|add:'1' }}" class="size-full flex justify-center items-center">
+        <a href="{% set_query_param href 'page' currentPage|add:'1' %}" class="size-full flex justify-center items-center">
           <i class="ph ph-caret-double-right"></i>
         </a>
       </c-pagination-item>
