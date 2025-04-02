@@ -1,4 +1,4 @@
-<c-vars contents displayName contentHref />
+<c-vars contents displayName contentHref initialHide/>
 
 <button
   class="content-filter-btn flex w-full bg-red-600 items-center text-white uppercase text-left text-sm font-semibold rounded-sm">
@@ -9,7 +9,7 @@
 </button>
 
 <div
-  class="content-filter-container w-full uppercase text-left text-sm font-semibold border border-gray-200 rounded-sm overflow-hidden">
+  class="content-filter-container w-full uppercase text-left text-sm font-semibold border border-gray-200 rounded-sm overflow-hidden {% if initialHide == 'True' %}h-0{% endif %}">
   <ul class="p-2">
     {% if slot %}
       {{slot}}
@@ -18,7 +18,7 @@
     <li class="py-1">
       <a
         href="/{{contentHref}}/{{item.slug}}"
-        class="hover:text-red-600 transition-colors duration-300 underline-animate underline-animate-left underline-animate-color-red-600 underline-animate-duration-[800ms]">
+        class="block hover:text-red-600 transition-colors duration-300 underline-animate underline-animate-left underline-animate-color-red-600 underline-animate-duration-[800ms]">
         {{item.name}}
       </a>
     </li>
