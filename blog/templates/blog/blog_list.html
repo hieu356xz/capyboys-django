@@ -6,7 +6,15 @@
 <section>
   <div
     class="px-1 md:px-4 max-w-[1200px] my-8 mx-auto">
-    <div class="grid md:grid-cols-[25%_1fr]">
+    <div class="px-4">
+      <a href="/" class="hover:text-red-500 transition-color duration-500">
+        Trang chủ
+      </a>
+      <span aria-hidden="true"> / </span>
+      <span>{{current_blog_type.name}}</span>
+    </div>
+
+    <div class="py-4 grid md:grid-cols-[25%_1fr]">
       <div class="hidden md:block px-4 w-full">
         <c-content-filter
           displayName="Danh mục bài viết"
