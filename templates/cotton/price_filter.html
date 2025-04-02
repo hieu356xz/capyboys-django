@@ -7,7 +7,7 @@
   {% if key == currentValue %}
   <li class="py-1">
     <a
-      href="{{contentHref|remove_query_param:'price'}}"
+      href="{% remove_query_param contentHref 'price' %}"
       class="relative w-full block text-red-600 font-bold transition-colors duration-300 underline-animate underline-animate-left underline-animate-color-red-600 underline-animate-duration-[800ms]">
       {{value.name}}
       <span class="absolute right-0 -top-1 size-6 leading-[26px] text-center bg-red-600 rounded-sm">
@@ -18,7 +18,7 @@
   {% else %}
   <li class="py-1">
     <a
-      href="{{contentHref|set_query_param:'price='}}{{key}}"
+      href="{% set_query_param contentHref 'price' key %}"
       class="block hover:text-red-600 transition-colors duration-300 underline-animate underline-animate-left underline-animate-color-red-600 underline-animate-duration-[800ms]">
       {{value.name}}
     </a>

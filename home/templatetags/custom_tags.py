@@ -16,18 +16,17 @@ def get_page_range(current_page, total_pages):
     
     return range(start, end + 1)
 
-@register.filter
-def set_query_param(url: str, param: str):
+@register.simple_tag
+def set_query_param(url: str, param: str, value: str):
     url = html.unescape(url)
     parsed_url = urlparse(url)
     query_dict = { key: value[-1] for key, value in parse_qs(parsed_url.query).items()}
     query_params = QueryParams(query_dict)
 
-    param_name, param_value = param.split('=', 1)
-    query_params.set(param_name, param_value)
+    query_params.set(param, value)
     return query_params.build_url(parsed_url.path)
 
-@register.filter
+@register.simple_tag
 def remove_query_param(url: str, param: str):
     url = html.unescape(url)
     parsed_url = urlparse(url)
