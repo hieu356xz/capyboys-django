@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import Http404
 from cart.cart import CartSession
-from product.models import Book, BookAttributeValue
+from product.models import Book
 
 # exclude general collections
 exclude_collections = (
@@ -23,7 +23,7 @@ def product_detail(request, slug):
             'bookattributevalue_set'
         ).get(slug=slug)
 
-        product_attributes = product.bookattributevalue_set.all()
+        product_attributes = product.bookattributevalue_set.prefetch_related('attribute').all()
         current_collection = product.collections.filter(slug=slug).first()
         collections = product.collections.exclude(slug__in=exclude_collections)
         authors = product.authors.all()

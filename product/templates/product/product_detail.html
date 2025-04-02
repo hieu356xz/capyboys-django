@@ -87,7 +87,7 @@
             <div class="my-4">
               <button 
                 id="add-to-cart-btn"
-                data-product-id={{product.pk}} class="p-1 w-full bg-red-600 text-white rounded-md font-semibold text-[14px] uppercase enabled:hover:bg-red-700 transition-colors duration-300 disabled:bg-neutral-600"
+                data-product-id={{product.pk}} class="p-1 w-full bg-red-600 text-white rounded-[4px] font-semibold text-[14px] uppercase enabled:hover:bg-red-700 transition-colors duration-300 disabled:bg-neutral-600"
                 {% if not product.stock %}disabled{% endif %}>
                 {% if product.stock %}
                   Thêm vào giỏ hàng
