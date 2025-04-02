@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.db.models import Q
 from home.utils import QueryParams
-from product.models import Book
+from product.models import Author, Book, Genre
 from blog.models import Blog
 from .utils import get_queryset_with_filter
 
@@ -106,9 +106,19 @@ def search(request):
             queryset = get_queryset_with_filter(queryset, min_price, price__gte=min_price)
         if max_price is not None:
             queryset = get_queryset_with_filter(queryset, max_price, price__lte=max_price)
+    else:
+        price_query = "all"
 
     total_products = queryset.count()
     products = queryset[start:end]
+
+    queryset = queryset.prefetch_related('authors', 'genres')
+
+    related_authors_id = queryset.values_list('authors__id', flat=True).distinct()
+    related_authors = Author.objects.filter(pk__in=related_authors_id)[:20]
+
+    related_genres_id = queryset.values_list('genres__id', flat=True).distinct()
+    related_genres = Genre.objects.filter(pk__in=related_genres_id)[:20]
 
     base_url = query_params.without("page").build_url('/search/')
 
@@ -118,7 +128,13 @@ def search(request):
         "query": search_query,
         "base_url": base_url,
         "current_page": page,
-        "total_page": total_products // PAGE_SIZE + 1
+        "total_page": total_products // PAGE_SIZE + 1,
+        "related_authors": related_authors,
+        "related_genres": related_genres,
+        "price_ranges": PRICE_RANGES,
+        "price_query": price_query,
+        "author_query": author_query,
+        "genre_query": genre_query,
     }
     return render(request, 'home/search.html', context)
 
