@@ -4,10 +4,23 @@
 {% block content %}
 <section>
   <div class="px-1 md:px-4 max-w-[1200px] my-8 mx-auto">
-    <div class="grid md:grid-cols-[25%_1fr]">
+    <div class="px-4">
+      <a href="/" class="hover:text-red-500 transition-color duration-500">
+        Trang chủ
+      </a>
+      <span aria-hidden="true"> / </span>
+      <span>
+        {% if current_collection %}
+          {{current_collection.name}}
+        {% else %}
+          Tất cả sản phẩm
+        {% endif %}
+      </span>
+    </div>
+
+    <div class="py-4 grid md:grid-cols-[25%_1fr]">
       <div class="hidden md:block px-4 w-full">
         <c-content-filter :contents="collections" displayName="Danh mục sản phẩm" contentHref="collections"/>
-
       </div>
 
         <div class="px-4">
@@ -21,7 +34,7 @@
           <div class="block md:hidden py-2 w-[50%]">
             <c-content-filter :contents="collections" displayName="Danh mục sản phẩm" contentHref="collections"/>
           </div>
-          <div class="text-sm">
+          <div class="pt-2 text-sm">
             <span>Sắp xếp</span>
             <select id="sorter" class="text-sm ml-4 rounded-lg">
               {% for key,value in sort_options.items %}
