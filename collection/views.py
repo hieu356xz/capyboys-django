@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.db.models import Q, Subquery
+from django.db.models import Q, Subquery, Sum
 from django.http import Http404
 from collection.models import Collection
 from product.models import Author, Book, Genre
@@ -59,7 +59,7 @@ SORT_OPTIONS = {
     },
     "best-selling": {
         "name": "Bán chạy nhất",
-        "order_by": "-id" # Placeholder
+        "order_by": None # Will be handled in the view
     },
     "title-ascending": {
         "name": "Tên A-Z",
@@ -134,9 +134,15 @@ def index(request, slug):
             queryset = current_collection.books.filter(filter_conditions)
         except Collection.DoesNotExist:
             raise Http404("Collection does not exist")
-    
-    sort_option = SORT_OPTIONS[sort_key]
-    queryset = queryset.order_by(sort_option['order_by'])
+
+    if sort_key == "best-selling":
+        queryset = queryset.annotate(
+            sale_count=Sum("orderitem__quantity", default=0)
+        )
+        queryset = queryset.order_by("-sale_count", "-id")
+    else:
+        sort_option = SORT_OPTIONS[sort_key]
+        queryset = queryset.order_by(sort_option['order_by'])
 
     total_products = queryset.count()
     products = queryset[start:end]
