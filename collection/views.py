@@ -138,8 +138,7 @@ def index(request, slug):
     if sort_key == "best-selling":
         queryset = queryset.annotate(
             sale_count=Sum("orderitem__quantity", default=0)
-        )
-        queryset = queryset.order_by("-sale_count", "-id")
+        ).order_by("-sale_count", "-id")
     else:
         sort_option = SORT_OPTIONS[sort_key]
         queryset = queryset.order_by(sort_option['order_by'])

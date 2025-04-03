@@ -18,7 +18,7 @@
     {% endfor %}
   </c-section>
 
-  <c-section title="Sách bán chạy" view-more-href="/collections/all">
+  <c-section title="Sách bán chạy" view-more-href="/collections/all?sort=best-selling">
     {% for product in best_selling_products %}
       <c-product-item :product="product"></c-product-item>
     {% endfor %}
