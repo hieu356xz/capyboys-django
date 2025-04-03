@@ -81,7 +81,9 @@ SORT_OPTIONS = {
 
 def index(request):
     new_products = Book.objects.all().order_by("-pk")[:10]
-    best_selling_products = Book.objects.all()[:10] # Placeholder
+    best_selling_products = Book.objects.annotate(
+            sale_count=Sum("orderitem__quantity", default=0)
+        ).order_by("-sale_count", "-id")[:10]
     vietnamese_literatures = Book.objects.filter(collection__slug="van-hoc-viet-nam").order_by("-pk")[:10]
     manga_comics = Book.objects.filter(collection__slug="manga-comic").order_by("-pk")[:10]
     light_novels = Book.objects.filter(collection__slug="light-novel").order_by("-pk")[:10]
@@ -151,8 +153,7 @@ def search(request):
     if sort_key == "best-selling":
         queryset = queryset.annotate(
             sale_count=Sum("orderitem__quantity", default=0)
-        )
-        queryset = queryset.order_by("-sale_count", "-id")
+        ).order_by("-sale_count", "-id")
     else:
         sort_option = SORT_OPTIONS[sort_key]
         queryset = queryset.order_by(sort_option['order_by'])
