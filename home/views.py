@@ -5,11 +5,6 @@ from product.models import Author, Book, Genre
 from blog.models import Blog
 
 PRICE_RANGES = {
-    "all": {
-        "name": "Tất cả",
-        "min_price": None,
-        "max_price": None,
-    },
     "0-50000": {
         "name": "Nhỏ hơn 50.000đ",
         "min_price": 0,
@@ -134,7 +129,7 @@ def search(request):
     if search_query:
         filter_conditions &= (Q(title__icontains=search_query) | Q(description__icontains=search_query))
 
-    if price_query and price_query in PRICE_RANGES:
+    if price_query in PRICE_RANGES:
         price_range = PRICE_RANGES[price_query]
         min_price = price_range["min_price"]
         max_price = price_range["max_price"]
@@ -145,8 +140,6 @@ def search(request):
             filter_conditions &= Q(price__gte=min_price)
         elif max_price:
             filter_conditions &= Q(price__lte=max_price)
-    else:
-        price_query = "all"
 
     queryset = Book.objects.filter(filter_conditions)
 

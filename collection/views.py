@@ -6,11 +6,6 @@ from product.models import Author, Book, Genre
 from home.utils import QueryParams
 
 PRICE_RANGES = {
-    "all": {
-        "name": "Tất cả",
-        "min_price": None,
-        "max_price": None,
-    },
     "0-50000": {
         "name": "Nhỏ hơn 50.000đ",
         "min_price": 0,
@@ -109,7 +104,7 @@ def index(request, slug):
     if genre_query:
         filter_conditions &= Q(genres__name=genre_query)
 
-    if price_query and price_query in PRICE_RANGES:
+    if price_query in PRICE_RANGES:
         price_range = PRICE_RANGES[price_query]
         min_price = price_range["min_price"]
         max_price = price_range["max_price"]
@@ -120,9 +115,7 @@ def index(request, slug):
             filter_conditions &= Q(price__gte=min_price)
         elif max_price:
             filter_conditions &= Q(price__lte=max_price)
-    else:
-        price_query = "all"
-    
+
     collections = Collection.objects.filter(slug__in=general_collections)
 
     if slug == 'all':
