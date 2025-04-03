@@ -129,19 +129,22 @@ def search(request):
     if search_query:
         filter_conditions &= (Q(title__icontains=search_query) | Q(description__icontains=search_query))
 
-    if price_query in PRICE_RANGES:
-        price_range = PRICE_RANGES[price_query]
-        min_price = price_range["min_price"]
-        max_price = price_range["max_price"]
-        
-        if min_price and max_price:
-            filter_conditions &= Q(price__gte=min_price, price__lte=max_price)
-        elif min_price:
-            filter_conditions &= Q(price__gte=min_price)
-        elif max_price:
-            filter_conditions &= Q(price__lte=max_price)
+    if not filter_conditions:
+        queryset = Book.objects.none()
+    else:
+        if price_query in PRICE_RANGES:
+            price_range = PRICE_RANGES[price_query]
+            min_price = price_range["min_price"]
+            max_price = price_range["max_price"]
 
-    queryset = Book.objects.filter(filter_conditions)
+            if min_price and max_price:
+                filter_conditions &= Q(price__gte=min_price, price__lte=max_price)
+            elif min_price:
+                filter_conditions &= Q(price__gte=min_price)
+            elif max_price:
+                filter_conditions &= Q(price__lte=max_price)
+
+        queryset = Book.objects.filter(filter_conditions)
 
     if sort_key == "best-selling":
         queryset = queryset.annotate(
