@@ -1,3 +1,4 @@
+from decimal import Decimal
 from django.db import models
 from django.contrib.auth import get_user_model
 from product.models import Book
@@ -46,7 +47,7 @@ class Order(models.Model):
     status = models.CharField(max_length=20, choices=ORDER_STATUS, default='pending')
 
     payment_method = models.CharField(max_length=20, choices=PAYMENT_METHOD)
-    payment_status = models.BooleanField(default=False)
+    payment_status = models.BooleanField(default=False, verbose_name="Is Paid?")
     transaction_id = models.CharField(max_length=255, blank=True)
 
     total_price = models.DecimalField(max_digits=15, decimal_places=2)
@@ -74,9 +75,11 @@ class Order(models.Model):
                 total=models.Sum('quantity'))['total'] or 0
     
     def save(self, *args, **kwargs):
-        if not self.final_price:
-            self.final_price = sum([item.subtotal for item in self.items.all()])
+        if not self.total_price:
+            self.total_price = 0
         super().save(*args, **kwargs)
+        if self.pk:
+            self.total_price = sum([item.subtotal for item in self.items.all()])
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)
@@ -88,14 +91,16 @@ class OrderItem(models.Model):
     final_price = models.DecimalField(max_digits=15, decimal_places=2)  # Price after discount
     
     def __str__(self):
-        return f"{self.quantity}x {self.book_title}"
+        return f"{self.quantity}x {self.book.title}"
     
     @property
     def subtotal(self):
         return self.quantity * self.final_price
     
     def save(self, *args, **kwargs):
-        if not self.final_price and self.price and self.discount:
-            discount_amount = (self.price * self.discount) / 100.0
-            self.final_price = self.price - discount_amount
+        self.price = self.book.price if self.book else 0
+        self.discount = self.book.discount if self.book else 0
+
+        discount_amount = (self.price * self.discount) / Decimal('100.0')
+        self.final_price = self.price - discount_amount
         super().save(*args, **kwargs)
