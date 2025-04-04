@@ -41,3 +41,7 @@ def calc_subtotal(price, count):
     count = int(count)
     subtotal = price * count
     return f"{subtotal:,.0f}"
+
+@register.filter
+def is_absolute_url(url):
+    return bool(urlparse(str(url)).netloc)

@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% block title %}{{ product.title }} - Capyboys{% endblock %} 
 
+{% load custom_tags %}
+
 {% block content %}
 <div class="px-1 md:px-4 max-w-[1200px] mx-auto">
   <section>
@@ -19,8 +21,8 @@
     </div>
     <div class="py-4 flex flex-wrap border-b border-gray-300">
       <div class="basis-full md:basis-2/5 p-4">
-        <a data-fancybox="image" href="{{ product.cover_img }}">
-          <img src="{{ product.cover_img }}" {% if product.cover_img and product.cover_img.url %}onerror="this.src='{{product.cover_img.url}};'"{% endif %} alt="{{ product.title }}" />
+        <a data-fancybox="image" href="{% if product.cover_img|is_absolute_url %}{{ product.cover_img }}{% else %}{{ product.cover_img.url }}{% endif %}">
+          <img src="{% if product.cover_img|is_absolute_url %}{{ product.cover_img }}{% else %}{{ product.cover_img.url }}{% endif %}" alt="{{ product.title }}" />
         </a>
       </div>
 
@@ -129,7 +131,7 @@
         <div class="flex flex-col gap-4 p-4">
           {% for product in related_products|slice:'8' %}
           <div class="grid grid-cols-[25%_auto] md:grid-cols-[30%_auto] gap-3">
-            <img src="{{product.cover_img}}" alt="product.title" {% if product.cover_img and product.cover_img.url %}onerror="this.src='{{product.cover_img.url}};'"{% endif %}>
+            <img src="{% if product.cover_img|is_absolute_url %}{{ product.cover_img }}{% else %}{{ product.cover_img.url }}{% endif %}">
             <div class="text-[14px] font-semibold">
               <a href="/products/{{product.slug}}" class="font-semibold text-gray-800 hover:text-red-600 transition-colors duration-300">
                 {{product.title}}
