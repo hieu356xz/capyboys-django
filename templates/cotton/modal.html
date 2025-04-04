@@ -8,16 +8,24 @@
             </button>
         </div>
         <div class="flex flex-col gap-2">
+            {% if header %}
             <div {% if id %}id="{{id}}__header"{% endif %} class="modal-container__header">
                 {{ header }}
             </div>
+            {% endif %}
+            {% if body %}
             <div {% if id %}id="{{id}}__body"{% endif %} class="modal-container__body">
                 {{ body }}
             </div>
+            {% endif %}
+            {% if footer %}
             <div {% if id %}id="{{id}}__footer"{% endif %} class="modal-container__footer">
                 {{ footer }}
             </div>
+            {% endif %}
         </div>
+        {% if script %}
         {{ script }}
+        {% endif %}
     </div>
 </div>

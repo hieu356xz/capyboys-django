@@ -1,6 +1,6 @@
 {% load custom_tags %}
 
-<c-vars currentValue contentHref authors initialHide/>
+<c-vars currentValue contentHref authors initialHide="False"/>
 
 <c-content-filter initialHide="{{initialHide}}" displayName="Tác giả">
   {% for author in authors %}
