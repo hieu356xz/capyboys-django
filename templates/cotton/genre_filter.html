@@ -1,6 +1,6 @@
 {% load custom_tags %}
 
-<c-vars currentValue contentHref genres initialHide/>
+<c-vars currentValue contentHref genres initialHide="False"/>
 
 <c-content-filter initialHide="{{initialHide}}" displayName="Thể loại">
   {% for genre in genres %}
