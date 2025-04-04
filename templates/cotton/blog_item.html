@@ -1,12 +1,13 @@
 <c-vars blog/>
 
+{% load custom_tags %}
+
 <div class="py-4 flex flex-wrap">
     <div class="px-4 basis-full md:basis-2/5 max-h-[300px]">
       <a href="/blogs/{{blog.blog_type.slug}}/{{blog.slug}}">
         <img
           class="size-full object-contain"
-          src={{blog.cover_img}}
-          {% if blog.cover_img and blog.cover_img.url %}onerror="this.src='{{blog.cover_img.url}};'"{% endif %}
+          src="{% if blog.cover_img|is_absolute_url %}{{ blog.cover_img }}{% else %}{{ blog.cover_img.url }}{% endif %}"
           alt={{blog.title}}
         />
       </a>
