@@ -74,3 +74,11 @@
   animation-name: animatetop;
   animation-duration: 0.4s
 } 
+
+.content-filter-btn .icon-container::after {
+  content: "\e32a";
+}
+
+.content-filter-btn[data-state="closed"] .icon-container::after {
+  content: "\e3d4";
+}

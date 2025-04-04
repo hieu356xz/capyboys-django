@@ -2280,6 +2280,14 @@ input[type="number"]::-webkit-inner-spin-button,
   animation-duration: 0.4s
 }
 
+.content-filter-btn .icon-container::after {
+  content: "\e32a";
+}
+
+.content-filter-btn[data-state="closed"] .icon-container::after {
+  content: "\e3d4";
+}
+
 .after\:absolute::after {
   content: var(--tw-content);
   position: absolute;
@@ -2457,4 +2465,4 @@ input[type="number"]::-webkit-inner-spin-button,
   .lg\:basis-1\/4 {
     flex-basis: 25%;
   }
-} 
+}

@@ -1,7 +1,15 @@
 $(document).ready(function() {
     $('.content-filter-btn').click(function() {
-        let container = $(this).next(".content-filter-container")
-        autoHeightAnimate(container, 300);
+        let triggerBtn = $(this);
+        let container = triggerBtn.next(".content-filter-container")
+        autoHeightAnimate(container, 300, 
+            function() {
+                triggerBtn.attr("data-state", "open");
+            },
+            function() {
+                triggerBtn.attr("data-state", "closed");
+            }
+        );
     });
 
     if (typeof Fancybox !== "undefined") {
@@ -43,15 +51,17 @@ $(document).ready(function() {
     });
 
     // By Josh Parrett https://codepen.io/JTParrett/pen/nJNXxX
-    function autoHeightAnimate(element, time) {
+    function autoHeightAnimate(element, time, callbackOpen, callbackClose) {
         if (element.height() === 0) {
             let curHeight = element.height(), // Get Default Height
             autoHeight = element.css('height', 'auto').height(); // Get Auto Height
 
             element.height(curHeight); // Reset to Default Height
+            if (callbackOpen) callbackOpen();
             element.filter(':not(:animated)').animate({ height: autoHeight }, parseInt(time)); // Animate to Auto Height
         }
         else {
+            if (callbackClose) callbackClose();
             element.filter(':not(:animated)').animate({ height: '0' }, parseInt(time)); // Animate to 0 Height
         }
     }
