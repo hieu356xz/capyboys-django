@@ -4,7 +4,7 @@ from cart.cart import CartSession
 from product.models import Book
 
 # exclude general collections
-exclude_collections = (
+general_collections = (
     "lich-su-truyen-thong",
     "van-hoc-viet-nam",
     "truyen-tranh",
@@ -24,8 +24,8 @@ def product_detail(request, slug):
         ).get(slug=slug)
 
         product_attributes = product.bookattributevalue_set.prefetch_related('attribute').all()
-        current_collection = product.collections.filter(slug=slug).first()
-        collections = product.collections.exclude(slug__in=exclude_collections)
+        current_collection = product.collections.filter(slug__in=general_collections).first()
+        collections = product.collections.exclude(slug__in=general_collections)
         authors = product.authors.all()
         genres = product.genres.all()
 
