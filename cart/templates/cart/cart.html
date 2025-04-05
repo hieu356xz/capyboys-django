@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+{% block title %}Giỏ hàng - Capyboys{% endblock title%}
+
+{% load custom_tags %}
+
+{% block content %}
+<div class="min-h-[inherit] max-w-[1200px] mx-auto px-4 py-4 md:py-8">
+  <h2 class="uppercase font-semibold text-lg border-b p-4 mb-6">Giỏ hàng</h2>
+  <div>
+  {% if cart.get_item_count %}
+    <div class="hidden min-[900px]:block">
+      <table class="border-y">
+        <thead class="border-b [&_tr>th]:py-6 [&_tr>th]:font-semibold">
+          <tr>
+            <th colspan="2">Sản phẩm</th>
+            <th>Đơn giá</th>
+            <th>Số lượng</th>
+            <th>Thành tiền</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in cart %}
+          <tr class="border-b">
+            <td class="w-[33%] px-4 py-8">
+              <a href="/products/{{item.slug}}" class="cursor-pointer">
+                <img
+                  class="max-h-[240px] mx-auto"
+                  src="{% if item.cover_img|is_absolute_url %}{{ item.cover_img }}{% else %}{{ item.cover_img.url }}{% endif %}"
+                  alt="{{item.title}}" />
+              </a>
+            </td>
+            <td class="p-3 w-full">
+              <a
+                href="/products/{{item.slug}}"
+                class="cursor-pointer text-xl font-semibold text-red-600">
+                {{item.title}}
+              </a>
+            </td>
+            <td class="p-3 min-w-[120px] text-xl font-semibold">
+              {{item.final_price|floatformat:'0g'}} đ
+            </td>
+            <td class="p-3 min-w-[150px] text-lg">{{item.quantity}}</td>
+            <td class="p-3 min-w-[120px] text-[22px] font-semibold text-red-600">
+              {{item.final_price|calc_subtotal:item.quantity}} đ
+            </td>
+            <td class="p-3 min-w-[40px]">
+              <button
+                data-product-id="{{item.id}}"
+                class="remove-cart-item-btn cursor-pointer hover:text-red-600 transition-colors duration-300">
+                <i class="ph-bold ph-trash"></i>
+              </button>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="block min-[900px]:hidden border-t">
+      {% for item in cart %}
+      <div class="p-2 md:p-4">
+        <div
+          class="grid grid-cols-[25%_auto] gap-4 leading-[18px] text-sm sm:text-base md:leading-5 pb-4 border-b">
+          <a
+            href="/products/{{item.slug}}"
+            class="cursor-pointer">
+            <img
+              class="max-h-[240px] mx-auto"
+              src="{% if item.cover_img|is_absolute_url %}{{ item.cover_img }}{% else %}{{ item.cover_img.url }}{% endif %}"
+              alt="{{item.title}}" />
+          </a>
+          <div class="md:py-2">
+            <a
+              href="/products/{{item.slug}}"
+              class="cursor-pointer font-semibold text-red-600">
+              {{item.title}}
+            </a>
+            <div class="font-semibold text-red-600 md:text-base py-1">
+              {{item.final_price|floatformat:'0g'}} đ
+            </div>
+            <div>
+              <span>Số lượng: {{item.quantity}}</span>
+              <span class="pl-4">
+                <button
+                  data-product-id="{{item.id}}"
+                  class="remove-cart-item-btn cursor-pointer font-semibold text-red-600">
+                  Xóa
+                </button>
+              </span>
+            </div>
+            <div>
+              <span>Thành tiền:</span>
+              <span class="pl-2 md:text-base font-semibold text-red-600"
+                >{{item.final_price|calc_subtotal:item.quantity}} đ</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+
+    </div>
+  {% else %}
+  <div class="text-center">
+    <h1>Giỏ hàng của bạn hiện chưa có sản phẩm nào</h1>
+    <div>
+      <span>Tiếp tục mua hàng</span>
+      <span>
+        <a class="text-red-600 font-semibold" href="/collections/all">tại đây</a>
+      </span>
+    </div>
+  </div>
+  {% endif %}
+    
+  {% if cart.get_item_count %}
+  <div class="sm:grid sm:grid-cols-[67%_auto] gap-4 p-4">
+    <div>
+      <label for="cart-note">Ghi chú</label>
+      <textarea class="w-full h-[100px] rounded-sm border-gray-300" name="note" id="cart-note"></textarea>
+    </div>
+    <div class="text-sm md:text-base text-right font-semibold">
+      <h3>
+        Tổng:
+        <span class="text-red-600 text-xl md:text-2xl pl-2">
+          {{cart.get_total_price|floatformat:'0g'}}đ
+        </span>
+      </h3>
+      <div class="text-right">
+        <a
+          href="/"
+          class="inline-block mt-2 md:mt-4 py-2 px-4 text-sm md:text-base font-semibold bg-red-600 rounded-md text-white cursor-pointer hover:bg-red-700 text-center"
+          >Thanh toán</a
+        >
+      </div>
+    </div>
+  </div>
+  {% endif %}
+  </div>
+</div>
+{% endblock %}

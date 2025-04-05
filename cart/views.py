@@ -3,6 +3,13 @@ from django.http import JsonResponse
 from product.models import Book
 from .cart import CartSession
 
+def cart_view(request):
+    cart = CartSession(request)
+    
+    context = {
+        "cart": cart,
+    }
+    return render(request, "cart/cart.html", context)
 
 def cart_add(request):
     if request.method == "POST":
@@ -127,7 +134,6 @@ def cart_remove_item(request):
                 "status": 400,
                 "message": f"Yêu cầu không hợp lệ: {str(e)}",
             }, status=400)
-
 
 def cart_modal_view(request):
     return render(request, "includes/cart_modal.html")
