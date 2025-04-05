@@ -190,15 +190,35 @@ class CartSession:
 
     def __iter__(self):
         if self.use_db:
-            items = self.db_cart.items.all()
+            items = self.db_cart.items.all().select_related('book', 'book__publisher').prefetch_related('book__authors')
 
             for item in items:
-                yield item
+                yield {
+                    'id': item.book.id,
+                    'title': item.book.title,
+                    'quantity': item.quantity,
+                    'price': float(item.book.price),
+                    'final_price': float(item.book.final_price),
+                    'discount': float(item.book.discount),
+                    'cover_img': str(item.book.cover_img) if item.book.cover_img else '',
+                    'authors': ", ".join(str(author) for author in item.book.authors.all()),
+                    'publisher': item.book.publisher.name if item.book.publisher else 'Unknown',
+                    'slug': item.book.slug,
+                }
         else:
-            product_ids = self.cart.keys()
-
-            for product_id in product_ids:
-                yield self.cart[product_id]
+            for product_id, item in self.cart.items():
+                yield {
+                    'id': int(product_id),
+                    'title': item['title'],
+                    'quantity': item['quantity'],
+                    'price': float(item['price']),
+                    'final_price': float(item['final_price']),
+                    'discount': float(item['discount']),
+                    'cover_img': item['cover_img'],
+                    'authors': item['authors'],
+                    'publisher': item['publisher'],
+                    'slug': item['slug'],
+                }
 
     def get_subtotal(self, product_id):
         product_id = str(product_id)
