@@ -9,7 +9,7 @@ class Book(models.Model):
     description = models.TextField(blank=True, null=True)
     slug = models.SlugField(max_length=255, unique=True)
     stock = models.PositiveIntegerField(default=0)
-    discount = models.DecimalField(max_digits=5, decimal_places=2, default=0)
+    discount = models.DecimalField(max_digits=5, decimal_places=2, default=0, verbose_name="Discount (%)", help_text="Discount percentage (0-100)")
 
     authors = models.ManyToManyField('Author', through='BookAuthor')
     genres = models.ManyToManyField('Genre', through='BookGenre')
