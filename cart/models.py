@@ -44,18 +44,18 @@ class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='orders')
     phone = models.CharField(max_length=20)
     address = models.TextField()
-    city = models.CharField(max_length=255, blank=True)
-    district = models.CharField(max_length=255, blank=True)
-    ward = models.CharField(max_length=255, blank=True)
+    city = models.CharField(max_length=255, blank=True, null=True)
+    district = models.CharField(max_length=255, blank=True, null=True)
+    ward = models.CharField(max_length=255, blank=True, null=True)
     status = models.CharField(max_length=20, choices=ORDER_STATUS, default='pending')
 
     payment_method = models.CharField(max_length=20, choices=PAYMENT_METHOD)
     payment_status = models.BooleanField(default=False, verbose_name="Is Paid?")
-    transaction_id = models.CharField(max_length=255, blank=True)
+    transaction_id = models.CharField(max_length=255, blank=True, null=True)
 
     total_price = models.DecimalField(max_digits=15, decimal_places=2)
 
-    notes = models.TextField(blank=True)
+    notes = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     class Meta:
