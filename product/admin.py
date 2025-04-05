@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.template.defaultfilters import slugify
+from unidecode import unidecode
 from .models import Book, Author, Attribute, BookAttributeValue, Publisher, Genre, BookGenre, BookAuthor
 from collection.models import BookCollection
 from django.forms import ModelForm, ModelMultipleChoiceField
@@ -93,7 +94,7 @@ class BookAdmin(admin.ModelAdmin):
 
     def save_model(self, request, obj, form, change):
         if 'slug' not in form.changed_data or not change:
-                obj.slug = slugify(obj.title)
+            obj.slug = slugify(unidecode(obj.title))
         return super().save_model(request, obj, form, change)
 
 
