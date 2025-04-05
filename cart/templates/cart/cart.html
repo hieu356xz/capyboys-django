@@ -33,12 +33,22 @@
             <td class="p-3 w-full">
               <a
                 href="/products/{{item.slug}}"
-                class="cursor-pointer text-xl font-semibold text-red-600">
+                class="cursor-pointer text-xl font-semibold hover:text-red-600 transition-colors duration-300">
                 {{item.title}}
               </a>
             </td>
             <td class="p-3 min-w-[120px] text-xl font-semibold">
-              {{item.final_price|floatformat:'0g'}} đ
+              <div class="text-red-600 my-[-6px]">
+                {{item.final_price|floatformat:'0g'}}đ
+              </div>
+              {% if item.discount > 0 %}
+              <div class="text-lg text-zinc-700 line-through my-[-4px]">
+                {{item.price|floatformat:'0g'}}đ
+              </div>
+              <span class="px-1 bg-red-600 text-base text-white">
+                -{{item.discount|floatformat:'2g'}}%
+              </span>
+              {% endif %}
             </td>
             <td class="p-3 min-w-[150px] text-lg">{{item.quantity}}</td>
             <td class="p-3 min-w-[120px] text-[22px] font-semibold text-red-600">
@@ -73,11 +83,21 @@
           <div class="md:py-2">
             <a
               href="/products/{{item.slug}}"
-              class="cursor-pointer font-semibold text-red-600">
+              class="cursor-pointer font-semibold hover:text-red-600 transition-colors duration-300">
               {{item.title}}
             </a>
-            <div class="font-semibold text-red-600 md:text-base py-1">
-              {{item.final_price|floatformat:'0g'}} đ
+            <div class="font-semibold py-1">
+              <div class="text-red-600 md:my-[-4px]">
+                {{item.final_price|floatformat:'0g'}}đ
+              </div>
+              {% if item.discount > 0 %}
+              <div class="text-xs md:text-sm text-zinc-700 line-through md:my-[-2px]">
+                {{item.price|floatformat:'0g'}}đ
+              </div>
+              <span class="px-1 bg-red-600 text-xs md:text-sm text-white">
+                -{{item.discount|floatformat:'2g'}}%
+              </span>
+              {% endif %}
             </div>
             <div>
               <span>Số lượng: {{item.quantity}}</span>
