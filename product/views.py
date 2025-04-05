@@ -33,7 +33,6 @@ def product_detail(request, slug):
         related_genre_products = Book.objects.filter(genres__in=genres).exclude(pk=product.id).distinct()
         related_collection_products = Book.objects.filter(collections__in=collections).exclude(pk=product.id).distinct()
 
-        formatted_price = f"{product.price:,.0f} ₫"
         max_quantity = max(0, min(product.stock - cart.get_item_quantity(product.pk), 99))
         min_quantity = 1 if max_quantity else 0
 
@@ -45,7 +44,6 @@ def product_detail(request, slug):
         "product": product,
         "current_collection": current_collection,
         "collections": collections,
-        "product_price": formatted_price,
         "product_attributes": product_attributes,
         "authors": authors,
         'genres': genres,
