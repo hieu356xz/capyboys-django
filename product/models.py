@@ -1,3 +1,4 @@
+from decimal import Decimal
 from django.db import models
 
 class Book(models.Model):
@@ -22,7 +23,7 @@ class Book(models.Model):
     @property
     def final_price(self):
         if self.discount > 0:
-            return (self.price * self.discount) / 100.0
+            return (self.price * self.discount) / Decimal('100.0')
         else:
             return self.price
 
