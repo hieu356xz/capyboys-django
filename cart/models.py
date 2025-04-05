@@ -87,7 +87,7 @@ class OrderItem(models.Model):
     
     quantity = models.PositiveIntegerField(default=1)
     price = models.DecimalField(max_digits=15, decimal_places=2)  # Original price
-    discount = models.DecimalField(max_digits=5, decimal_places=2, default=0)
+    discount = models.DecimalField(max_digits=5, decimal_places=2, default=0, verbose_name="Discount (%)", help_text="Discount percentage (0-100)")
     final_price = models.DecimalField(max_digits=15, decimal_places=2)  # Price after discount
     
     def __str__(self):
