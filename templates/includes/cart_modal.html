@@ -10,21 +10,23 @@
     {% if cart.get_item_count %}
     <div class="hidden min-[900px]:block">
       <table class="border-y">
-        <thead class="border-b">
-          <th></th>
-          <th>Sản phẩm</th>
-          <th>Đơn giá</th>
-          <th>Số lượng</th>
-          <th>Thành tiền</th>
-          <th></th>
+        <thead class="border-b [&_tr>th]:font-semibold">
+          <tr>
+            <th></th>
+            <th>Sản phẩm</th>
+            <th>Đơn giá</th>
+            <th>Số lượng</th>
+            <th>Thành tiền</th>
+            <th></th>
+          </tr>
         </thead>
         <tbody class="overflow-auto max-h-[500px]">
           {% if cart.use_db %}
             {% for item in cart %}
             <tr>
-              <td class="p-[6px] min-w-[120px] max-w-[120px]">
+              <td class="p-[6px] w-[30%]">
                 <a href="/products/{{item.book.slug}}" class="cursor-pointer">
-                  <img src="{% if item.book.cover_img|is_absolute_url %}{{ item.book.cover_img }}{% else %}{{ item.book.cover_img.url }}{% endif %}" alt="{{item.book.title}}" />
+                  <img class="max-h-[120px] mx-auto" src="{% if item.book.cover_img|is_absolute_url %}{{ item.book.cover_img }}{% else %}{{ item.book.cover_img.url }}{% endif %}" alt="{{item.book.title}}" />
                 </a>
               </td>
               <td class="p-[6px] w-full">
@@ -53,9 +55,9 @@
           {% else %}
             {% for id, item in cart.cart.items %}
             <tr>
-              <td class="p-[6px] min-w-[120px] max-w-[120px]">
+              <td class="p-[6px] w-[30%]">
                 <a href="/products/{{item.slug}}" class="cursor-pointer">
-                  <img src="{% if item.cover_img|is_absolute_url %}{{ item.cover_img }}{% else %}{{ item.cover_img.url }}{% endif %}" alt="{{item.title}}" />
+                  <img class="max-h-[120px] mx-auto" class="max-h-[120px]" src="{% if item.cover_img|is_absolute_url %}{{ item.cover_img }}{% else %}{{ item.cover_img.url }}{% endif %}" alt="{{item.title}}" />
                 </a>
               </td>
               <td class="p-[6px] w-full">
@@ -88,10 +90,10 @@
     <div class="block min-[900px]:hidden border-t">
       {% if cart.use_db %}
       {% for item in cart %}
-      <div class="p-4">
+      <div class="p-2">
         <div class="grid grid-cols-[25%_auto] gap-4 leading-[18px] md:leading-5 text-sm pb-4 border-b">
-            <a href="/products/{{item.book.slug}}" class="cursor-pointer max-w-[130px]">
-              <img src="{% if item.book.cover_img|is_absolute_url %}{{ item.book.cover_img }}{% else %}{{ item.book.cover_img.url }}{% endif %}" alt="{{item.book.title}}" />
+            <a href="/products/{{item.book.slug}}" class="cursor-pointer">
+              <img class="max-h-[120px] mx-auto" src="{% if item.book.cover_img|is_absolute_url %}{{ item.book.cover_img }}{% else %}{{ item.book.cover_img.url }}{% endif %}" alt="{{item.book.title}}" />
             </a>
             <div class="md:py-2">
               <a
@@ -122,10 +124,10 @@
       {% endfor %}
       {% else %}
       {% for id, item in cart.cart.items %}
-      <div class="p-4">
+      <div class="p-2">
         <div class="grid grid-cols-[25%_auto] gap-4 leading-[18px] md:leading-5 text-sm pb-4 border-b">
-            <a href="/products/{{item.slug}}" class="cursor-pointer max-w-[130px]">
-              <img src="{% if item.cover_img|is_absolute_url %}{{ item.cover_img }}{% else %}{{ item.cover_img.url }}{% endif %}" alt="{{item.title}}" />
+            <a href="/products/{{item.slug}}" class="cursor-pointer">
+              <img class="max-h-[120px] mx-auto" src="{% if item.cover_img|is_absolute_url %}{{ item.cover_img }}{% else %}{{ item.cover_img.url }}{% endif %}" alt="{{item.title}}" />
             </a>
             <div class="md:py-2">
               <a
