@@ -20,10 +20,13 @@
       <span>{{ product.title }}</span>
     </div>
     <div class="py-4 flex flex-wrap border-b border-gray-300">
-      <div class="basis-full md:basis-2/5 p-4">
+      <div class="relative basis-full md:basis-2/5 p-4">
         <a data-fancybox="image" href="{% if product.cover_img|is_absolute_url %}{{ product.cover_img }}{% else %}{{ product.cover_img.url }}{% endif %}">
           <img src="{% if product.cover_img|is_absolute_url %}{{ product.cover_img }}{% else %}{{ product.cover_img.url }}{% endif %}" alt="{{ product.title }}" />
         </a>
+        {% if product.discount > 0 %}
+        <div class="absolute top-6 right-6 size-10 leading-10 rounded-full text-center text-white text-[12px] bg-red-600"> -{{product.discount|floatformat:'0g'}}% </div>
+        {% endif %}
       </div>
 
       <div class="basis-full md:basis-3/5 p-8 pb-0 md:p-4">
@@ -31,10 +34,20 @@
           class="uppercase font-semibold text-2xl pb-4 mb-2 border-b border-gray-300">
           {{ product.title }}
         </h2>
-        <h2
-          class="font-semibold text-2xl pb-2 mb-2 border-b border-gray-300 text-red-500">
-          {{ product_price }}
-        </h2>
+        <div class="border-b border-gray-300 pb-2 mb-2 font-semibold text-2xl">
+          <span
+            class="text-red-500">
+            {{ product.final_price|floatformat:'0g' }}đ
+          </span>
+          {% if product.discount > 0 %}
+          <span class="text-zinc-400 text-xl line-through ml-4">
+            {{ product.price|floatformat:'0g' }}đ
+          </span>
+          <span class="text-sm ml-4 bg-red-100 text-red-600 px-2 py-[2px] rounded-full font-semibold">
+            Giảm {{ product.discount|floatformat:"2g" }}%
+          </span>
+          {% endif %}
+      </div>
         <div class="flex flex-wrap">
           <div class="basis-full pb-8 md:basis-1/2">
             <ul class="list-disc pl-6 leading-[1.75]">
@@ -136,7 +149,10 @@
               <a href="/products/{{product.slug}}" class="font-semibold text-gray-800 hover:text-red-600 transition-colors duration-300">
                 {{product.title}}
               </a>
-              <div class="text-red-600">{{product.price|floatformat:'0g'}} đ</div>
+              <div class="text-red-600">{{product.final_price|floatformat:'0g'}}đ</div>
+              {% if product.discount > 0 %}
+              <div class="text-zinc-400 leading-4 line-through">{{product.price|floatformat:'0g'}}đ</div>
+              {% endif %}
             </div>
           </div>
           {% endfor %}
