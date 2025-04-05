@@ -1455,6 +1455,16 @@ input[type="number"]::-webkit-inner-spin-button,
   margin-bottom: 2rem;
 }
 
+.my-\[-4px\] {
+  margin-top: -4px;
+  margin-bottom: -4px;
+}
+
+.my-\[-6px\] {
+  margin-top: -6px;
+  margin-bottom: -6px;
+}
+
 .mb-1 {
   margin-bottom: 0.25rem;
 }
@@ -2253,6 +2263,11 @@ input[type="number"]::-webkit-inner-spin-button,
   color: rgb(161 161 170 / var(--tw-text-opacity, 1));
 }
 
+.text-zinc-700 {
+  --tw-text-opacity: 1;
+  color: rgb(63 63 70 / var(--tw-text-opacity, 1));
+}
+
 .line-through {
   text-decoration-line: line-through;
 }
@@ -2493,6 +2508,16 @@ input[type="number"]::-webkit-inner-spin-button,
     margin-right: auto;
   }
 
+  .md\:my-\[-2px\] {
+    margin-top: -2px;
+    margin-bottom: -2px;
+  }
+
+  .md\:my-\[-4px\] {
+    margin-top: -4px;
+    margin-bottom: -4px;
+  }
+
   .md\:mt-4 {
     margin-top: 1rem;
   }
@@ -2589,6 +2614,11 @@ input[type="number"]::-webkit-inner-spin-button,
   .md\:text-base {
     font-size: 1rem;
     line-height: 1.5rem;
+  }
+
+  .md\:text-sm {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
   }
 
   .md\:leading-5 {

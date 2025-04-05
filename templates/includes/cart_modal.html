@@ -35,12 +35,22 @@
                   {{item.title}}
                 </a>
               </td>
-              <td class="p-[6px] min-w-[100px] font-semibold text-red-600">
-                {{item.final_price|floatformat:'0g'}} đ
+              <td class="p-[6px] min-w-[100px] font-semibold">
+                <div class="text-red-600 my-[-6px]">
+                  {{item.final_price|floatformat:'0g'}}đ
+                </div>
+                {% if item.discount > 0 %}
+                <div class="text-sm text-zinc-700 line-through my-[-4px]">
+                  {{item.price|floatformat:'0g'}}đ
+                </div>
+                <span class="px-1 bg-red-600 text-sm text-white">
+                  -{{item.discount|floatformat:'2g'}}%
+                </span>
+                {% endif %}
               </td>
               <td class="p-[6px] min-w-[100px]">{{item.quantity}}</td>
               <td class="p-[6px] min-w-[100px] font-semibold text-red-600">
-                {{item.final_price|calc_subtotal:item.quantity}} đ
+                {{item.final_price|calc_subtotal:item.quantity}}đ
               </td>
               <td class="p-[6px] min-w-[40px]">
                 <button
@@ -67,8 +77,18 @@
                 class="cursor-pointer font-semibold hover:text-red-600 transition-colors duration-300">
                 {{item.title}}
               </a>
-              <div class="font-semibold text-red-600 md:text-base pb-1">
-                {{item.final_price|floatformat:'0g'}} đ
+              <div class="font-semibold md:text-base pb-1">
+                <div class="text-red-600 md:my-[-4px]">
+                  {{item.final_price|floatformat:'0g'}}đ
+                </div>
+                {% if item.discount > 0 %}
+                <div class="text-xs md:text-sm text-zinc-700 line-through md:my-[-2px]">
+                  {{item.price|floatformat:'0g'}}đ
+                </div>
+                <span class="px-1 bg-red-600 text-sm text-white">
+                  -{{item.discount|floatformat:'2g'}}%
+                </span>
+                {% endif %}
               </div>
               <div>
                 <span>Số lượng: {{item.quantity}}</span>
