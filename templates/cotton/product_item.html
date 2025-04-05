@@ -5,10 +5,13 @@
 <div class="p-1 md:p-2 {{class}}">
   <div
     class="border-2 border-gray-200 rounded-sm hover:shadow-md hover:shadow-gray-400 transition-shadow duration-300">
-    <div class="m-2">
+    <div class="relative m-2">
       <a href="/products/{{product.slug}}">
         <img src="{% if product.cover_img|is_absolute_url %}{{ product.cover_img }}{% else %}{{ product.cover_img.url }}{% endif %}" alt="{{product.title}}" />
       </a>
+      {% if product.discount > 0 %}
+      <div class="absolute top-0 right-0 size-10 leading-10 rounded-full text-center text-white text-[12px] bg-red-600"> -{{product.discount|floatformat:'0g'}}% </div>
+      {% endif %}
     </div>
     <div class="m-2 text-sm">
       <div class="min-h-9 mb-1">
@@ -18,8 +21,11 @@
           {{product.title|truncatechars:42}}
         </a>
       </div>
-      <div class="w-full text-right">
-        <span class="text-red-500 font-bold">{{product.price|floatformat:"0g"}} ₫</span>
+      <div class="w-full">
+        <span class="text-red-500 font-bold">{{product.final_price|floatformat:"0g"}}₫</span>
+        {% if product.discount > 0 %}
+        <span class="float-right text-zinc-400 line-through">{{product.price|floatformat:'0g'}}đ</span>
+        {% endif %}
       </div>
     </div>
   </div>
