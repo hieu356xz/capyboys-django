@@ -1,3 +1,4 @@
+from decimal import Decimal
 from django.db import models
 from cart.models import Cart, CartItem
 from product.models import Book
@@ -79,7 +80,7 @@ class CartSession:
                 final_price = product.price
                 if product.discount > 0:
                     # Calculate discounted price
-                    discount_amount = (product.price * product.discount) / 100.0
+                    discount_amount = (product.price * product.discount) / Decimal('100.0')
                     final_price = product.price - discount_amount
 
                 # Add new product to cart with essential data
