@@ -1,5 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.db.models import Q, Subquery, Sum
+from django.core.validators import validate_email
+import phonenumbers
+from cart.cart import CartSession
+from cart.models import Order, OrderItem
 from home.utils import QueryParams
 from product.models import Author, Book, Genre
 from blog.models import Blog
@@ -189,6 +193,122 @@ def search(request):
         "genre_query": genre_query,
     }
     return render(request, 'home/search.html', context)
+
+def checkout(request):
+    PAYMENT_METHODS = {
+        "cod": "Thanh toán khi nhận hàng",
+        "bank_transfer": "Chuyển khoản ngân hàng",
+        "credit_card": "Thẻ tín dụng",
+        "e_wallet": "Ví điện tử",
+    }
+
+    first_name = request.user.first_name if request.user.is_authenticated else ''
+    last_name = request.user.last_name if request.user.is_authenticated else ''
+    email = request.user.email if request.user.is_authenticated else ''
+    phone = ''
+    address = ''
+    city = ''
+    district = ''
+    ward = ''
+    notes = ''
+    payment_method = ''
+    errors = {}
+
+    if request.method == "POST":
+        cart = CartSession(request)
+
+        if not request.user.is_authenticated:
+            first_name = request.POST.get("first_name")
+            last_name = request.POST.get("last_name")
+            email = request.POST.get("email")
+        phone = request.POST.get("phone")
+        address = request.POST.get("address")
+        city = request.POST.get("city")
+        district = request.POST.get("district")
+        ward = request.POST.get("ward")
+        notes = request.POST.get("notes")
+        payment_method = request.POST.get("payment_method")
+
+        if not first_name:
+            errors["first_name"] = "Vui lòng nhập tên"
+
+        if not email:
+            errors["email"] = "Vui lòng nhập email"
+        else:
+            try:
+                validate_email(email)
+            except Exception:
+                errors["email"] = "Email không hợp lệ"
+        
+        if not phone:
+            errors["phone"] = "Vui lòng nhập số điện thoại"
+        else:
+            try:
+                parsed_phone = phonenumbers.parse(phone, "VN")
+                if not phonenumbers.is_valid_number(parsed_phone):
+                    errors["phone"] = "Số điện thoại không hợp lệ"
+            except phonenumbers.NumberParseException:
+                errors["phone"] = "Số điện thoại không hợp lệ"
+
+        if not address:
+            errors["address"] = "Vui lòng nhập địa chỉ"
+        if not city:
+            errors["city"] = "Vui lòng nhập tỉnh/thành phố"
+        if not district:
+            errors["district"] = "Vui lòng nhập quận/huyện"
+        if not ward:
+            errors["ward"] = "Vui lòng nhập phường/xã"
+
+        if not errors:
+            try:
+                order = Order(
+                    user=request.user if request.user.is_authenticated else None,
+                    first_name=first_name,
+                    last_name=last_name,
+                    email=email,
+                    phone=phone,
+                    address=address,
+                    city=city,
+                    district=district,
+                    ward=ward,
+                    notes=notes,
+                    payment_method=payment_method,
+                    payment_status=False,
+                )
+                order.save()
+
+                for item in cart:
+                    book = Book.objects.get(pk=item['id'])
+                    order_item = OrderItem(
+                        order=order,
+                        book=book,
+                        quantity=item['quantity'],
+                        price=book.price,
+                    )
+                    order_item.save()
+
+                cart.clear()
+
+                return redirect("home") # placeholder
+            except Exception as e:
+                print(str(e))
+
+    context = {
+        "payment_methods": PAYMENT_METHODS,
+        "first_name": first_name,
+        "last_name": last_name,
+        "email": email,
+        "phone": phone,
+        "address": address,
+        "city": city,
+        "district": district,
+        "ward": ward,
+        "notes": notes,
+        "payment_method": payment_method,
+        "errors": errors,
+    }
+
+    return render(request, 'home/checkout.html', context)
 
 def handler404(request, exception):
     return render(request, 'home/404.html', status=404)
