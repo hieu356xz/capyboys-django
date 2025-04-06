@@ -12,6 +12,20 @@ $(document).ready(function() {
         );
     });
 
+    $('#checkout-cart-info-btn').click(function() {
+        console.log("clicked")
+        let container = $(this).next("#checkout-cart-info-container")
+        let icon = $(this).find("#checkout-cart-info-icon")
+        autoHeightAnimate(container, 300, 
+            function() {
+                icon.css("transform", "rotate(180deg)");
+            },
+            function() {
+                icon.css("transform", "rotate(0deg)");
+            }
+        );
+    });
+
     if (typeof Fancybox !== "undefined") {
         Fancybox.bind("[data-fancybox]", {
             //

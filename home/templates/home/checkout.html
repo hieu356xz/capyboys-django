@@ -1,162 +1,213 @@
 {% extends "base.html" %}
 {% block title %}Thanh toán - Capyboys{% endblock title %}
 
+{% load custom_tags %}
+
 {% block content %}
-<div class="min-h-[inherit] max-w-[600px] mx-auto px-4 py-4 md:py-8">
-  <a href="{% url "cart" %}" class="px-4 text-red-600">Quay trở về giỏ hàng</a>
-  <h2 class="uppercase font-semibold text-lg border-b p-4 mb-6">Thanh toán</h2>
-  <form id="checkout-form" action={% url "checkout" %} method="POST" novalidate>
-    {% csrf_token %}
-  <div class="flex flex-col gap-4">
-    <div class="grid gap-2">
-        <label for="id_lastname" class="font-semibold">Họ</label>
-        <input type="text" name="last_name" id="id_lastname"
-            value="{{ last_name }}"
-            {% if user.is_authenticated %}readonly{% endif %}
-            {% if not user.is_authenticated %}placeholder="Nhập họ"{% endif %}
-            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm transition-colors duration-300 read-only:text-gray-500 read-only:border-gray-200">
-    </div>
-
-    <div class="grid gap-2">
-        <label for="id_firstname" class="font-semibold">Tên</label>
-        <input type="text" name="first_name" id="id_firstname"
-            value="{{ first_name }}" 
-            {% if user.is_authenticated %}readonly{% endif %}
-            {% if not user.is_authenticated %}placeholder="Nhập tên"{% endif %}
-            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm transition-colors duration-300 read-only:text-gray-500 read-only:border-gray-200" required>
-    </div>
-
-    {% if errors.first_name %}
-    <div class="error">
-        <p class="text-red-600 text-sm font-semibold">{{ errors.first_name }}</p>
-    </div>
-    {% endif %}
-
-    <div class="grid gap-2">
-        <label for="id_email" class="font-semibold">Email</label>
-        <input type="email" name="email" id="id_email"
-            value="{{ email }}" 
-            {% if user.is_authenticated %}readonly{% endif %}
-            {% if not user.is_authenticated %}placeholder="Nhập email"{% endif %}
-            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm transition-colors duration-300 read-only:text-gray-500 read-only:border-gray-200" required>
-    </div>
-
-    {% if errors.email %}
-    <div class="error">
-        <p class="text-red-600 text-sm font-semibold">{{ errors.email }}</p>
-    </div>
-    {% endif %}
-
-    <div class="grid gap-2">
-        <label for="id_phone" class="font-semibold">Số điện thoại</label>
-        <input type="number" inputmode="numberic" name="phone" id="id_phone"
-            value="{{ phone }}" 
-            placeholder="Nhập số điện thoại"
-            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm transition-colors duration-300" required>
-    </div>
-
-    {% if errors.phone %}
-    <div class="error">
-        <p class="text-red-600 text-sm font-semibold">{{ errors.phone }}</p>
-    </div>
-    {% endif %}
-
-    <div class="flex flex-col md:flex-row gap-4">
-        <div class="flex flex-col gap-2 md:gap-4">
-            <div class="grid gap-2">
-                <label for="id_city" class="font-semibold">Thành phố</label>
-                <input type="text" name="city" id="id_city"
-                value="{{ city }}"
-                placeholder="Nhập thành phố"
-                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm transition-colors duration-300" required>
-            </div>
-            
-            {% if errors.city %}
-            <div class="error">
-                <p class="text-red-600 text-sm font-semibold">{{ errors.city }}</p>
-            </div>
-            {% endif %}
-        </div>
-            
-        <div class="flex flex-col gap-2 md:gap-4">
-            <div class="grid gap-2">
-                <label for="id_district" class="font-semibold">Quận/Huyện</label>
-                <input type="text" name="district" id="id_district"
-                value="{{ district }}"
-                placeholder="Nhập quận/huyện"
-                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm transition-colors duration-300" required>
-            </div>
-            
-            {% if errors.district %}
-            <div class="error">
-                <p class="text-red-600 text-sm font-semibold">{{ errors.district }}</p>
-            </div>
-            {% endif %}
-        </div>
-        
-        <div class="flex flex-col gap-2 md:gap-4">
-            <div class="grid gap-2">
-                <label for="id_ward" class="font-semibold">Phường/Xã</label>
-                <input type="text" name="ward" id="id_ward"
-                value="{{ ward }}"
-                placeholder="Nhập phường/xã"
-                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm transition-colors duration-300" required>
-            </div>
-            
-            {% if errors.ward %}
-            <div class="error">
-                <p class="text-red-600 text-sm font-semibold">{{ errors.ward }}</p>
-            </div>
-            {% endif %}
-        </div>
-    </div>
-
-    <div class="grid gap-2">
-        <label for="id_address" class="font-semibold">Địa chỉ</label>
-        <input type="text" name="address" id="id_address"
-            value="{{ address }}"
-            placeholder="Nhập địa chỉ"
-            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm transition-colors duration-300" required>
-    </div>
-
-    {% if errors.address %}
-    <div class="error">
-        <p class="text-red-600 text-sm font-semibold">{{ errors.address }}</p>
-    </div>
-    {% endif %}
-
-    <div class="grid gap-2">
-        <label for="id_payment_method" class="font-semibold">Phương thức thanh toán</label>
-        <select name="payment_method" id="id_payment_method"
-            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm transition-colors duration-300" required>
-            {% for key, item in payment_methods.items %}
-            <option value="{{key}}" {% if key == payment_method %}selected{% endif %}>{{item}}</option>
-            {% endfor %}
-        </select>
-    </div>
-
-    <div>
-        {% if messages %}
-        {% for message in messages %}
-        <p class="text-red-600 text-sm font-semibold">{{ message }}</p>
-        {% endfor %}
-        {% endif %}
-    </div>
-
-    <div class="sm:grid sm:grid-cols-[67%_auto] gap-4 items-end">
-        <div class="grid gap-2">
-            <label for="id_note" class="font-semibold">Ghi chú</label>
-            <textarea class="w-full h-[100px] rounded-sm border-gray-300" name="note" id="id_note"></textarea>
-        </div>
-        <div>
-            <button type="submit"
-                class="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-white font-semibold bg-red-600 hover:bg-red-700">
-                Thanh toán
+<div class="min-h-[inherit] max-w-[600px] lg:max-w-[1200px] mx-auto px-4 py-4 md:py-8">
+    <div class="flex flex-col lg:flex-row-reverse">
+        <div class="max-w-[600px] px-4 pb-4 max-lg:border-b-2 max-lg:mb-4 lg:w-2/5 lg:pr-4 lg:pl-8">
+            <button id="checkout-cart-info-btn" class="inline lg:hidden mb-4">
+                <span>Hiện thị thông tin đơn hàng</span>
+                <span>
+                    <i id="checkout-cart-info-icon" class="ph-bold ph-caret-down inline-block transition-all duration-300"></i>
+                </span>
             </button>
+
+            <div id="checkout-cart-info-container" class="h-0 lg:!h-full overflow-hidden">
+                <h2 class="hidden lg:block uppercase font-semibold text-lg border-b p-4 mb-6">Thông tin đơn hàng</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="sr-only">Bìa sản phẩm</th>
+                            <th class="sr-only">Tên sản phẩm</th>
+                            <th class="sr-only">Số lượng</th>
+                            <th class="sr-only">Giá</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in cart %}
+                        <tr class="text-sm">
+                            <td>
+                                <div class="p-1 border rounded-md w-14 h-full">
+                                    <img src="{{item.cover_img}}" alt="{{item.title}}">
+                                </div>
+                            </td>
+                            <td class="p-2 w-full">
+                                <span>{{item.title}}</span>
+                            </td>
+                            <td class="p-2">
+                                <span>x{{item.quantity}}</span>
+                            </td>
+                            <td class="p-2 text-right font-semibold">
+                                <span class="text-red-600">{{item.final_price|calc_subtotal:item.quantity}}đ</span>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <div class="flex justify-between items-center mt-6 border-t pt-4">
+                    <span class="text-lg font-semibold">Tổng tiền</span>
+                    <span class="text-xl text-red-600 font-semibold">{{ cart.get_total_price|floatformat:'0g' }}đ</span>
+                </div>
+            </div>
+        </div>
+        <div class="max-w-[600px] lg:border-r-2 lg:pl-4 lg:pr-12 w-full">
+            <a href="{% url "cart" %}" class="px-4 text-red-600">Quay trở về giỏ hàng</a>
+            <h2 class="uppercase font-semibold text-lg border-b p-4 mb-6">Thanh toán</h2>
+            <form id="checkout-form" action={% url "checkout" %} method="POST" novalidate>
+                {% csrf_token %}
+                <div class="flex flex-col gap-4">
+                    <div class="grid gap-2">
+                        <label for="id_lastname" class="font-semibold">Họ</label>
+                        <input type="text" name="last_name" id="id_lastname"
+                            value="{{ last_name }}"
+                            {% if user.is_authenticated %}readonly{% endif %}
+                            {% if not user.is_authenticated %}placeholder="Nhập họ"{% endif %}
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm transition-colors duration-300 read-only:text-gray-500 read-only:border-gray-200">
+                    </div>
+                
+                    <div class="grid gap-2">
+                        <label for="id_firstname" class="font-semibold">Tên</label>
+                        <input type="text" name="first_name" id="id_firstname"
+                            value="{{ first_name }}" 
+                            {% if user.is_authenticated %}readonly{% endif %}
+                            {% if not user.is_authenticated %}placeholder="Nhập tên"{% endif %}
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm transition-colors duration-300 read-only:text-gray-500 read-only:border-gray-200" required>
+                    </div>
+                
+                    {% if errors.first_name %}
+                    <div class="error">
+                        <p class="text-red-600 text-sm font-semibold">{{ errors.first_name }}</p>
+                    </div>
+                    {% endif %}
+                
+                    <div class="grid gap-2">
+                        <label for="id_email" class="font-semibold">Email</label>
+                        <input type="email" name="email" id="id_email"
+                            value="{{ email }}" 
+                            {% if user.is_authenticated %}readonly{% endif %}
+                            {% if not user.is_authenticated %}placeholder="Nhập email"{% endif %}
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm transition-colors duration-300 read-only:text-gray-500 read-only:border-gray-200" required>
+                    </div>
+                
+                    {% if errors.email %}
+                    <div class="error">
+                        <p class="text-red-600 text-sm font-semibold">{{ errors.email }}</p>
+                    </div>
+                    {% endif %}
+                
+                    <div class="grid gap-2">
+                        <label for="id_phone" class="font-semibold">Số điện thoại</label>
+                        <input type="number" inputmode="numberic" name="phone" id="id_phone"
+                            value="{{ phone }}" 
+                            placeholder="Nhập số điện thoại"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm transition-colors duration-300" required>
+                    </div>
+                
+                    {% if errors.phone %}
+                    <div class="error">
+                        <p class="text-red-600 text-sm font-semibold">{{ errors.phone }}</p>
+                    </div>
+                    {% endif %}
+                
+                    <div class="flex flex-col md:flex-row gap-4">
+                        <div class="flex flex-col gap-2 md:gap-4">
+                            <div class="grid gap-2">
+                                <label for="id_city" class="font-semibold">Thành phố</label>
+                                <input type="text" name="city" id="id_city"
+                                value="{{ city }}"
+                                placeholder="Nhập thành phố"
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm transition-colors duration-300" required>
+                            </div>
+    
+                            {% if errors.city %}
+                            <div class="error">
+                                <p class="text-red-600 text-sm font-semibold">{{ errors.city }}</p>
+                            </div>
+                            {% endif %}
+                        </div>
+    
+                        <div class="flex flex-col gap-2 md:gap-4">
+                            <div class="grid gap-2">
+                                <label for="id_district" class="font-semibold">Quận/Huyện</label>
+                                <input type="text" name="district" id="id_district"
+                                value="{{ district }}"
+                                placeholder="Nhập quận/huyện"
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm transition-colors duration-300" required>
+                            </div>
+    
+                            {% if errors.district %}
+                            <div class="error">
+                                <p class="text-red-600 text-sm font-semibold">{{ errors.district }}</p>
+                            </div>
+                            {% endif %}
+                        </div>
+    
+                        <div class="flex flex-col gap-2 md:gap-4">
+                            <div class="grid gap-2">
+                                <label for="id_ward" class="font-semibold">Phường/Xã</label>
+                                <input type="text" name="ward" id="id_ward"
+                                value="{{ ward }}"
+                                placeholder="Nhập phường/xã"
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm transition-colors duration-300" required>
+                            </div>
+    
+                            {% if errors.ward %}
+                            <div class="error">
+                                <p class="text-red-600 text-sm font-semibold">{{ errors.ward }}</p>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                
+                    <div class="grid gap-2">
+                        <label for="id_address" class="font-semibold">Địa chỉ</label>
+                        <input type="text" name="address" id="id_address"
+                            value="{{ address }}"
+                            placeholder="Nhập địa chỉ"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm transition-colors duration-300" required>
+                    </div>
+                
+                    {% if errors.address %}
+                    <div class="error">
+                        <p class="text-red-600 text-sm font-semibold">{{ errors.address }}</p>
+                    </div>
+                    {% endif %}
+                
+                    <div class="grid gap-2">
+                        <label for="id_payment_method" class="font-semibold">Phương thức thanh toán</label>
+                        <select name="payment_method" id="id_payment_method"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm transition-colors duration-300" required>
+                            {% for key, item in payment_methods.items %}
+                            <option value="{{key}}" {% if key == payment_method %}selected{% endif %}>{{item}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                
+                    <div>
+                        {% if messages %}
+                        {% for message in messages %}
+                        <p class="text-red-600 text-sm font-semibold">{{ message }}</p>
+                        {% endfor %}
+                        {% endif %}
+                    </div>
+                
+                    <div class="sm:grid sm:grid-cols-[67%_auto] gap-4 items-end">
+                        <div class="grid gap-2">
+                            <label for="id_note" class="font-semibold">Ghi chú</label>
+                            <textarea class="w-full h-[100px] rounded-sm border-gray-300" name="note" id="id_note"></textarea>
+                        </div>
+                        <div>
+                            <button type="submit"
+                                class="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-white font-semibold bg-red-600 hover:bg-red-700">
+                                Thanh toán
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
-
-  </div>
-</form>
 </div>
 {% endblock content %}
