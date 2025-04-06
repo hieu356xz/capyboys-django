@@ -1331,6 +1331,18 @@ input[type="number"]::-webkit-inner-spin-button,
   transform-origin: left;
 }
 
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
 .pointer-events-none {
   pointer-events: none;
 }
@@ -1513,6 +1525,10 @@ input[type="number"]::-webkit-inner-spin-button,
   margin-top: 1rem;
 }
 
+.mt-6 {
+  margin-top: 1.5rem;
+}
+
 .mt-8 {
   margin-top: 2rem;
 }
@@ -1523,6 +1539,10 @@ input[type="number"]::-webkit-inner-spin-button,
 
 .inline-block {
   display: inline-block;
+}
+
+.inline {
+  display: inline;
 }
 
 .flex {
@@ -1643,6 +1663,10 @@ input[type="number"]::-webkit-inner-spin-button,
 
 .min-h-\[inherit\] {
   min-height: inherit;
+}
+
+.w-14 {
+  width: 3.5rem;
 }
 
 .w-20 {
@@ -2302,6 +2326,12 @@ input[type="number"]::-webkit-inner-spin-button,
   --tw-shadow: var(--tw-shadow-colored);
 }
 
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
 .transition-colors {
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -2496,6 +2526,16 @@ input[type="number"]::-webkit-inner-spin-button,
   display: inline-block;
 }
 
+@media not all and (min-width: 1024px) {
+  .max-lg\:mb-4 {
+    margin-bottom: 1rem;
+  }
+
+  .max-lg\:border-b-2 {
+    border-bottom-width: 2px;
+  }
+}
+
 @media (max-width: 500px) {
   .max-\[500px\]\:max-w-\[300px\] {
     max-width: 300px;
@@ -2678,8 +2718,52 @@ input[type="number"]::-webkit-inner-spin-button,
 }
 
 @media (min-width: 1024px) {
+  .lg\:block {
+    display: block;
+  }
+
+  .lg\:hidden {
+    display: none;
+  }
+
+  .lg\:\!h-full {
+    height: 100% !important;
+  }
+
+  .lg\:w-2\/5 {
+    width: 40%;
+  }
+
+  .lg\:max-w-\[1200px\] {
+    max-width: 1200px;
+  }
+
   .lg\:basis-1\/4 {
     flex-basis: 25%;
+  }
+
+  .lg\:flex-row-reverse {
+    flex-direction: row-reverse;
+  }
+
+  .lg\:border-r-2 {
+    border-right-width: 2px;
+  }
+
+  .lg\:pl-4 {
+    padding-left: 1rem;
+  }
+
+  .lg\:pl-8 {
+    padding-left: 2rem;
+  }
+
+  .lg\:pr-12 {
+    padding-right: 3rem;
+  }
+
+  .lg\:pr-4 {
+    padding-right: 1rem;
   }
 }
 
