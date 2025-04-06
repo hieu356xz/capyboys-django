@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Thanh toán thành công - Capyboys{% endblock title %}
+
+{% block content %}
+
+<div class="min-h-[inherit] max-w-[600px] mx-auto px-4 py-4 md:py-8">
+  <h2 class="uppercase font-semibold text-lg border-b p-4 mb-6">Thanh toán thành công</h2>
+  <div class="text-center">
+    <p class="text-xl font-semibold">Cảm ơn bạn đã đặt hàng tại Capyboys!</p>
+    <p class="text-lg">Đơn hàng của bạn đã được xác nhận và sẽ được xử lý trong thời gian sớm nhất.</p>
+    <a href="{% url 'home' %}" class="mt-4 inline-block px-4 py-2 font-semibold bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors duration-300">Quay về trang chủ</a>
+  </div>
+
+{% endblock content %}

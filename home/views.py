@@ -291,7 +291,7 @@ def checkout(request):
 
                 cart.clear()
 
-                return redirect("home") # placeholder
+                return redirect("checkout_success")
             except Exception as e:
                 print(str(e))
 
@@ -311,6 +311,9 @@ def checkout(request):
     }
 
     return render(request, 'home/checkout.html', context)
+
+def checkout_success(request):
+    return render(request, 'home/checkout_success.html', {})
 
 def handler404(request, exception):
     return render(request, 'home/404.html', status=404)
