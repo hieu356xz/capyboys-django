@@ -3,6 +3,7 @@
 
 {% block content %}
 <div class="min-h-[inherit] max-w-[600px] mx-auto px-4 py-4 md:py-8">
+  <a href="{% url "cart" %}" class="px-4 text-red-600">Quay trở về giỏ hàng</a>
   <h2 class="uppercase font-semibold text-lg border-b p-4 mb-6">Thanh toán</h2>
   <form id="checkout-form" action={% url "checkout" %} method="POST" novalidate>
     {% csrf_token %}
