@@ -195,6 +195,10 @@ def search(request):
     return render(request, 'home/search.html', context)
 
 def checkout(request):
+    cart = CartSession(request)
+    if cart.get_item_count() == 0:
+        return redirect("cart")
+
     PAYMENT_METHODS = {
         "cod": "Thanh toán khi nhận hàng",
         "bank_transfer": "Chuyển khoản ngân hàng",
@@ -215,8 +219,6 @@ def checkout(request):
     errors = {}
 
     if request.method == "POST":
-        cart = CartSession(request)
-
         if not request.user.is_authenticated:
             first_name = request.POST.get("first_name")
             last_name = request.POST.get("last_name")
