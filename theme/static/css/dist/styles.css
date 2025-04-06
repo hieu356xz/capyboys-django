@@ -1765,6 +1765,10 @@ input[type="number"]::-webkit-inner-spin-button,
   max-width: 90%;
 }
 
+.max-w-\[calc\(0\.9\*100vw\)\] {
+  max-width: calc(0.9 * 100vw);
+}
+
 .max-w-full {
   max-width: 100%;
 }
@@ -2601,6 +2605,13 @@ input[type="number"]::-webkit-inner-spin-button,
   }
 }
 
+@media not all and (min-width: 640px) {
+  .max-sm\:text-sm {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+}
+
 @media (max-width: 500px) {
   .max-\[500px\]\:max-w-\[300px\] {
     max-width: 300px;
@@ -2654,6 +2665,11 @@ input[type="number"]::-webkit-inner-spin-button,
   .sm\:text-base {
     font-size: 1rem;
     line-height: 1.5rem;
+  }
+
+  .sm\:text-lg {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
   }
 }
 
