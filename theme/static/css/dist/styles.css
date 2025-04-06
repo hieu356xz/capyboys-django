@@ -1407,6 +1407,10 @@ input[type="number"]::-webkit-inner-spin-button,
   top: 100%;
 }
 
+.z-20 {
+  z-index: 20;
+}
+
 .z-30 {
   z-index: 30;
 }
@@ -1417,10 +1421,6 @@ input[type="number"]::-webkit-inner-spin-button,
 
 .z-50 {
   z-index: 50;
-}
-
-.z-20 {
-  z-index: 20;
 }
 
 .float-right {
@@ -2588,6 +2588,10 @@ input[type="number"]::-webkit-inner-spin-button,
 }
 
 @media not all and (min-width: 768px) {
+  .max-md\:right-\[-56px\] {
+    right: -56px;
+  }
+
   .max-md\:hidden {
     display: none;
   }

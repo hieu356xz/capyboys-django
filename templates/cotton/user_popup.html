@@ -1,4 +1,4 @@
-<div class="absolute top-full right-0 w-[320px] min-h-[200px] break-words bg-slate-100 shadow-md border-2 border-gray-200 rounded-md p-6 flex-col gap-4 hidden">
+<div class="absolute top-full right-0 max-md:right-[-56px] w-[320px] min-h-[200px] break-words bg-slate-100 shadow-md border-2 border-gray-200 rounded-md p-6 flex-col gap-4 hidden">
     <a href={% if user.is_authenticated %}{% url "home" %}{% else %}{% url "login" %}{% endif %} class="flex flex-col w-full text-center gap-2 rounded-md hover:bg-zinc-200 p-4">
         <div class="text-lg font-semibold leading-5">
         {% if user.is_authenticated %}
