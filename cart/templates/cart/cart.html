@@ -5,6 +5,13 @@
 
 {% block content %}
 <div class="min-h-[inherit] max-w-[1200px] mx-auto px-4 py-4 md:py-8">
+  <div class="px-4">
+    <a href="/" class="hover:text-red-500 transition-color duration-500">
+      Trang chủ
+    </a>
+    <span aria-hidden="true"> / </span>
+    <span>Giỏ hàng</span>
+  </div>
   <h2 class="uppercase font-semibold text-lg border-b p-4 mb-6">Giỏ hàng</h2>
   <div>
   {% if cart.get_item_count %}
