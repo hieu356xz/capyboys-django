@@ -42,8 +42,12 @@ class Order(models.Model):
     )
     
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='orders')
+    first_name = models.CharField(max_length=255, blank=True, null=True)
+    last_name = models.CharField(max_length=255, blank=True, null=True)
+    email = models.EmailField(blank=True, null=True)
     phone = models.CharField(max_length=20)
     address = models.TextField()
+
     city = models.CharField(max_length=255, blank=True, null=True)
     district = models.CharField(max_length=255, blank=True, null=True)
     ward = models.CharField(max_length=255, blank=True, null=True)
@@ -70,7 +74,8 @@ class Order(models.Model):
     
     @property
     def full_name(self):
-        return f"{self.user.last_name} {self.user.first_name}"
+        if self.user:
+            return f"{self.user.first_name} {self.user.last_name}"
     
     @property
     def total_item(self):
