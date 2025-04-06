@@ -13,7 +13,6 @@ $(document).ready(function() {
     });
 
     $('#checkout-cart-info-btn').click(function() {
-        console.log("clicked")
         let container = $(this).next("#checkout-cart-info-container")
         let icon = $(this).find("#checkout-cart-info-icon")
         autoHeightAnimate(container, 300, 
@@ -24,6 +23,19 @@ $(document).ready(function() {
                 icon.css("transform", "rotate(0deg)");
             }
         );
+    });
+
+    $('#sidebar-open-btn, #sidebar-close-btn, #sidebar-overlay').on('click', function() {
+        let sidebarOverlay = $('#sidebar-overlay');
+        let sidebar = $('#sidebar-container');
+        if (sidebar.hasClass('active')) {
+            sidebarOverlay.removeClass('active');
+            sidebar.removeClass('active');
+        }
+        else {
+            sidebarOverlay.addClass('active');
+            sidebar.addClass('active');
+        }
     });
 
     if (typeof Fancybox !== "undefined") {

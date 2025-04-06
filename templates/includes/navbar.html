@@ -1,6 +1,6 @@
 {% load static %}
 
-<div class="bg-white z-40 relative p-2 pb-0 mb-6 shadow-md">
+<div class="bg-white z-20 relative p-2 pb-0 mb-6 shadow-md">
   {% comment %} Upper navbar {% endcomment %}
   <div class="max-w-[1200px] flex max-md:justify-between mx-auto items-center">
     <div class="flex gap-2">
@@ -50,6 +50,12 @@
           <span class="text-xs md:text-sm">Tài khoản</span>
         </button>
         <c-user-popup></c-user-popup>
+      </div>
+      <div>
+        <button id="sidebar-open-btn" class="md:hidden size-14 md:size-16 flex flex-col justify-center items-center rounded-md hover:bg-zinc-200">
+          <i class="text-[26px] md:text-[30px] my-1 ph-light ph ph-list"></i>
+          <span class="text-xs md:text-sm">Menu</span>
+        </button>
       </div>
     </div>
   </div>
