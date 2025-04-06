@@ -1,0 +1,22 @@
+<div class="md:hidden">
+    <div id="sidebar-container" class="fixed top-0 right-0 max-w-[90%] w-[320px] p-4 bg-red-600 h-full float-right opacity-90 border-l-2 z-50 translate-x-[320px] [&.active]:block [&.active]:translate-x-0 transition-transform duration-300 ">
+        <div class="text-right py-4 px-2">
+            <button id="sidebar-close-btn" class="uppercase text-white p-2">
+                <span class="inline-block -translate-y-1">Đóng</span>
+                    <i class="ph-bold ph-x text-2xl"></i>
+            </button>
+        </div>
+        <div class="">
+            {% for item in menu_links %}
+            <div class="p-4 py-3 border-b">
+                <a 
+                    href="{{ item.link }}"
+                    class="uppercase inline-block text-white underline-animate underline-animate-color-white underline-animate-left underline-animate-duration-500">
+                    {{ item.name }}
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div id="sidebar-overlay" class="fixed w-screen h-0 top-0 right-0 z-40 bg-black bg-opacity-40 opacity-0 [&.active]:h-screen [&.active]:opacity-100"></div>
+</div>
