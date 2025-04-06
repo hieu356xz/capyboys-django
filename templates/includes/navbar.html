@@ -2,9 +2,9 @@
 
 <div class="bg-white z-40 relative p-2 pb-0 mb-6 shadow-md">
   {% comment %} Upper navbar {% endcomment %}
-  <div class="max-w-[1200px] flex mx-auto items-center">
+  <div class="max-w-[1200px] flex max-md:justify-between mx-auto items-center">
     <div class="flex gap-2">
-      <div class="min-w-14 size-14">
+      <div class="min-w-10 max-w-14">
         <a href="/">
           <img
             src="{% static 'favicon.ico' %}"
@@ -14,10 +14,10 @@
         </a>
       </div>
       {% comment %} Add space between logo and search bar {% endcomment %}
-      <div class="size-16"></div>
+      <div class="size-16 max-md:hidden"></div>
     </div>
 
-    <div class="w-[540px] mx-auto p-2">
+    <div class="w-[540px] mx-auto p-2 max-md:hidden">
       <form id="search-form" action="/search">
         <div class="flex items-center gap-2">
           <input
@@ -34,20 +34,20 @@
       </form>
     </div>
 
-    <div class="flex gap-2">
+    <div class="flex gap-1 md:gap-2">
       <div class="relative">
-        <button id="cart-btn" class="size-16 flex flex-col justify-center items-center rounded-md hover:bg-zinc-200">
-          <i class="text-[30px] my-1 ph-light ph ph-shopping-cart"></i>
-          <span class="text-sm">Giỏ hàng</span>
+        <button id="cart-btn" class="size-14 md:size-16 flex flex-col justify-center items-center rounded-md hover:bg-zinc-200">
+          <i class="text-[26px] md:text-[30px] my-1 ph-light ph ph-shopping-cart"></i>
+          <span class="text-xs md:text-sm">Giỏ hàng</span>
         </button>
         <span id="cart-count-badge" class="absolute top-0 right-1 size-4 rounded-full bg-red-600 leading-[normal] align-middle text-center text-[12px] text-white">
           {{cart.get_item_count}}
         </span>
       </div>
       <div class="relative">
-        <button id="user-popup-btn" class="size-16 flex flex-col justify-center items-center rounded-md hover:bg-zinc-200">
-          <i class="text-[30px] my-1 ph-light ph-user"></i>
-          <span class="text-sm">Tài khoản</span>
+        <button id="user-popup-btn" class="size-14 md:size-16 flex flex-col justify-center items-center rounded-md hover:bg-zinc-200">
+          <i class="text-[26px] md:text-[30px] my-1 ph-light ph-user"></i>
+          <span class="text-xs md:text-sm">Tài khoản</span>
         </button>
         <c-user-popup></c-user-popup>
       </div>
@@ -55,7 +55,7 @@
   </div>
 
   {% comment %} Below navbar {% endcomment %}
-  <div class="max-w-[600px] flex mx-auto items-center justify-between p-4">
+  <div class="max-w-[600px] flex mx-auto items-center justify-between p-4 max-md:hidden">
       {% for item in menu_links %}
         <div>
             <a 
@@ -65,5 +65,22 @@
             </a>
         </div>
       {% endfor %}
+  </div>
+
+  <div class="max-w-[600px] p-3 max-[480px]:px-1 pt-2 mx-auto md:hidden">
+    <form id="search-form-mobile" action="/search">
+      <div class="flex items-center gap-2">
+        <input
+        id="search-text-mobile"
+        type="text"
+        name="q"
+        placeholder="Tìm kiếm"
+        autocomplete="off"
+        class="bg-white rounded-3xl px-4 max-[480px]:px-3 max-[480px]:text-sm h-10 w-full min-w-24 border-2 border-gray-400 transition-colors duration-300"></input>
+        <button type="submit" class="bg-transparent size-10 flex justify-center items-center">
+          <i class="text-[32px] ph-light ph-magnifying-glass"></i>
+        </button>
+      </div>
+    </form>
   </div>
 </div>
