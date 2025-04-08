@@ -2464,11 +2464,11 @@ input[type="number"]::-webkit-inner-spin-button,
   animation-duration: 0.4s
 }
 
-.content-filter-btn .icon-container::after {
+.content-filter-btn .icon-container::before {
   content: "\e32a";
 }
 
-.content-filter-btn[data-state="closed"] .icon-container::after {
+.content-filter-btn[data-state="closed"] .icon-container::before {
   content: "\e3d4";
 }
 
