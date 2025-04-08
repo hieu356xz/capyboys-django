@@ -78,7 +78,7 @@ $(document).ready(function() {
 
     // By Josh Parrett https://codepen.io/JTParrett/pen/nJNXxX
     function autoHeightAnimate(element, time, callbackOpen, callbackClose) {
-        if (element.height() === 0) {
+        if (Math.round(element.height()) === 0) {
             let curHeight = element.height(), // Get Default Height
             autoHeight = element.css('height', 'auto').height(); // Get Auto Height
 
