@@ -22,9 +22,9 @@
         </a>
       </div>
       <div class="w-full">
-        <span class="text-red-500 font-bold">{{product.final_price|floatformat:"0g"}}₫</span>
+        <span class="text-red-500 font-semibold">{{product.final_price|floatformat:"0g"}}₫</span>
         {% if product.discount > 0 %}
-        <span class="float-right text-zinc-400 line-through">{{product.price|floatformat:'0g'}}đ</span>
+        <span class="float-right text-zinc-400 line-through font-semibold">{{product.price|floatformat:'0g'}}đ</span>
         {% endif %}
       </div>
     </div>
