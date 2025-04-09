@@ -1661,8 +1661,8 @@ input[type="number"]::-webkit-inner-spin-button,
   max-height: 500px;
 }
 
-.min-h-60 {
-  min-height: 15rem;
+.min-h-80 {
+  min-height: 20rem;
 }
 
 .min-h-9 {

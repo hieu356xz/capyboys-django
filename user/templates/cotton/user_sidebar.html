@@ -1,42 +1,42 @@
 <c-vars selected="detail"/>
 
 <div>
-<div id="user-sidebar-container" class="max-lg:absolute bg-gray-100 border min-h-60 rounded-2xl">
-    <div class="min-h-[inherit] flex flex-col gap-1 p-2 lg:p-4 justify-center">
-        <div class="mb-2 w-full">
-            <button id="user-sidebar-btn" class="block w-fit ml-auto py-2 px-3">
-                <i class="ph-bold ph-list"></i>
-            </button>
-        </div>
+    <div id="user-sidebar-container" class="max-lg:absolute bg-gray-100 border min-h-80 rounded-2xl">
+        <div class="min-h-[inherit] flex flex-col gap-1 p-2 lg:p-4 justify-center">
+            <div class="mb-2 w-full">
+                <button id="user-sidebar-btn" class="block w-fit ml-auto py-2 px-3">
+                    <i class="ph-bold ph-list"></i>
+                </button>
+            </div>
 
-        <div>
-            <a class="flex gap-2 w-full py-2 px-3 rounded-xl {% if selected == "detail" %}text-white bg-red-600{% else %}text-black{% endif %}"
-                href={% url "user-profile-detail" %}>
-                <span>
-                    <i class="ph-bold ph-user"></i>
-                </span>
-                <span class="user-sidebar-text overflow-hidden whitespace-nowrap -translate-y-[1px]">Thông tin tài khoản</span>
-            </a>
-        </div>
+            <div>
+                <a class="flex gap-2 w-full py-2 px-3 rounded-xl {% if selected == "detail" %}text-white bg-red-600{% else %}text-black{% endif %}"
+                    href={% url "user-profile-detail" %}>
+                    <span>
+                        <i class="ph-bold ph-user"></i>
+                    </span>
+                    <span class="user-sidebar-text overflow-hidden whitespace-nowrap -translate-y-[1px]">Thông tin tài khoản</span>
+                </a>
+            </div>
 
-        <div>
-            <a class="flex gap-2 w-full py-2 px-3 rounded-xl {% if selected == "orders" %}text-white bg-red-600{% else %}text-black{% endif %}"
-                href="#">
-                <span>
-                    <i class="ph-bold ph-package"></i>
-                </span>
-                <span class="user-sidebar-text overflow-hidden whitespace-nowrap -translate-y-[1px]">Theo dõi đơn hàng</span>
-            </a>
-        </div>
-        
-        <div class="mt-auto">
-            <a class="flex gap-2 w-full py-2 px-3 rounded-xl" href={% url "logout" %}>
-                <span>
-                    <i class="ph-bold ph-sign-out"></i>
-                </span>
-                <span class="user-sidebar-text overflow-hidden whitespace-nowrap -translate-y-[1px]">Đăng xuất</span>
-            </a>
+            <div>
+                <a class="flex gap-2 w-full py-2 px-3 rounded-xl {% if selected == "orders" %}text-white bg-red-600{% else %}text-black{% endif %}"
+                    href="#">
+                    <span>
+                        <i class="ph-bold ph-package"></i>
+                    </span>
+                    <span class="user-sidebar-text overflow-hidden whitespace-nowrap -translate-y-[1px]">Theo dõi đơn hàng</span>
+                </a>
+            </div>
+
+            <div class="mt-auto">
+                <a class="flex gap-2 w-full py-2 px-3 rounded-xl" href={% url "logout" %}>
+                    <span>
+                        <i class="ph-bold ph-sign-out"></i>
+                    </span>
+                    <span class="user-sidebar-text overflow-hidden whitespace-nowrap -translate-y-[1px]">Đăng xuất</span>
+                </a>
+            </div>
         </div>
     </div>
-</div>
 </div>
