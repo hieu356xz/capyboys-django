@@ -4,6 +4,7 @@ from django.contrib.auth import login, logout, get_user_model, password_validati
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 def login_view(request):
     email = ""
@@ -118,3 +119,27 @@ def register_view(request):
         "errors": errors
     }
     return render(request, "user/register.html", context)
+
+@login_required
+def profile_detail_view(request):
+    if request.method == "POST":
+        first_name = request.POST.get("first_name")
+        last_name = request.POST.get("last_name")
+
+        # Kiểm tra trường first_name có trống không
+        if not first_name:
+            messages.error(request, "Tên không được để trống.")
+        
+        # Cập nhật thông tin người dùng nếu không có lỗi
+        if not messages.get_messages(request):
+            request.user.first_name = first_name
+            request.user.last_name = last_name
+            request.user.save()
+            messages.success(request, "Cập nhật thông tin thành công.")
+
+    context = {
+        "email": request.user.email,
+        "first_name": request.user.first_name,
+        "last_name": request.user.last_name,
+    }
+    return render(request, "user/profile.html", context)
