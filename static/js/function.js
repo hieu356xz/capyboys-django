@@ -48,6 +48,10 @@ $(document).ready(function() {
         }
     });
 
+    if ($(window).width() >= 1024) {
+        $('#user-sidebar-container').addClass('active');
+    }
+
     if (typeof Fancybox !== "undefined") {
         Fancybox.bind("[data-fancybox]", {
             //
