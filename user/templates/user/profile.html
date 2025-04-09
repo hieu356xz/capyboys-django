@@ -14,7 +14,58 @@
     </div>
     <div class="p-4 flex gap-8">
         <c-user-sidebar></c-user-sidebar>
-        <div class="max-lg:pl-[58px]">TEST</div>
+        <div class="max-lg:pl-[58px] w-full">
+            <h2 class="inline-block uppercase py-2 text-lg font-bold">Thông tin tài khoản</h2>
+            <div class="pt-4 max-w-[500px]">
+                <form method="POST" novalidate>
+                    {% csrf_token %}
+
+                    <div class="flex flex-col gap-4">
+                        <div class="grid gap-2">
+                            <label for="id_email" class="font-semibold">Email</label>
+                            <input  type="email" id="id_email" 
+                                    readonly
+                                    value="{{ email }}" 
+                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm transition-colors duration-300 read-only:text-gray-500 read-only:border-gray-200">
+                        </div>
+        
+                        <div class="grid gap-2">
+                            <label for="id_lastname" class="font-semibold">Họ</label>
+                            <input type="text" name="last_name" id="id_lastname"
+                                value="{{ last_name }}"
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm transition-colors duration-300">
+                        </div>
+    
+                        <div class="grid gap-2">
+                            <label for="id_firstname" class="font-semibold">Tên</label>
+                            <input type="text" name="first_name" id="id_firstname"
+                                value="{{ first_name }}" 
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm transition-colors duration-300" required>
+                                
+                            {% if errors.first_name %}
+                            <div class="error">
+                                <p class="text-red-600 text-sm font-semibold">{{ errors.first_name }}</p>
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <div>
+                            {% if messages %}
+                            {% for message in messages %}
+                                <p class="text-green-600 text-sm font-semibold">{{ message }}</p>
+                            {% endfor %}
+                            {% endif %}
+                        </div>
+
+                        <div>
+                            <button type="submit" class="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-white font-semibold bg-red-600 hover:bg-red-700">
+                                Thay đổi thông tin
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

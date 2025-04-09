@@ -122,16 +122,20 @@ def register_view(request):
 
 @login_required
 def profile_detail_view(request):
+    first_name = request.user.first_name
+    last_name = request.user.last_name
+    errors = {}
+
     if request.method == "POST":
         first_name = request.POST.get("first_name")
         last_name = request.POST.get("last_name")
 
         # Kiểm tra trường first_name có trống không
         if not first_name:
-            messages.error(request, "Tên không được để trống.")
+            errors["first_name"] = "Tên không được để trống."
         
         # Cập nhật thông tin người dùng nếu không có lỗi
-        if not messages.get_messages(request):
+        if not errors:
             request.user.first_name = first_name
             request.user.last_name = last_name
             request.user.save()
@@ -141,5 +145,6 @@ def profile_detail_view(request):
         "email": request.user.email,
         "first_name": request.user.first_name,
         "last_name": request.user.last_name,
+        "errors": errors,
     }
     return render(request, "user/profile.html", context)
