@@ -90,3 +90,29 @@
 #sidebar-overlay.active {
   transition: opacity 300ms ease;
 }
+
+#user-sidebar-container {
+  width: 72px;
+}
+
+#user-sidebar-container.active {
+  width: 100%;
+}
+
+#user-sidebar-container .user-sidebar-text {
+  display: none;
+}
+
+#user-sidebar-container.active .user-sidebar-text {
+  display: inline;
+}
+
+@media not all and (min-width: 1024px) {
+  #user-sidebar-container {
+    width: 58px;
+  }
+
+  #user-sidebar-container.active {
+    width: 208px;
+  }
+}

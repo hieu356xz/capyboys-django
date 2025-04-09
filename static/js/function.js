@@ -38,6 +38,16 @@ $(document).ready(function() {
         }
     });
 
+    $('#user-sidebar-btn').click(function() {
+        let sidebar = $('#user-sidebar-container');
+        if (sidebar.hasClass('active')) {
+            sidebar.removeClass('active');
+        }
+        else {
+            sidebar.addClass('active');
+        }
+    });
+
     if (typeof Fancybox !== "undefined") {
         Fancybox.bind("[data-fancybox]", {
             //
