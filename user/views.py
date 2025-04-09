@@ -147,4 +147,4 @@ def profile_detail_view(request):
         "last_name": request.user.last_name,
         "errors": errors,
     }
-    return render(request, "user/profile.html", context)
+    return render(request, "user/profile_detail.html", context)
