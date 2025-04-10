@@ -148,3 +148,11 @@ def profile_detail_view(request):
         "errors": errors,
     }
     return render(request, "user/profile_detail.html", context)
+
+@login_required
+def order_tracking_view(request):
+    orders = request.user.orders.all().prefetch_related("items")
+    context = {
+        "orders": orders,
+    }
+    return render(request, "user/order_tracking.html", context)

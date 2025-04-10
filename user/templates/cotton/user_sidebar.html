@@ -1,7 +1,7 @@
 <c-vars selected="detail"/>
 
 <div>
-    <div id="user-sidebar-container" class="max-lg:absolute bg-gray-100 border min-h-80 rounded-2xl">
+    <div id="user-sidebar-container" class="z-10 max-lg:absolute bg-gray-100 border min-h-80 rounded-2xl">
         <div class="min-h-[inherit] flex flex-col gap-1 p-2 lg:p-4 justify-center">
             <div class="mb-2 w-full">
                 <button id="user-sidebar-btn" class="block w-fit ml-auto py-2 px-3">
@@ -21,7 +21,7 @@
 
             <div>
                 <a class="flex gap-2 w-full py-2 px-3 rounded-xl {% if selected == "orders" %}text-white bg-red-600{% else %}text-black{% endif %}"
-                    href="#">
+                    href={% url "order_tracking" %}>
                     <span>
                         <i class="ph-bold ph-package"></i>
                     </span>
