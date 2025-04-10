@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 {%block title %}Theo dõi đơn hàng - Capyboys{% endblock title %}
 
+{% load custom_tags %}
+
 {% block content %}
 <div class="px-1 md:px-4 max-w-[1200px] pt-2 mx-auto">
     <div class="px-4">
@@ -32,7 +34,7 @@
                                     Tổng tiền: 
                                 </span>
                                 <span class="pl-2 text-lg font-semibold text-red-600">
-                                    {{ order.total_price|floatformat:"0g" }}đ
+                                    {{ order.total_price|float_format:',.0f' }}đ
                                 </span>
                             </div>
                         </div>
@@ -76,7 +78,7 @@
                                 Tổng tiền: 
                             </span>
                             <span class="pl-2 text-lg font-semibold text-red-600">
-                                {{ order.total_price|floatformat:"0g" }}đ
+                                {{ order.total_price|float_format:',.0f' }}đ
                             </span>
                         </div>
                         <a href={% url "order_detail" order_id=order.id %} class="text-red-600 mt-2 block">Xem chi tiết</a>

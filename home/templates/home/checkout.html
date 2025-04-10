@@ -48,7 +48,7 @@
                 </table>
                 <div class="flex justify-between items-center mt-6 border-t pt-4">
                     <span class="text-lg font-semibold">Tổng tiền</span>
-                    <span class="text-xl text-red-600 font-semibold">{{ cart.get_total_price|floatformat:'0g' }}đ</span>
+                    <span class="text-xl text-red-600 font-semibold">{{ cart.get_total_price|float_format:',.0f' }}đ</span>
                 </div>
             </div>
         </div>
