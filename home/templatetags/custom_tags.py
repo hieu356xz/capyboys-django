@@ -45,3 +45,10 @@ def calc_subtotal(price, count):
 @register.filter
 def is_absolute_url(url):
     return bool(urlparse(str(url)).netloc)
+
+@register.filter
+def float_format(value, format_string):
+    try:
+        return f"{float(value):{format_string}}"
+    except (ValueError, TypeError):
+        return value
