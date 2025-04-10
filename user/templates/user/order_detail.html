@@ -86,14 +86,14 @@
             </td>
             <td class="p-3 min-w-[120px] text-xl font-semibold">
               <div class="text-red-600 my-[-6px]">
-                {{item.final_price|floatformat:'0g'}}đ
+                {{item.final_price|float_format:',.0f'}}đ
               </div>
               {% if item.discount > 0 %}
               <div class="text-lg text-zinc-700 line-through my-[-4px]">
-                {{item.price|floatformat:'0g'}}đ
+                {{item.price|float_format:',.0f'}}đ
               </div>
               <span class="px-1 bg-red-600 text-base text-white">
-                -{{item.discount|floatformat:'2g'}}%
+                -{{item.discount|float_format:',.2f'}}%
               </span>
               {% endif %}
             </td>
@@ -128,14 +128,14 @@
             </a>
             <div class="font-semibold py-1">
               <div class="text-red-600 md:my-[-4px]">
-                {{item.final_price|floatformat:'0g'}}đ
+                {{item.final_price|float_format:',.0f'}}đ
               </div>
               {% if item.discount > 0 %}
               <div class="text-xs md:text-sm text-zinc-700 line-through md:my-[-2px]">
-                {{item.price|floatformat:'0g'}}đ
+                {{item.price|float_format:',.0f'}}đ
               </div>
               <span class="px-1 bg-red-600 text-xs md:text-sm text-white">
-                -{{item.discount|floatformat:'2g'}}%
+                -{{item.discount|float_format:',.2f'}}%
               </span>
               {% endif %}
             </div>
@@ -160,7 +160,7 @@
     <h3>
       Tổng:
       <span class="text-red-600 text-xl md:text-2xl pl-2">
-        {{order.total_price|floatformat:"0g"}}đ
+        {{order.total_price|float_format:',.0f'}}đ
       </span>
     </h3>
   </div>

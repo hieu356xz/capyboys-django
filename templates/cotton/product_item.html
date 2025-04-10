@@ -10,7 +10,7 @@
         <img src="{% if product.cover_img|is_absolute_url %}{{ product.cover_img }}{% else %}{{ product.cover_img.url }}{% endif %}" alt="{{product.title}}" />
       </a>
       {% if product.discount > 0 %}
-      <div class="absolute top-0 right-0 size-10 leading-10 rounded-full text-center text-white text-[12px] bg-red-600"> -{{product.discount|floatformat:'0g'}}% </div>
+      <div class="absolute top-0 right-0 size-10 leading-10 rounded-full text-center text-white text-[12px] bg-red-600"> -{{product.discount|float_format:',.0f'}}% </div>
       {% endif %}
     </div>
     <div class="m-2 text-sm">
@@ -22,9 +22,9 @@
         </a>
       </div>
       <div class="w-full">
-        <span class="text-red-500 font-semibold">{{product.final_price|floatformat:"0g"}}₫</span>
+        <span class="text-red-500 font-semibold">{{product.final_price|float_format:",.0f"}}₫</span>
         {% if product.discount > 0 %}
-        <span class="float-right text-zinc-400 line-through font-semibold">{{product.price|floatformat:'0g'}}đ</span>
+        <span class="float-right text-zinc-400 line-through font-semibold">{{product.price|float_format:',.0f'}}đ</span>
         {% endif %}
       </div>
     </div>
