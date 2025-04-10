@@ -1,5 +1,5 @@
 <div class="absolute top-full right-0 max-md:right-[-56px] max-w-[calc(0.9*100vw)] w-[320px] min-h-[200px] break-words bg-slate-100 shadow-md border-2 border-gray-200 rounded-md p-6 flex-col gap-4 hidden">
-    <a href={% if user.is_authenticated %}{% url "home" %}{% else %}{% url "login" %}{% endif %} class="flex flex-col w-full text-center gap-2 rounded-md hover:bg-zinc-200 p-4">
+    <a href={% if user.is_authenticated %}{% url "profile_detail" %}{% else %}{% url "login" %}{% endif %} class="flex flex-col w-full text-center gap-2 rounded-md hover:bg-zinc-200 p-4">
         <div class="sm:text-lg font-semibold leading-5">
         {% if user.is_authenticated %}
             {%if user.last_name %}{{ user.last_name }} {% endif %}{{ user.first_name }}
