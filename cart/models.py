@@ -86,8 +86,9 @@ class Order(models.Model):
         if not self.total_price:
             self.total_price = 0
         super().save(*args, **kwargs)
-        if self.pk:
-            self.total_price = sum([item.subtotal for item in self.items.all()])
+        self.total_price = sum([item.subtotal for item in self.items.all()])
+        super().save(*args, **kwargs)
+
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)
