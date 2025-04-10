@@ -6,6 +6,8 @@ from django.core.exceptions import ValidationError
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
+from cart.models import Order, OrderItem
+
 def login_view(request):
     email = ""
 
@@ -156,3 +158,17 @@ def order_tracking_view(request):
         "orders": orders,
     }
     return render(request, "user/order_tracking.html", context)
+
+@login_required
+def order_detail(request, order_id):
+    try:
+        order = Order.objects.get(pk=order_id, user=request.user)
+        order_items = OrderItem.objects.filter(order=order)
+    except Order.DoesNotExist:
+        return redirect("home")
+
+    context = {
+        "order": order,
+        "order_items": order_items,
+    }
+    return render(request, 'user/order_detail.html', context)

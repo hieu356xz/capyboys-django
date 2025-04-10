@@ -79,7 +79,7 @@
                                 {{ order.total_price|floatformat:"0g" }}đ
                             </span>
                         </div>
-                        <a href="#" class="text-red-600 mt-2 block">Xem chi tiết</a>
+                        <a href={% url "order_detail" order_id=order.id %} class="text-red-600 mt-2 block">Xem chi tiết</a>
                     </div>
                     {% endfor %}
                     {% else %}

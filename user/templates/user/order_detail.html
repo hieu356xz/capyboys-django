@@ -1,0 +1,170 @@
+{% extends "base.html" %}
+{% block title %}Chi tiết đơn hàng - Capyboys{% endblock title %}
+
+{% load custom_tags %}
+
+{% block content %}
+<div class="min-h-[inherit] max-w-[1200px] mx-auto px-4 py-4 md:py-8">
+  <div class="px-4">
+    <a href="/" class="hover:text-red-500 transition-color duration-500">
+      Trang chủ
+    </a>
+    <span aria-hidden="true"> / </span>
+    <span>Chi tiết đơn hàng</span>
+  </div>
+  <h2 class="uppercase font-semibold text-lg border-b p-4 mb-6">Chi tiết đơn hàng</h2>
+  <div class="px-4 mb-6">
+    <div class="font-semibold uppercase">Mã đơn hàng: {{ order.id }}</div>
+    <div class="text-sm text-gray-600">{{ order.created_at|date:"d/m/Y" }}</div>
+
+    <ul class="text-sm list-disc mt-4 space-y-2 px-4 lg:px-8">
+
+      <li><span class="font-medium text-gray-800">Người nhận:</span> {{ order.full_name }}</li>
+      <li><span class="font-medium text-gray-800">Email:</span> {{ order.email }}</li>
+      <li><span class="font-medium text-gray-800">Số điện thoại:</span> {{ order.phone }}</li>
+
+      <li class="pt-2"><span class="font-medium text-gray-800">Địa chỉ:</span> {{ order.address }}</li>
+      <li><span class="font-medium text-gray-800">Phường/Xã:</span> {{ order.ward }}</li>
+      <li><span class="font-medium text-gray-800">Quận/Huyện:</span> {{ order.district }}</li>
+      <li><span class="font-medium text-gray-800">Tỉnh/Thành phố:</span> {{ order.city }}</li>
+
+      <li class="pt-2"><span class="font-medium text-gray-800">Phương thức thanh toán:</span> {{ order.get_payment_method_display }}</li>
+      <li><span class="font-medium text-gray-800">Trạng thái:</span> {{ order.get_status_display }}</li>
+
+      <li>
+        <span class="font-medium text-gray-800">Đã thanh toán:</span>
+        <span class="inline-block translate-y-[2px]">
+          {% if order.is_paid %}
+              <i class="text-green-600 ph-bold ph-check"></i>
+          {% else %}
+              <i class="text-red-600 ph-bold ph-x"></i>
+          {% endif %}
+        </span>
+      </li>
+
+      {% if order.notes %}
+        <li class="pt-2">
+          <div class="text-sm font-medium text-gray-700">Ghi chú:</div>
+          <div class="text-sm bg-yellow-50 bg-opacity-50 text-yellow-800 px-3 py-2 mt-1 rounded border">
+            {{ order.notes }}
+          </div>
+        </li>
+      {% endif %}
+    </ul>
+
+  </div>
+  <h2 class="uppercase font-semibold p-4">Danh sách sản phẩm</h2>
+  <div>
+  {% if order_items %}
+    <div class="hidden min-[900px]:block">
+      <table class="border-y">
+        <thead class="border-b [&_tr>th]:py-6 [&_tr>th]:font-semibold">
+          <tr>
+            <th colspan="2">Sản phẩm</th>
+            <th>Đơn giá</th>
+            <th>Số lượng</th>
+            <th>Thành tiền</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in order_items %}
+          <tr class="border-b">
+            <td class="w-[33%] px-4 py-8">
+              <a href="/products/{{item.book.slug}}" class="cursor-pointer">
+                <img
+                  class="max-h-[240px] mx-auto"
+                  src="{% if item.book.cover_img|is_absolute_url %}{{ item.book.cover_img }}{% else %}{{ item.book.cover_img.url }}{% endif %}"
+                  alt="{{item.book.title}}" />
+              </a>
+            </td>
+            <td class="p-3 w-full">
+              <a
+                href="/products/{{item.book.slug}}"
+                class="cursor-pointer text-xl font-semibold hover:text-red-600 transition-colors duration-300">
+                {{item.book.title}}
+              </a>
+            </td>
+            <td class="p-3 min-w-[120px] text-xl font-semibold">
+              <div class="text-red-600 my-[-6px]">
+                {{item.final_price|floatformat:'0g'}}đ
+              </div>
+              {% if item.discount > 0 %}
+              <div class="text-lg text-zinc-700 line-through my-[-4px]">
+                {{item.price|floatformat:'0g'}}đ
+              </div>
+              <span class="px-1 bg-red-600 text-base text-white">
+                -{{item.discount|floatformat:'2g'}}%
+              </span>
+              {% endif %}
+            </td>
+            <td class="p-3 min-w-[150px] text-lg">{{item.quantity}}</td>
+            <td class="p-3 min-w-[120px] text-[22px] font-semibold text-red-600">
+              {{item.final_price|calc_subtotal:item.quantity}}đ
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="block min-[900px]:hidden border-t">
+      {% for item in order_items %}
+      <div class="p-2 md:p-4">
+        <div
+          class="grid grid-cols-[25%_auto] gap-4 leading-[18px] text-sm sm:text-base md:leading-5 pb-4 border-b">
+          <a
+            href="/products/{{item.book.slug}}"
+            class="cursor-pointer">
+            <img
+              class="max-h-[240px] mx-auto"
+              src="{% if item.book.cover_img|is_absolute_url %}{{ item.book.cover_img }}{% else %}{{ item.book.cover_img.url }}{% endif %}"
+              alt="{{item.book.title}}" />
+          </a>
+          <div class="md:py-2">
+            <a
+              href="/products/{{item.book.slug}}"
+              class="cursor-pointer font-semibold hover:text-red-600 transition-colors duration-300">
+              {{item.book.title}}
+            </a>
+            <div class="font-semibold py-1">
+              <div class="text-red-600 md:my-[-4px]">
+                {{item.final_price|floatformat:'0g'}}đ
+              </div>
+              {% if item.discount > 0 %}
+              <div class="text-xs md:text-sm text-zinc-700 line-through md:my-[-2px]">
+                {{item.price|floatformat:'0g'}}đ
+              </div>
+              <span class="px-1 bg-red-600 text-xs md:text-sm text-white">
+                -{{item.discount|floatformat:'2g'}}%
+              </span>
+              {% endif %}
+            </div>
+            <div>
+              <span>Số lượng: {{item.quantity}}</span>
+            </div>
+            <div>
+              <span>Thành tiền:</span>
+              <span class="pl-2 md:text-base font-semibold text-red-600"
+                >{{item.final_price|calc_subtotal:item.quantity}}đ</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+    
+  {% if cart.get_item_count %}
+  <div class="text-sm md:text-base text-right font-semibold">
+    <h3>
+      Tổng:
+      <span class="text-red-600 text-xl md:text-2xl pl-2">
+        {{order.total_price|floatformat:"0g"}}đ
+      </span>
+    </h3>
+  </div>
+  {% endif %}
+  </div>
+</div>
+{% endblock %}
