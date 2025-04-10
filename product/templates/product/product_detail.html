@@ -51,6 +51,12 @@
         <div class="flex flex-wrap">
           <div class="basis-full pb-8 md:basis-1/2">
             <ul class="list-disc pl-6 leading-[1.75]">
+              {% if product.isbn %}
+              <li>
+                <strong>ISBN: </strong>
+                {{ product.isbn }}
+              </li>
+              {% endif %}
               <li>
                 <strong>Tác giả: </strong>
                 {% for author in authors %}
@@ -69,12 +75,42 @@
                 {% endfor %}
               </li>
               {% endif %}
-              {% for attr in product_attributes %}
+              {% if product.publish_year %}
               <li>
-                <strong>{{ attr.attribute.name }}: </strong>
-                {{ attr.value }}
+                <strong>Năm xuất bản: </strong>
+                {{ product.publish_year }}
               </li>
-              {% endfor %}
+              {% endif %}
+              {% if product.weight %}
+              <li>
+                <strong>Trọng lượng: </strong>
+                {{ product.weight|float_format:',.0f' }} gram
+              </li>
+              {% endif %}
+              {% if product.page_count %}
+              <li>
+                <strong>Số trang: </strong>
+                {{ product.page_count }}
+              </li>
+              {% endif %}
+              {% if product.format %}
+              <li>
+                <strong>Định dạng: </strong>
+                {{ product.format }}
+              </li>
+              {% endif %}
+              {% if product.dimensions %}
+              <li>
+                <strong>Kích thước: </strong>
+                {{ product.dimensions }}
+              </li>
+              {% endif %}
+              {% if product.audience %}
+              <li>
+                <strong>Đối tượng: </strong>
+                {{ product.audience }}
+              </li>
+              {% endif %}
               {% if collections %}
               <li>
                 <strong>Bộ sách: </strong>

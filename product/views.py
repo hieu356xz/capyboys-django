@@ -20,10 +20,8 @@ def product_detail(request, slug):
             'collections',
             'authors',
             'genres',
-            'bookattributevalue_set'
         ).get(slug=slug)
 
-        product_attributes = product.bookattributevalue_set.prefetch_related('attribute').all()
         current_collection = product.collections.filter(slug__in=general_collections).first()
         collections = product.collections.exclude(slug__in=general_collections)
         authors = product.authors.all()
@@ -44,7 +42,6 @@ def product_detail(request, slug):
         "product": product,
         "current_collection": current_collection,
         "collections": collections,
-        "product_attributes": product_attributes,
         "authors": authors,
         'genres': genres,
         "max_quantity": max_quantity,
