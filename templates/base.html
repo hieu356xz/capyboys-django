@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 {% load static tailwind_tags %}
 
 <!DOCTYPE html>
@@ -18,6 +19,7 @@
     <title>{% block title %}Capyboys{% endblock title %}</title>
 </head>
 <body>
+    {% language 'vi' %}
     {% include 'includes/navbar.html' %}
     {% include 'includes/sidebar.html' %}
     <div class="min-h-[calc(100vh-236px)] lg:min-h-[calc(100vh-241px)]">
@@ -27,5 +29,6 @@
     {% include 'includes/cart_modal.html' %}
     {% include 'includes/error_modal.html' %}
     {% include 'includes/footer.html' %}
+    {% endlanguage %}
 </body>
 </html>
