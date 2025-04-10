@@ -5,16 +5,22 @@ class Book(models.Model):
     title = models.CharField(max_length=511)
     publisher = models.ForeignKey('Publisher', on_delete=models.SET_NULL, null=True, blank=True)
     price = models.DecimalField(max_digits=15, decimal_places=2)
-    publish_year = models.PositiveSmallIntegerField(blank=True, null=True)
     cover_img = models.ImageField(max_length=511, upload_to='covers/', blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     slug = models.SlugField(max_length=255, unique=True)
     stock = models.PositiveIntegerField(default=0)
     discount = models.DecimalField(max_digits=5, decimal_places=2, default=0, verbose_name="Discount (%)", help_text="Discount percentage (0-100)")
 
+    publish_year = models.PositiveSmallIntegerField(blank=True, null=True)
+    weight = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True, verbose_name="Weight (g)")
+    page_count = models.PositiveIntegerField(blank=True, null=True)
+    format = models.CharField(max_length=255, blank=True, null=True)
+    dimensions = models.CharField(max_length=255, blank=True, null=True)
+    audience = models.CharField(max_length=255, blank=True, null=True)
+    isbn = models.CharField(max_length=20, blank=True, null=True)
+
     authors = models.ManyToManyField('Author', through='BookAuthor')
     genres = models.ManyToManyField('Genre', through='BookGenre')
-    attributes = models.ManyToManyField('Attribute', through='BookAttributeValue')
     collections = models.ManyToManyField('collection.Collection', through='collection.BookCollection')
 
     def __str__(self):
@@ -55,25 +61,6 @@ class Publisher(models.Model):
 
     def __str__(self):
         return self.name
-
-class Attribute(models.Model):
-    name = models.CharField(max_length=511)
-
-    def __str__(self):
-        return self.name
-
-class BookAttributeValue(models.Model):
-    book = models.ForeignKey('Book', on_delete=models.CASCADE)
-    attribute = models.ForeignKey('Attribute', on_delete=models.CASCADE)
-    value = models.CharField(max_length=511)
-
-    class Meta:
-        constraints = [
-            models.UniqueConstraint(fields=['book', 'attribute'], name='unique_book_attribute_migration'),
-        ]
-
-    def __str__(self):
-        return f"[{self.book.title}] {self.attribute.name}: {self.value}"
 
 class Genre(models.Model):
     name = models.CharField(max_length=511)

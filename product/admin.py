@@ -1,16 +1,11 @@
 from django.contrib import admin
 from django.template.defaultfilters import slugify
 from unidecode import unidecode
-from .models import Book, Author, Attribute, BookAttributeValue, Publisher, Genre, BookGenre, BookAuthor
+from .models import Book, Author, Publisher, Genre, BookGenre, BookAuthor
 from collection.models import BookCollection
 from django.forms import ModelForm, ModelMultipleChoiceField
 from django.contrib.admin.widgets import FilteredSelectMultiple
 
-class BookAttributeValueInline(admin.StackedInline):
-    model = BookAttributeValue
-    extra = 1
-
-    autocomplete_fields = ('attribute',)
 class BookCollectionInline(admin.TabularInline):
     model = BookCollection
     extra = 1
@@ -86,7 +81,7 @@ class BookAdmin(admin.ModelAdmin):
 
     list_display = ('title', 'display_authors', 'publisher', 'price', 'stock', 'discount', 'publish_year', 'description')
 
-    inlines = [BookAttributeValueInline, BookCollectionInline, BookAuthorInline]
+    inlines = [BookCollectionInline, BookAuthorInline]
 
     list_filter = ['collections', 'genres', 'publish_year', 'authors', 'publisher']
     search_fields = ['title', 'authors__name', 'publisher__name']
@@ -104,12 +99,7 @@ class AuthorAdmin(admin.ModelAdmin):
 class PublisherAdmin(admin.ModelAdmin):
     search_fields = ['name']
 
-class AttributeAdmin(admin.ModelAdmin):
-    search_fields = ['attribute']
-
 admin.site.register(Book, BookAdmin)
 admin.site.register(Author, AuthorAdmin)
 admin.site.register(Publisher, PublisherAdmin)
-admin.site.register(Attribute, AttributeAdmin)
 admin.site.register(Genre)
-admin.site.register(BookAttributeValue)
