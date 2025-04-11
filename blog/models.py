@@ -3,6 +3,7 @@ from django.db import models
 class Blog(models.Model):
     title = models.CharField(max_length=511)
     content = models.TextField()
+    user = models.ForeignKey('user.User', on_delete=models.SET_NULL, related_name='blogs', null=True, blank=True)
     description = models.TextField(blank=True, null=True)
     cover_img = models.ImageField(max_length=511, upload_to="blog/", blank=True, null=True)
     blog_type = models.ForeignKey('BlogType', on_delete=models.CASCADE)
